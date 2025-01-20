@@ -35,7 +35,7 @@ At its core, the AI Conductor intelligently coordinates specialized agents for p
    ```
 For more details on Cursor's Rules for AI, read their [documentation](https://docs.cursor.com/context/rules-for-ai).
 
-### Windsurf (Global AI Rules)
+![image](https://github.com/user-attachments/assets/acdd77d5-5f1a-4092-a4a1-a7282dc66b27) **Codeium (Windsurf)** (Global AI Rules)
 1. Copy the contents of [COMMANDS.md] to Windsurf's Global AI Rules
 
 2. Initialize the framework in your project:
@@ -50,7 +50,7 @@ For more details on Cursor's Rules for AI, read their [documentation](https://do
 
 For more details on Windsurf's Global AI Rules, read their [documentation](https://docs.codeium.com/windsurf/memories#global-rules).
 
-![image](https://github.com/user-attachments/assets/2f9dc685-ae4e-4bc2-b2f2-ad9d2bf70e79)### aider (Conventions File)
+![image](https://github.com/user-attachments/assets/2f9dc685-ae4e-4bc2-b2f2-ad9d2bf70e79) ***aider*** (Conventions File)
 1. Create aegis_commands.md file in your project root
 
 2. Copy @[COMMANDS.md] to aegis_commands.md
