@@ -1,6 +1,8 @@
+> **⚠ Disclaimer**  
+> Some AI-powered code assistants have predefined token limits. While this framework has proven tremendously helpful, be mindful of these limitations. Using assistants with your own API keys can help avoid stricter token limits.
 # Aegis: The Intelligent AI Framework for Structured Development
 
-**Aegis** is an advanced AI-assisted development framework designed to guide, protect, and orchestrate your projects with structured memory management and multi-agent planning. Aegis ensures your AI assistant stays informed and effective throughout the development lifecycle.
+**Aegis** (pronounced **EE-jis** or **AY-jis**) is an advanced AI-assisted development framework designed to guide, protect, and orchestrate your projects with structured memory management and multi-agent planning. Aegis ensures your AI assistant stays informed and effective throughout the development lifecycle.
 
 Inspired by the way the human brain organizes knowledge, Aegis leverages:
 
@@ -11,59 +13,64 @@ Inspired by the way the human brain organizes knowledge, Aegis leverages:
 
 At its core, the AI Conductor intelligently coordinates specialized agents for planning, execution, and optimization. Aegis also maintains clarity and continuity through a lightweight .context directory, keeping your project structured and accessible at all times.
 
-> **⚠ Disclaimer**  
-> Some AI-powered code assistants have predefined token limits. While this framework has proven tremendously helpful, be mindful of these limitations. Using assistants with your own API keys can help avoid stricter token limits.
-
 ## 🚀 Quick Start
 
-**Step 1**: Aegis is a drop-in framework - simply copy the `.context` directory to your project root. That's it! Your project is now ready to use Aegis.
+### Step 1: Add the `.context` directory
+Aegis is a drop-in framework - simply copy the `.context` directory to your project root. That's it! Your project is now ready to use Aegis.
 
-**Step 2**: Aegis uses simple commands that your AI Code Assistant will follow. Update your code assistant's global rules so that it understand what to do when you give it an aegis-specific command.
+### Step 2: Update global rules
+Aegis uses simple commands that your AI Code Assistant will follow. To make sure the assistant understands them, you'll need to update your editor or IDE's global rules. Instructions for 3 popular code assistants are provided below.
 
-### Cursor (Rules for AI)
+## ![image](https://github.com/user-attachments/assets/09be2aa4-5459-4aeb-b69d-982d4d485c2c) Cursor
 
-1. Copy the contents of [COMMANDS.md] to Cursor's Rules for AI:
+1. Copy the contents of [COMMANDS.md]() to Cursor's Rules for AI. Instructions can be found [here](https://docs.cursor.com/context/rules-for-ai).
 
-2. Initialize the framework in your project:
+2. Initialize the framework in your project by typing the following command in the chat window:
    ```
    /aegis init .
    ```
 
-3. Start your development session:
+3. Start your development session by typing the following command in the chat window:
    ```
    /aegis start
    ```
-For more details on Cursor's Rules for AI, read their [documentation](https://docs.cursor.com/context/rules-for-ai).
+## ![image](https://github.com/user-attachments/assets/acdd77d5-5f1a-4092-a4a1-a7282dc66b27) Codeium 
+1. Copy the contents of [COMMANDS.md]() to Windsurf's Global AI Rules. Instructions can be found [here](https://docs.codeium.com/windsurf/memories#global-rules).
 
-![image](https://github.com/user-attachments/assets/acdd77d5-5f1a-4092-a4a1-a7282dc66b27) **Codeium (Windsurf)** (Global AI Rules)
-1. Copy the contents of [COMMANDS.md] to Windsurf's Global AI Rules
-
-2. Initialize the framework in your project:
+2. Initialize the framework in your project by typing the following command in the chat window:
    ```
    /aegis init .
    ```
 
-3. Start your development session:
+3. Start your development session by typing the following command in the chat window:
    ```
    /aegis start
    ```
 
-For more details on Windsurf's Global AI Rules, read their [documentation](https://docs.codeium.com/windsurf/memories#global-rules).
-
-![image](https://github.com/user-attachments/assets/2f9dc685-ae4e-4bc2-b2f2-ad9d2bf70e79) ***aider*** (Conventions File)
+## ![image](https://github.com/user-attachments/assets/2f9dc685-ae4e-4bc2-b2f2-ad9d2bf70e79) aider
 1. Create aegis_commands.md file in your project root
 
-2. Copy @[COMMANDS.md] to aegis_commands.md
+2. Copy [COMMANDS.md]() to aegis_commands.md
 
-3. Configure aider to always load your conventions file in the `.aider.conf.yml` config file:
-```bash
-# alone
-read: aegis_commands.md
-```
+3. Configure aider to always load your conventions file in the `.aider.conf.yml` config file. More details [here](https://aider.chat/docs/usage/conventions.html).
+   ```
+   # alone
+   read: aegis_commands.md
+   ```
 
-For more details on aider's code conventions, read their [documentation](https://aider.chat/docs/usage/conventions.html).
+4. Initialize the framework in your project by typing the following command in the chat window:
+   ```
+   /aegis init .
+   ```
+
+5. Start your development session by typing the following command in the chat window:
+   ```
+   /aegis start
+   ```
 
 ## 🛠️ Commands
+
+Aegis-specific commands are simply commands you enter in your assistant's chat window. Here are the list of base commands you can use with Aegis:
 
 | Command | Description |
 |---------|-------------|
@@ -74,9 +81,6 @@ For more details on aider's code conventions, read their [documentation](https:/
 | `/aegis task` | Focus on implementation |
 | `/aegis context` | Quick context refresh |
 | `/aegis plan` | AI-guided planning |
-
-
-
 
 ## 🎯 Core Features
 
