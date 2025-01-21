@@ -1,6 +1,6 @@
 > **⚠ Disclaimer**  
 > Some AI-powered code assistants have predefined token limits. While this framework has proven tremendously helpful, be mindful of these limitations. Using assistants with your own API keys can help avoid stricter token limits.
-# Aegis: The Intelligent AI Framework for Structured Development
+# Aegis: The Zero-Dependency AI Framework for Structured Development
 
 **Aegis** (pronounced **EE-jis** or **AY-jis**) is an advanced AI-assisted development framework designed to guide, protect, and orchestrate your projects with structured memory management and multi-agent planning. Aegis ensures your AI assistant stays informed and effective throughout the development lifecycle.
 
