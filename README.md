@@ -26,7 +26,7 @@ Aegis uses simple commands that your AI Code Assistant will follow. To make sure
 
 ## ![image](https://github.com/user-attachments/assets/09be2aa4-5459-4aeb-b69d-982d4d485c2c) Cursor
 
-1. Copy the contents of [COMMANDS.md]() to Cursor's Rules for AI. Instructions can be found [here](https://docs.cursor.com/context/rules-for-ai).
+1. Copy the contents of [COMMANDS.md](COMMANDS.md) to Cursor's Rules for AI. Instructions can be found [here](https://docs.cursor.com/context/rules-for-ai).
 
 2. Initialize the framework in your project by typing the following command in the chat window:
    ```
@@ -38,7 +38,7 @@ Aegis uses simple commands that your AI Code Assistant will follow. To make sure
    /aegis start
    ```
 ## ![image](https://github.com/user-attachments/assets/acdd77d5-5f1a-4092-a4a1-a7282dc66b27) Codeium 
-1. Copy the contents of [COMMANDS.md]() to Windsurf's Global AI Rules. Instructions can be found [here](https://docs.codeium.com/windsurf/memories#global-rules).
+1. Copy the contents of [COMMANDS.md](COMMANDS.md) to Windsurf's Global AI Rules. Instructions can be found [here](https://docs.codeium.com/windsurf/memories#global-rules).
 
 2. Initialize the framework in your project by typing the following command in the chat window:
    ```
@@ -53,7 +53,7 @@ Aegis uses simple commands that your AI Code Assistant will follow. To make sure
 ## ![image](https://github.com/user-attachments/assets/2f9dc685-ae4e-4bc2-b2f2-ad9d2bf70e79) aider
 1. Create aegis_commands.md file in your project root
 
-2. Copy [COMMANDS.md]() to aegis_commands.md
+2. Copy [COMMANDS.md](COMMANDS.md) to aegis_commands.md
 
 3. Configure aider to always load your conventions file in the `.aider.conf.yml` config file. More details [here](https://aider.chat/docs/usage/conventions.html).
    ```
