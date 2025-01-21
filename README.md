@@ -44,7 +44,13 @@ That’s it! Aegis creates a clear structure for your project, helping you track
 
 ### Step 1: Add the `.context` Directory
 
-Getting started is as easy as copying the `.context` directory to your project root. This lightweight directory keeps everything organized and ensures your AI assistant has the context it needs to be effective.  
+Getting started is as easy as cloning the Aegis repo to your project directory.  
+
+```bash
+git clone https://github.com/FixingPixels/Aegis.git
+```
+
+Or, you can copy the `.context` directory to your project root. This lightweight directory keeps everything organized and ensures your AI assistant has the context it needs to be effective.  
 
 ```bash
 cp -r /path/to/aegis/context /your/project/root
