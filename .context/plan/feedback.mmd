@@ -1,0 +1,8 @@
+graph TD
+    UserFeedback[User Provides Feedback] -->|Analyze Suggestions| AgentReview[Agents Review Planning]
+    AgentReview -->|Reassign Tasks| TaskRework[Refine Scope, Architecture, or Design]
+    TaskRework -->|Reevaluate Changes| UpdatePlanning[Update Planning Document]
+    UpdatePlanning -->|Request Final Review| UserApproval[User Approves?]
+    
+    UserApproval -- Yes --> Finalized[Project Plan Completed]
+    UserApproval -- No --> AgentReview

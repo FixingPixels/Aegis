@@ -1,0 +1,7 @@
+stateDiagram-v2
+    [*] --> Drafting
+    Drafting --> Review
+    Review --> Refinement
+    Refinement --> FinalApproval
+    FinalApproval --> Completed
+    Refinement --> Drafting
