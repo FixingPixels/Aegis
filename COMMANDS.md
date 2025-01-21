@@ -12,19 +12,25 @@ When the USER types any of these commands, follow the corresponding instructions
 2. Create the `.context/` directory structure at the specified location:
    ```
    .context/
-   ├── planning/
-   │   └── initial_plan.md    # Original planning document
+   ├── plan/
+   │   ├── README.md           # Planning overview
+   │   ├── agents.mmd         # Agent system diagram
+   │   ├── ai_conductor.json  # Conductor configuration
+   │   ├── document_states.mmd # Document workflow
+   │   ├── feedback.mmd       # Feedback system
+   │   └── workflow.mmd       # Planning workflow
    ├── current_state.md
    ├── roadmap.md
    ├── tasks/
    │   ├── active/
    │   ├── planned/
+   │   ├── hold/
    │   └── completed/
    ├── sessions/
    └── decisions/
    ```
 3. Process planning document:
-   - Move/copy to .context/planning/initial_plan.md
+   - Move/copy to .context/plan/README.md
    - Extract core concepts for current_state.md
    - Create project roadmap
    - Generate initial tasks
@@ -73,20 +79,29 @@ When the USER types any of these commands, follow the corresponding instructions
 
 ### `/aegis plan`
 1. Read `.context/plan/README.md`
-2. Assist the user with the project planning process.
-3. Follow the AI Conductor workflow as outlined in `ai_conductor.json`.
-4. Provide guidance on:
-- Project scope and requirements
-- Agent assignments and responsibilities
-- Architecture and milestone planning
-- Risk assessment and mitigation strategies
-- Feedback incorporation and iterative improvements
-5. Assist in generating and refining the `planning_document.md` in the root of `.context/`.
-6. Allow users to request:
-- Specific edits to the planning document
-- Additional agents or role refinements
-- Strategy adjustments based on new project insights
-7. Continuously update `planning_document.md` as the planning session progresses.
+2. Follow the AI Conductor workflow from `ai_conductor.json`
+3. Coordinate specialized agents for:
+   - Project scope and requirements
+   - Architecture and technical planning
+   - UI/UX design considerations
+   - Quality assurance strategy
+   - Infrastructure planning
+4. Guide the planning process through:
+   - User alignment and requirement gathering
+   - Team creation and role assignment
+   - Problem solving and architecture design
+   - Feedback incorporation and refinement
+   - Plan finalization and documentation
+5. Maintain planning artifacts in `.context/plan/`:
+   - Update README.md with current planning state
+   - Refine agent system diagrams (agents.mmd)
+   - Adjust workflow diagrams as needed
+   - Track document states and progress
+6. Support iterative improvement through:
+   - User feedback integration
+   - Agent review and recommendations
+   - Task refinement and updates
+   - Plan optimization
 
 ---
 
