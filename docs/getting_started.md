@@ -97,15 +97,15 @@ This command:
 
 Here are the key commands you’ll use with Aegis:
 
-| Command             | Description                            |
-||-|
-| `/aegis init <path>` | Initialize Aegis in your project       |
-| `/aegis start`      | Start a new development session        |
-| `/aegis save`       | Save the current project state         |
-| `/aegis status`     | Check project progress and status      |
-| `/aegis task`       | Focus on specific tasks or workflows   |
-| `/aegis context`    | Refresh the current project context    |
-| `/aegis plan`       | Collaborate with AI for project planning |
+| Command | Description |
+|---------|-------------|
+| `/aegis init <path>` | Initialize Aegis in your project |
+| `/aegis start` | Start a new development session |
+| `/aegis save` | Save the current project state |
+| `/aegis status` | Check project progress and status |
+| `/aegis task` | Focus on specific tasks or workflows |
+| `/aegis context` | Refresh the current project context |
+| `/aegis plan` | Collaborate with AI for project planning |
 
 For a full list of commands and their descriptions, check the [Command Reference](./commands/aegis_start.md).
 

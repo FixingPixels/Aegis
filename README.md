@@ -89,7 +89,7 @@ That's it! Aegis will load your project’s context, process its memory, and pre
 Aegis is driven by simple text commands that you enter into your AI assistant. Here's a quick reference for the base commands:
 
 | Command             | Description                            |
-||-|
+|---------|-------------|
 | `/aegis init <path>` | Initialize Aegis in your project       |
 | `/aegis start`      | Start a new development session        |
 | `/aegis save`       | Save the current project state         |
