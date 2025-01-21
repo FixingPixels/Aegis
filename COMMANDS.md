@@ -6,10 +6,10 @@ When the USER types any of these commands, follow the corresponding instructions
 
 ### `/aegis init <path>`
 1. Determine the target directory:
-   - If `<path>` is **"."** (dot), initialize `.context/` in the **current directory**.
-   - If `<path>` is a **folder name**, create that folder in the root directory and initialize `.context/` inside it.
+   - If `<path>` is **"."** (dot), copy `.context/` to the **current directory**.
+   - If `<path>` is a **folder name**, create that folder in the root directory and copy `.context/` inside it.
 
-2. Create the `.context/` directory structure at the specified location:
+2. Copy the base `.context/` directory structure to the specified location:
    ```
    .context/
    ├── plan/
@@ -29,17 +29,15 @@ When the USER types any of these commands, follow the corresponding instructions
    ├── sessions/
    └── decisions/
    ```
-3. Process planning document:
-   - Move/copy to .context/plan/README.md
-   - Extract core concepts for current_state.md
-   - Create project roadmap
-   - Generate initial tasks
-4. Initialize files with memory types:
-   - current_state.md [semantic, working]
-   - roadmap.md [semantic]
-   - First task(s) [procedural]
-5. Show summary of generated structure
-6. Transition to `/aegis start` flow
+
+3. Initialize project state:
+   - Copy all template files from the base `.context/` directory
+   - Preserve file structure and permissions
+   - Maintain all memory type assignments
+   - Keep template examples for reference
+
+4. Show summary of copied structure
+5. Transition to `/aegis start` flow
 
 ### `/aegis start`
 1. Read AI_INSTRUCTIONS.md

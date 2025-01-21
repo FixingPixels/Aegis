@@ -13,17 +13,16 @@ Welcome to Aegis! This guide will help you get started with the zero-dependency 
 ### 1. Initialize Aegis in Your Project
 
 ```bash
-# Create the .context directory structure
+# Copy the .context directory structure to your project
 /aegis init .
 ```
 
-This command sets up the essential framework structure:
+This command copies the pre-configured framework structure:
 ```
 .context/
-├── AI_INSTRUCTIONS.md    # Framework instructions
-├── current_state.md     # Working Memory
-├── decisions/          # Semantic Memory
-├── plan/              # Project Planning
+├── plan/              # Project planning
+├── current_state.md   # Working Memory
+├── decisions/         # Semantic Memory
 ├── roadmap.md         # Project Direction
 ├── sessions/          # Episodic Memory
 └── tasks/             # Procedural Memory
@@ -32,6 +31,8 @@ This command sets up the essential framework structure:
     ├── hold/
     └── planned/
 ```
+
+All necessary files, templates, and examples are included to help you get started quickly.
 
 ### 2. Start Your First Session
 
