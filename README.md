@@ -4,6 +4,9 @@
 
 **Aegis** (pronounced **EE-jis** or **AY-jis**) is an advanced AI-assisted development framework designed to guide, protect, and orchestrate your projects with structured memory management and multi-agent planning. Aegis ensures your AI assistant stays informed and effective throughout the development lifecycle.
 
+> **Zero Dependencies** ⚡️  
+> Aegis is completely independent and requires no external dependencies or installations. All you need is your preferred AI assistant - the framework is ready to use immediately with any AI-powered development tool.
+
 Inspired by the way the human brain organizes knowledge, Aegis leverages:
 
 - Semantic Memory for long-term knowledge retention
