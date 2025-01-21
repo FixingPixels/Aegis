@@ -24,7 +24,7 @@ Aegis is a drop-in framework - simply copy the `.context` directory to your proj
 ### Step 2: Update global rules
 Aegis uses simple commands that your AI Code Assistant will follow. To make sure the assistant understands them, you'll need to update your editor or IDE's global rules. Instructions for 3 popular code assistants are provided below.
 
-## ![image](https://github.com/user-attachments/assets/09be2aa4-5459-4aeb-b69d-982d4d485c2c) Cursor
+## ![image](docs/icons/cursor.png) Cursor
 
 1. Copy the contents of [COMMANDS.md](COMMANDS.md) to Cursor's Rules for AI. Instructions can be found [here](https://docs.cursor.com/context/rules-for-ai).
 
@@ -37,7 +37,7 @@ Aegis uses simple commands that your AI Code Assistant will follow. To make sure
    ```
    /aegis start
    ```
-## ![image](https://github.com/user-attachments/assets/acdd77d5-5f1a-4092-a4a1-a7282dc66b27) Codeium 
+## ![image](docs/icons/codeium.png) Codeium 
 1. Copy the contents of [COMMANDS.md](COMMANDS.md) to Windsurf's Global AI Rules. Instructions can be found [here](https://docs.codeium.com/windsurf/memories#global-rules).
 
 2. Initialize the framework in your project by typing the following command in the chat window:
@@ -49,8 +49,20 @@ Aegis uses simple commands that your AI Code Assistant will follow. To make sure
    ```
    /aegis start
    ```
+## ![image](docs/icons/cline.png) Cline 
+1. Rename [COMMANDS.md](COMMANDS.md) to `.clinerules`
 
-## ![image](https://github.com/user-attachments/assets/2f9dc685-ae4e-4bc2-b2f2-ad9d2bf70e79) aider
+2. Initialize the framework in your project by typing the following command in the chat window:
+   ```
+   /aegis init .
+   ```
+
+3. Start your development session by typing the following command in the chat window:
+   ```
+   /aegis start
+   ```
+
+## ![image](docs/icons/aider.png) aider
 1. Create aegis_commands.md file in your project root
 
 2. Copy [COMMANDS.md](COMMANDS.md) to aegis_commands.md
