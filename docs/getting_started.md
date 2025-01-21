@@ -107,7 +107,7 @@ Here are the key commands you’ll use with Aegis:
 | `/aegis context` | Refresh the current project context |
 | `/aegis plan` | Collaborate with AI for project planning |
 
-For a full list of commands and their descriptions, check the [Command Reference](./commands/aegis_start.md).
+For a full list of commands and their descriptions, check the [Command Reference](./commands/).
 
 ## Memory System Overview
 

@@ -130,9 +130,9 @@ graph TD
 - Episodic: Planning history
 
 ### 2. Command Interface
-- `/aide plan`: Initiate planning
-- `/aide save`: Save state
-- `/aide status`: Check progress
+- `/aegis plan`: Initiate planning
+- `/aegis save`: Save state
+- `/aegis status`: Check progress
 
 ### 3. Documentation
 - Planning documents

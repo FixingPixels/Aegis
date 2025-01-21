@@ -38,7 +38,7 @@ That’s it! Aegis creates a clear structure for your project, helping you track
 
 - **[Step-by-Step Guide](./docs/getting_started.md)**: Walkthrough for beginners.  
 - **[Memory System Overview](./docs/memory_system.md)**: Learn how Aegis keeps track of everything.  
-- **[Quick Commands](./docs/commands.md)**: A simple reference for all Aegis commands.
+- **[Command Reference](./docs/commands.md)**: A simple reference for all Aegis commands.
 
 ## 🚀 Quick Start
 
@@ -172,8 +172,8 @@ We welcome your contributions to Aegis! You can help by:
 - Suggesting new features.  
 - Reporting bugs or issues.
 
-For more details, check out our [Contributing Guide](./CONTRIBUTING.md).
+Please see our [issues page](https://github.com/FixingPixels/Aegis/issues) for ways to contribute.
 
 ## 📝 License
 
-Aegis is open source and available under the [MIT License](./LICENSE). Feel free to use, modify, and share it to make your projects better!
+Aegis is open source and available under the MIT License. Feel free to use, modify, and share it to make your projects better!
