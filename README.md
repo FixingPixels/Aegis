@@ -98,7 +98,7 @@ Aegis is driven by simple text commands that you enter into your AI assistant. H
 | `/aegis context`    | Refresh the current project context    |
 | `/aegis plan`       | Collaborate with AI for project planning |
 
-For a complete list of commands and their uses, see our [Command Reference](./docs/commands.md).
+For a complete list of commands and their uses, see our [Command Reference](./docs/commands/aegis_start.md).
 
 ## 🎯 Core Features
 
