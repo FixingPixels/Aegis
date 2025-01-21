@@ -128,7 +128,7 @@ Aegis-specific commands are simply commands you enter in your assistant's chat w
 ## 📘 Documentation
 
 ### Core Documentation
-- [Getting Started Guide](./docs/GETTING_STARTED.md)
+- [Getting Started Guide](./docs/getting_started.md)
 - [Core Framework Files](./docs/core_files.md) - Learn about the essential files that power Aegis
 - [Memory System](./docs/memory_system.md) - Understand how Aegis organizes and manages project knowledge
 - [Cross-Referencing](./docs/cross_referencing.md) - See how Aegis maintains relationships between project components
