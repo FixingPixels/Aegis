@@ -5,7 +5,7 @@ Welcome to Aegis! This guide will help you get started with the zero-dependency 
 ## Prerequisites
 
 - An AI-powered code assistant (e.g., GitHub Copilot, Codeium, Amazon CodeWhisperer)
-- Git (for version control)
+- Git (optional - for version control)
 - That's it! Aegis has no other dependencies
 
 ## Quick Start
