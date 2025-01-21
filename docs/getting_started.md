@@ -1,166 +1,160 @@
-# Getting Started with Aegis
+ Getting Started with Aegis
 
 Welcome to Aegis! This guide will help you get started with the zero-dependency framework for AI-assisted development. Aegis is designed to work seamlessly with any AI code assistant while providing structured memory management and multi-agent planning capabilities.
 
 ## Prerequisites
 
-- An AI-powered code assistant (e.g., GitHub Copilot, Codeium, Amazon CodeWhisperer)
-- Git (optional - for version control)
-- That's it! Aegis has no other dependencies
+- **An AI-powered code assistant** (e.g., GitHub Copilot, Codeium, Cursor, Amazon CodeWhisperer)  
+- **Git** (optional - for version control)  
+- **That’s it!** Aegis has no other dependencies.
 
 ## Quick Start
 
-### 1. Initialize Aegis in Your Project
+### Step 1: Initialize Aegis in Your Project
+
+To begin, copy the `.context` directory structure to your project:
 
 ```bash
-# Copy the .context directory structure to your project
 /aegis init .
 ```
 
-This command copies the pre-configured framework structure:
+This command creates the following directory structure in your project:
+
 ```
 .context/
-├── plan/              # Project planning
-├── current_state.md   # Working Memory
-├── decisions/         # Semantic Memory
-├── roadmap.md         # Project Direction
-├── sessions/          # Episodic Memory
-└── tasks/             # Procedural Memory
+├── planning/            # Project planning
+├── current_state.md     # Working Memory
+├── decisions/           # Semantic Memory
+├── roadmap.md           # Project Direction
+├── sessions/            # Episodic Memory
+└── tasks/               # Procedural Memory
     ├── active/
     ├── completed/
     ├── hold/
     └── planned/
 ```
 
-All necessary files, templates, and examples are included to help you get started quickly.
+### Step 2: Set Up Global Rules for Your AI Assistant
 
-### 2. Start Your First Session
+Aegis uses text-based commands to guide your AI assistant. To ensure seamless integration, you’ll need to configure global rules for your specific AI tool. Here’s how:
+
+#### **Cursor**
+1. Copy the contents of [COMMANDS.md](COMMANDS.md) to Cursor’s **Rules for AI**.  
+   Instructions are available [here](https://docs.cursor.com/context/rules-for-ai).  
+2. Start Aegis with:  
+   ```bash
+   /aegis init .
+   /aegis start
+   ```
+
+#### **Codeium**
+1. Copy the contents of [COMMANDS.md](COMMANDS.md) to Windsurf’s **Global AI Rules**.  
+   Instructions are available [here](https://docs.codeium.com/windsurf/memories#global-rules).  
+2. Start Aegis with:  
+   ```bash
+   /aegis init .
+   /aegis start
+   ```
+
+#### **Cline**
+1. Rename [COMMANDS.md](COMMANDS.md) to `.clinerules`.  
+2. Start Aegis with:  
+   ```bash
+   /aegis init .
+   /aegis start
+   ```
+
+#### **Aider**
+1. Save the commands in `aegis_commands.md` in your project root.  
+2. Configure Aider to load the commands automatically by editing `.aider.conf.yml`:  
+   ```yaml
+   # alone
+   read: aegis_commands.md
+   ```
+3. Start Aegis with:  
+   ```bash
+   /aegis init .
+   /aegis start
+   ```
+
+> For other AI tools, simply copy the commands to your assistant’s rule configuration, ensuring it recognizes `/aegis` commands.
+
+### Step 3: Start Your First Session
+
+Once set up, you can start a new session:
 
 ```bash
 /aegis start
 ```
 
-This command:
-- Loads project context
-- Initializes memory systems
-- Prepares for development
-- Shows current project state
+This command:  
+- Loads your project’s context.  
+- Initializes the memory systems.  
+- Prepares for development.  
+- Displays the current project state.
 
-### 3. Basic Commands
+## Essential Commands
 
-Here are the essential commands you'll use:
+Here are the key commands you’ll use with Aegis:
 
-- `/aegis status` - Check current project state
-- `/aegis task` - Manage development tasks
-- `/aegis save` - Save project state
-- `/aegis context` - Quick context refresh
-- `/aegis plan` - Use AI planning system
+| Command             | Description                            |
+||-|
+| `/aegis init <path>` | Initialize Aegis in your project       |
+| `/aegis start`      | Start a new development session        |
+| `/aegis save`       | Save the current project state         |
+| `/aegis status`     | Check project progress and status      |
+| `/aegis task`       | Focus on specific tasks or workflows   |
+| `/aegis context`    | Refresh the current project context    |
+| `/aegis plan`       | Collaborate with AI for project planning |
+
+For a full list of commands and their descriptions, check the [Command Reference](./commands/aegis_start.md).
 
 ## Memory System Overview
 
-Aegis organizes project knowledge into four memory types:
+Aegis uses a structured memory system to keep your project organized:
 
-1. **Semantic Memory** (Long-term Knowledge)
-   - Architecture decisions
-   - Technical documentation
-   - System design patterns
-   - Implementation standards
+1. **Semantic Memory** (Long-term Knowledge)  
+   Stores architecture decisions, technical documentation, and implementation standards.  
 
-2. **Episodic Memory** (Project History)
-   - Development sessions
-   - Problem solutions
-   - Decision contexts
-   - Implementation history
+2. **Episodic Memory** (Project History)  
+   Tracks development sessions, decision contexts, and implementation history.  
 
-3. **Procedural Memory** (Task Management)
-   - Active tasks
-   - Implementation steps
-   - Testing procedures
-   - Deployment processes
+3. **Procedural Memory** (Task Management)  
+   Manages tasks, workflows, and implementation steps.  
 
-4. **Working Memory** (Current Focus)
-   - Active development
-   - Immediate goals
-   - Current challenges
-   - Recent changes
+4. **Working Memory** (Current Focus)  
+   Maintains immediate goals, current challenges, and recent changes.
 
 ## Best Practices
 
-### 1. Regular State Updates
-- Save progress frequently
-- Document decisions
-- Update task status
-- Maintain context
+1. **Set Up Rules for Your AI Assistant**  
+   Ensure your assistant recognizes `/aegis` commands for seamless interaction.
 
-### 2. Clear Communication
-- Use structured commands
-- Provide clear context
-- Document decisions
-- Track progress
+2. **Save Progress Frequently**  
+   Use `/aegis save` to avoid losing your work.
 
-### 3. Effective Organization
-- Keep files focused
-- Use cross-references
-- Maintain clean structure
-- Regular cleanup
+3. **Document Decisions**  
+   Update the `decisions/` folder regularly with architecture and design choices.
 
-## Next Steps
-
-1. **Explore Documentation**
-   - [Core Framework Files](./core_files.md)
-   - [Memory System Details](./memory_system.md)
-   - [Command Reference](./commands/aegis_start.md)
-
-2. **Review Examples**
-   - Check task templates
-   - Study decision records
-   - Examine session logs
-
-3. **Start Development**
-   - Create your first task
-   - Document decisions
-   - Track progress
-   - Save state regularly
+4. **Update Context**  
+   Refresh your working memory with `/aegis context`.
 
 ## Common Issues and Solutions
 
-### 1. Context Loading
-**Issue**: Framework can't find context  
-**Solution**: Verify `.context` directory structure
+### 1. Framework Can’t Find Context
+**Cause**: `.context` directory is missing or misconfigured.  
+**Solution**: Verify the `.context` directory structure.
 
-### 2. Memory Management
-**Issue**: Losing track of state  
-**Solution**: Use `/aegis status` regularly
+### 2. AI Assistant Doesn’t Recognize Commands
+**Cause**: Global rules not configured.  
+**Solution**: Check the instructions for your specific AI tool in [Step 2](#step-2-set-up-global-rules-for-your-ai-assistant).
 
-### 3. Task Tracking
-**Issue**: Unclear task progress  
-**Solution**: Regular updates with `/aegis task`
+### 3. Losing Track of Tasks
+**Cause**: Task updates not saved.  
+**Solution**: Use `/aegis save` after updates and `/aegis status` to review progress.
 
 ## Getting Help
 
-- Review the [Memory System](./memory_system.md) documentation
-- Check [Command Reference](./commands/) for detailed command usage
-- Study [Core Files](./core_files.md) for framework structure
-- Explore [Planning System](./planning/overview.md) for AI-guided planning
-
-## Tips for Success
-
-1. **Regular Updates**
-   - Save progress often
-   - Document decisions
-   - Track changes
-   - Maintain context
-
-2. **Clear Organization**
-   - Use templates
-   - Follow structure
-   - Cross-reference
-   - Clean regularly
-
-3. **Effective Communication**
-   - Clear commands
-   - Complete context
-   - Regular status
-   - Track progress
-
-Remember, Aegis is designed to be intuitive and lightweight. Start with basic commands and gradually explore more advanced features as you become comfortable with the framework.
+- Review the [Memory System](./memory_system.md) documentation.  
+- Check the [Command Reference](./commands/) for detailed command usage.  
+- Explore the [Planning System](./planning/overview.md) for AI-guided planning.
