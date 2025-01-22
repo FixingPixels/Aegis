@@ -6,7 +6,7 @@ Aegis (pronounced **EE-jis** or **AY-jis**) is a simple, flexible framework desi
 ### Why Choose Aegis?
 
 - **Zero Dependencies**: Aegis runs entirely on text files—no software downloads, plugins, or configurations required. You can start using it immediately with any AI-powered development tool.  
-- **Universal Compatibility**: Works seamlessly with popular tools like Codeium, Cursor, and Cline, or even standalone systems with your own API keys.  
+- **Universal Compatibility**: Works seamlessly with popular tools like Codeium, Cursor, and Cline, or even standalone systems with your own API keys.
 - **Lightweight and Portable**: All your project’s structure and data are stored in plain text files that you can share, back up, or edit anywhere.  
 - **Beginner-Friendly**: Start with just a few simple commands and let Aegis guide you through your project.  
 
@@ -26,13 +26,15 @@ Aegis (pronounced **EE-jis** or **AY-jis**) is a simple, flexible framework desi
 
 ### See Aegis in Action
 
-Here's how easy it is to get started:  
+Here's how easy it is to get started. Type the following into your AI assistant's chat window:
 ```bash
 /aegis init .
 /aegis plan
 /aegis start
 ```
-That’s it! Aegis creates a clear structure for your project, helping you track tasks, make decisions, and plan efficiently—all using your favorite AI tool.  
+That’s it! Aegis creates a clear structure for your project, helping you track tasks, make decisions, and plan efficiently—all using your favorite AI tool. The `/aegis init .` command (alternatively, `/aegis init new-project) will initialize the framework in your project. 
+
+The `/aegis plan` command will trigger the multi-agent planning assistant to help you generate a planning document, which is used by Aegis to get the project up and running. You can modify the planning document as you go, or drop your own planning_document.md file into your project and use `/aegis start` to start a new development session.
 
 ### Ready to Get Started?
 
@@ -73,11 +75,15 @@ For detailed instructions, see our [Getting Started Guide](./docs/getting_starte
 
 Once you've set up your environment, you're ready to start using Aegis! Open your AI assistant and run the following commands:
 
-1. **Initialize Aegis**:
+**Initialize Aegis in the root directory**:
    ```bash
    /aegis init .
-   ```
-2. **Start Your Development Session**:
+   ``` 
+**(Optional)** **Initialize Aegis in a subdirectory**:
+   ```bash
+   /aegis init new-project
+   ``` 
+**Start Your Development Session**:
    ```bash
    /aegis start
    ```
