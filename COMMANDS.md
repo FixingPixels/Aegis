@@ -12,6 +12,7 @@ When the USER types any of these commands, follow the corresponding instructions
 2. Copy the base `.context/` directory structure to the specified location:
    ```
    .context/
+   ├── AI_INSTRUCTIONS.md     # Framework instructions
    ├── plan/
    │   ├── README.md           # Planning overview
    │   ├── agents.mmd         # Agent system diagram
@@ -19,15 +20,18 @@ When the USER types any of these commands, follow the corresponding instructions
    │   ├── document_states.mmd # Document workflow
    │   ├── feedback.mmd       # Feedback system
    │   └── workflow.mmd       # Planning workflow
-   ├── current_state.md
-   ├── roadmap.md
+   ├── current_state.md       # Working memory
+   ├── roadmap.md            # Project direction
    ├── tasks/
-   │   ├── active/
-   │   ├── planned/
-   │   ├── hold/
-   │   └── completed/
+   │   ├── TEMPLATE.md       # Task template
+   │   ├── active/          # Current tasks
+   │   ├── planned/         # Future tasks
+   │   ├── hold/           # Blocked tasks
+   │   └── completed/      # Finished tasks
    ├── sessions/
+   │   └── TEMPLATE.md      # Session log template
    └── decisions/
+       └── TEMPLATE.md      # Decision record template
    ```
 
 3. Initialize project state:
