@@ -32,9 +32,9 @@ Here's how easy it is to get started. Type the following into your AI assistant'
 /aegis plan
 /aegis start
 ```
-That’s it! Aegis creates a clear structure for your project, helping you track tasks, make decisions, and plan efficiently—all using your favorite AI tool. The `/aegis init .` command (alternatively, `/aegis init new-project`) will initialize the framework in your project. 
+That's it! Aegis creates a clear structure for your project, helping you track tasks, make decisions, and plan efficiently—all using your favorite AI tool. The `/aegis init .` command (alternatively, `/aegis init new-project`) will initialize the framework in your project. 
 
-The `/aegis plan` command will help you create and refine your project's `planning_document.md`. This document outlines your project's goals, architecture, and implementation approach. You can modify the planning document as you go, or use your own existing planning document to start a new development session with `/aegis start`.
+The `/aegis plan` command focuses solely on helping you create and refine your project's `planning_document.md`. This document outlines your project's goals, architecture, and implementation approach. Once you're happy with your planning document, use `/aegis start` to begin a new development session - this is when tasks will be created and project state initialized based on your planning document.
 
 ### Ready to Get Started?
 

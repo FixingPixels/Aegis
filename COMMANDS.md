@@ -86,6 +86,13 @@ When the USER types any of these commands, follow the corresponding instructions
 3. No full reload, just working memory update
 
 ### `/aegis plan`
+> **IMPORTANT**: This command works ONLY with `planning_document.md` in the project root.
+> - DO NOT create or modify any other files
+> - DO NOT create tasks
+> - DO NOT update current_state.md
+> - DO NOT modify the .context directory
+> - ONLY focus on creating and improving the planning document
+
 1. Create or edit `planning_document.md` in the project root:
    - If no document exists, create it with project planning template
    - If document exists, review and offer improvements
@@ -108,7 +115,7 @@ When the USER types any of these commands, follow the corresponding instructions
    - Specific implementation steps
    - Defined success criteria
 
-> **Note**: The planning document will be used by `/aegis start` to initialize the project structure and create initial tasks.
+> **Note**: The planning document will be used LATER by `/aegis start` to initialize tasks and update project state. The planning command itself should not do this.
 
 ---
 
