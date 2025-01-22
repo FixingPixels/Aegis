@@ -86,30 +86,29 @@ When the USER types any of these commands, follow the corresponding instructions
 3. No full reload, just working memory update
 
 ### `/aegis plan`
-1. Read `.context/plan/README.md`
-2. Follow the AI Conductor workflow from `ai_conductor.json`
-3. Coordinate specialized agents for:
-   - Project scope and requirements
-   - Architecture and technical planning
-   - UI/UX design considerations
-   - Quality assurance strategy
-   - Infrastructure planning
-4. Guide the planning process through:
-   - User alignment and requirement gathering
-   - Team creation and role assignment
-   - Problem solving and architecture design
-   - Feedback incorporation and refinement
-   - Plan finalization and documentation
-5. Maintain planning artifacts in `.context/plan/`:
-   - Update README.md with current planning state
-   - Refine agent system diagrams (agents.mmd)
-   - Adjust workflow diagrams as needed
-   - Track document states and progress
-6. Support iterative improvement through:
-   - User feedback integration
-   - Agent review and recommendations
-   - Task refinement and updates
-   - Plan optimization
+1. Create or edit `planning_document.md` in the project root:
+   - If no document exists, create it with project planning template
+   - If document exists, review and offer improvements
+
+2. Guide the user through planning process:
+   - Project goals and requirements
+   - Technical architecture
+   - Implementation approach
+   - Timeline and milestones
+
+3. Update document based on user feedback:
+   - Incorporate user suggestions
+   - Refine existing sections
+   - Add missing details
+   - Clarify ambiguous points
+
+4. Keep planning_document.md focused and actionable:
+   - Clear project objectives
+   - Concrete technical decisions
+   - Specific implementation steps
+   - Defined success criteria
+
+> **Note**: The planning document will be used by `/aegis start` to initialize the project structure and create initial tasks.
 
 ---
 
