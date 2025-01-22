@@ -5,6 +5,12 @@ When the USER types any of these commands, follow the corresponding instructions
 ## Core Commands
 
 ### `/aegis init <path>`
+> **IMPORTANT**: 
+> - The directory name is ".context" (with a leading dot)
+> - ALWAYS use `cp -r` to copy the entire directory structure
+> - DO NOT use `mkdir` to create directories manually
+> - DO NOT create empty directories
+
 1. Determine the target directory:
    - If `<path>` is **"."** (dot), copy `.context/` to the **current directory**.
    - If `<path>` is a **folder name**, create that folder in the root directory and copy `.context/` inside it.
