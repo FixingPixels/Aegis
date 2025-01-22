@@ -14,6 +14,8 @@ Welcome to Aegis! This guide will help you get started with the zero-dependency 
 
 To begin, copy the `.context` directory structure to your project:
 
+> **Note**: The directory is named ".context" with a leading dot. Make sure to include the dot when copying or referencing the directory.
+
 ```bash
 /aegis init .
 ```

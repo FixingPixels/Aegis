@@ -9,6 +9,12 @@ When the USER types any of these commands, follow the corresponding instructions
    - If `<path>` is **"."** (dot), copy `.context/` to the **current directory**.
    - If `<path>` is a **folder name**, create that folder in the root directory and copy `.context/` inside it.
 
+   > **Important**: The directory name is ".context" (with a leading dot). The exact command to copy would be:
+   > ```bash
+   > cp -r /path/to/aegis/.context /target/directory/
+   > ```
+   > Make sure to include the dot when copying or referencing the directory.
+
 2. Copy the base `.context/` directory structure to the specified location:
    ```
    .context/
