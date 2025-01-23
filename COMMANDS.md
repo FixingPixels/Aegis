@@ -59,16 +59,20 @@ When the USER types any of these commands, follow the corresponding instructions
 1. Read AI_INSTRUCTIONS.md
 2. Follow Session Start Flow
 3. Load and process all context by memory type
-4. Present organized summary of:
+4. Create/update roadmap.md based on planning_document.md  # New step
+5. Present organized summary of:
    - Project knowledge (semantic)
    - Active tasks (procedural)
    - Current focus (working)
    - Recent history (episodic)
-5. Indicate readiness for requests
+6. Indicate readiness for requests
 
 ### `/aegis save`
 1. Follow Save Operation Flow from AI_INSTRUCTIONS.md
-2. Update all relevant files based on memory types
+2. Update all relevant files based on memory types:
+   - Update roadmap.md with progress and changes  # New explicit item
+   - Update current_state.md
+   - Update active tasks
 3. Create/update session log
 4. Update task progress
 5. Show summary of changes made
