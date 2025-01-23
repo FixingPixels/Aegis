@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Aegis Memory System Visualization</title>
+    <script type="text/javascript" src="visualization/vis-network.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="visualization/styles.css">
+</head>
+<body>
+    <div id="leftPanel">
+        <div id="nodeInfo">
+            <div class="info-title">Aegis Memory System</div>
+            <div class="info-section">
+                <div class="info-content">
+                    Select a node to view details about that component of the memory system.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="rightPanel">
+        <div class="legend">
+            <h3>Memory Types</h3>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #97C2FC"></div>
+                Semantic Memory
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #FB7E81"></div>
+                Procedural Memory
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #7BE141"></div>
+                Working Memory
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #FFA807"></div>
+                Episodic Memory
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #C2FABC"></div>
+                Template Files
+            </div>
+        </div>
+        <div id="mynetwork"></div>
+    </div>
+    <script type="text/javascript" src="visualization/memory_types.js"></script>
+    <script type="text/javascript" src="visualization/memory_graph.js"></script>
+</body>
+</html>

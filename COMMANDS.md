@@ -25,6 +25,12 @@ When the USER types any of these commands, follow the corresponding instructions
    ```
    .context/
    ├── AI_INSTRUCTIONS.md     # Framework instructions
+   ├── memory_visualization.html  # Base memory graph template
+   ├── visualization/         # Visualization assets
+   │   ├── memory_graph.js    # Core graph logic
+   │   ├── memory_types.js    # Memory definitions
+   │   ├── styles.css        # Graph styling
+   │   └── vis-network.min.js # Visualization library
    ├── plan/
    │   ├── README.md           # Planning overview
    │   ├── agents.mmd         # Agent system diagram
@@ -70,12 +76,20 @@ When the USER types any of these commands, follow the corresponding instructions
 ### `/aegis save`
 1. Follow Save Operation Flow from AI_INSTRUCTIONS.md
 2. Update all relevant files based on memory types:
-   - Update roadmap.md with progress and changes  # New explicit item
+   - Update roadmap.md with progress and changes
    - Update current_state.md
    - Update active tasks
 3. Create/update session log
 4. Update task progress
-5. Show summary of changes made
+5. Generate memory visualization:
+   - Create/update memory_visualization.html
+   - Map relationships between files and memory types
+   - Show connections between different memory types
+   - Include interactive node descriptions
+   - Use vis.js for graph visualization
+6. Show summary of changes made
+
+> **Note**: The memory visualization provides an interactive graph showing how different parts of your project relate to each other and how information flows through the memory system. View it in any web browser.
 
 ### `/aegis status`
 1. Show current working memory:
