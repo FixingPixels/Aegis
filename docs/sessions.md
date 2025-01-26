@@ -8,23 +8,29 @@ The Aegis framework uses development sessions to maintain episodic memory of pro
 graph TD
     A[Development Session] --> B[Metadata]
     A --> C[Content]
+    A --> D[Agent Records]
     
     B --> B1[Date]
     B --> B2[Memory Types]
     B --> B3[References]
     B --> B4[Priority]
+    B --> B5[Agent Roles]
     
     C --> C1[Context]
     C --> C2[Progress]
     C --> C3[Next Steps]
     C --> C4[AI Notes]
     
-    C2 --> D1[Changes Made]
-    C2 --> D2[Insights Gained]
+    D --> D1[Contributions]
+    D --> D2[State Changes]
+    D --> D3[Memory Access]
     
-    D1 --> E1[Code Changes]
-    D1 --> E2[Documentation]
-    D1 --> E3[Decisions]
+    C2 --> E1[Changes Made]
+    C2 --> E2[Insights Gained]
+    
+    E1 --> F1[Code Changes]
+    F1 --> F2[Documentation]
+    F2 --> F3[Decisions]
 ```
 
 ## Session Structure
@@ -35,6 +41,11 @@ graph TD
 memory_types: [episodic, working]
 references: []
 priority: medium
+agent_roles: [AGENT-PM, AGENT-TL]
+agent_states:
+  AGENT-PM: active
+  AGENT-TL: active
+memory_access: [semantic, working]
 ---
 ```
 
@@ -42,6 +53,9 @@ priority: medium
 - **memory_types**: How this session should be processed (typically episodic and working)
 - **references**: Links to related sessions, tasks, or decisions
 - **priority**: Importance level for context retention
+- **agent_roles**: Active agents in this session
+- **agent_states**: Current state of each agent
+- **memory_access**: Memory types accessible in this session
 
 ### Content Sections
 
@@ -50,28 +64,61 @@ priority: medium
    - Related tasks
    - Current focus
    - Active context
+   - Active agents
+   - Agent states
+   - Memory context
 
 2. **Progress**
    - Changes Made:
      - Code changes
      - Documentation updates
      - Decisions made
+     - Agent contributions
+     - Role-specific updates
    - Insights Gained:
      - Technical insights
      - Pattern discoveries
      - Potential issues
+     - Agent learnings
+     - Role effectiveness
 
 3. **Next Steps**
    - Immediate tasks
    - Open questions
    - Follow-up items
    - Planned work
+   - Agent assignments
+   - Role transitions
+   - Memory requirements
 
 4. **Notes for AI**
    - Key context
    - Important patterns
    - Special considerations
    - Implementation guidance
+   - Agent guidance
+   - Role boundaries
+   - Memory access
+
+### Agent Records
+
+1. **Contributions**
+   - Role-specific work
+   - Key decisions
+   - Implementation details
+   - Documentation updates
+
+2. **State Changes**
+   - Role transitions
+   - Task assignments
+   - Context updates
+   - Memory access
+
+3. **Memory Access**
+   - Read operations
+   - Write operations
+   - Context updates
+   - Reference tracking
 
 ## Memory Integration
 
@@ -87,6 +134,12 @@ priority: medium
 - Immediate tasks
 - Recent changes
 
+### Agent Memory
+- Role-based access
+- State persistence
+- Context sharing
+- Interaction history
+
 ## Session Management
 
 ### 1. Session Creation
@@ -94,18 +147,27 @@ priority: medium
 - Links to previous session
 - Sets initial context
 - Establishes focus
+- Agent initialization
+- Role assignment
+- Access configuration
 
 ### 2. Session Updates
 - Updated during development
 - Records progress
 - Captures decisions
 - Maintains context
+- Agent state tracking
+- Role progression
+- Access management
 
 ### 3. Session Completion
 - Finalized by `/aide save`
 - Summarizes changes
 - Sets next steps
 - Archives context
+- Agent state cleanup
+- Role documentation
+- Access cleanup
 
 ## Best Practices
 
@@ -127,6 +189,12 @@ priority: medium
 - Note challenges
 - Plan next steps
 
+### 4. Agent Coordination
+- Track contributions
+- Manage states
+- Control access
+- Document interactions
+
 ## Example Session
 
 ```markdown
@@ -136,14 +204,33 @@ priority: medium
 memory_types: [episodic, working]
 references: [DEC-001, SESSION-20250119]
 priority: medium
+agent_roles: [AGENT-PM, AGENT-TL]
+agent_states:
+  AGENT-PM: active
+  AGENT-TL: active
+memory_access: [semantic, working]
 ---
 
 ## Context
 - Previous session: SESSION-20250119
 - Related tasks: [TASK-001, TASK-002]
 - Current focus: Implementing memory system documentation
+- Active agents: AGENT-PM (Requirements), AGENT-TL (Implementation)
 
 ## Progress
+### Agent Contributions
+#### Product Manager [AGENT-PM]
+- Defined documentation requirements
+- Reviewed structure and format
+- Provided user perspective
+- Planned next iterations
+
+#### Tech Lead [AGENT-TL]
+- Implemented documentation system
+- Created templates
+- Set up memory integration
+- Added context tracking
+
 ### Changes Made
 - Code changes:
   - Documentation system
@@ -162,21 +249,26 @@ priority: medium
 - Session structure improves AI context
 - Memory typing enhances retrieval
 - Context links aid continuity
+- Role-specific insights:
+  - PM: Documentation structure improves usability
+  - TL: Memory typing enhances implementation
 
 ## Next Steps
 - Immediate tasks: 
-  - [ ] Complete memory docs
-  - [ ] Add more examples
-  - [ ] Review templates
-- Open questions:
-  - Optimal session linking
-  - Context preservation
-  - Memory optimization
+  - [ ] Complete memory docs (AGENT-TL)
+  - [ ] Review documentation (AGENT-PM)
+  - [ ] Finalize templates (AGENT-TL)
+- Agent assignments:
+  - PM: Documentation review and feedback
+  - TL: Implementation and templates
 
 ## Notes for AI
 - Maintain session links
 - Track decision impacts
 - Focus on continuity
+- Coordinate agent handoffs
+- Maintain role boundaries
+- Track memory access
 ```
 
 ## Integration with Commands
@@ -204,6 +296,12 @@ priority: medium
    - Shows active work
    - Maintains continuity
    - Tracks progress
+
+5. **`/aide plan`**
+   - Coordinates agents
+   - Assigns roles
+   - Sets access
+   - Manages workflow
 
 ## Tips for Effective Use
 

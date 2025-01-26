@@ -1,7 +1,8 @@
-# [Task Name]
+# [Task Title]
 
 ---
 id: TASK-XXX
+title: [Task Title]
 created: ${timestamp}
 updated: ${timestamp}
 memory_types: [procedural, working]
@@ -21,13 +22,16 @@ references: []
   - Technical approach
   - Validation criteria
 
-## Progress
-- Started: [date]
-- Current status: [details]
-- Blockers: [if any]
-- Sessions: [session-ids]
+## Dependencies
+- List any blocking dependencies
+- Required resources or access
 
-## Notes for AI
-- Key considerations
-- Related patterns
-- Implementation guidance
+## Validation
+- [ ] Test cases defined
+- [ ] Implementation verified
+- [ ] Documentation updated
+
+## Notes
+- Additional context
+- Implementation decisions
+- Lessons learned

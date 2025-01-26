@@ -47,11 +47,15 @@ graph TD
   - Design patterns
   - System constraints
   - Implementation choices
+  - Agent knowledge base
+  - Conductor configurations
 - **When Used**: 
   - Making architectural decisions
   - Technical planning
   - System design
   - Implementation guidance
+  - Agent role definition
+  - Conductor orchestration
 
 ### 2. Episodic Memory (Project History)
 - **Purpose**: Record of project events, decisions, and their contexts
@@ -62,11 +66,15 @@ graph TD
   - Decision contexts
   - Implementation history
   - Debugging sessions
+  - Agent interactions
+  - Feedback cycles
 - **When Used**:
   - Learning from past decisions
   - Understanding problem contexts
   - Tracking project evolution
   - Debugging similar issues
+  - Improving agent performance
+  - Refining workflows
 
 ### 3. Procedural Memory (Task Management)
 - **Purpose**: Managing active development and processes
@@ -77,11 +85,15 @@ graph TD
   - Testing procedures
   - Deployment processes
   - Maintenance routines
+  - Agent workflows
+  - Validation rules
 - **When Used**:
   - Task execution
   - Process following
   - Implementation guidance
   - Testing procedures
+  - Agent task assignment
+  - Workflow orchestration
 
 ### 4. Working Memory (Current Focus)
 - **Purpose**: Maintaining immediate context and focus
@@ -92,38 +104,98 @@ graph TD
   - Current challenges
   - Recent changes
   - Open questions
+  - Active agent states
+  - Current feedback
 - **When Used**:
   - Current development
   - Active problem-solving
   - Immediate decisions
   - Context switching
+  - Agent coordination
+  - State management
 
 ## Directory Structure
 
 ```
 .context/
-├── AI_INSTRUCTIONS.md    # Framework instructions
-├── current_state.md     # Working Memory
-├── decisions/          # Semantic Memory (Architecture & Technical Decisions)
-├── plan/              # Project Planning
-├── roadmap.md         # Project Direction
-├── sessions/          # Episodic Memory
-└── tasks/             # Procedural Memory
+├── AI_INSTRUCTIONS.md     # Framework instructions
+├── current_state.md      # Working Memory
+├── decisions/           # Semantic Memory
+├── plan/               # Project Planning
+│   ├── README.md       # Planning overview
+│   ├── ai_conductor.json # Conductor config
+│   ├── agents.mmd      # Agent definitions
+│   ├── workflow.mmd    # Process flow
+│   ├── feedback.mmd    # Refinement system
+│   └── document_states.mmd # State machine
+├── roadmap.md          # Project Direction
+├── sessions/           # Episodic Memory
+└── tasks/              # Procedural Memory
     ├── active/
-    └── completed/
+    ├── completed/
     ├── hold/
     └── planned/
+```
+
+## Memory Integration with AI Conductor
+
+### Agent Memory Management
+```mermaid
+graph TD
+    AC[AI Conductor] -->|Manages| SM[Semantic Memory]
+    AC -->|Records| EM[Episodic Memory]
+    AC -->|Coordinates| PM[Procedural Memory]
+    AC -->|Updates| WM[Working Memory]
+
+    SM -->|Knowledge Base| Agents
+    EM -->|Learning| Agents
+    PM -->|Tasks| Agents
+    WM -->|State| Agents
+
+    Agents -->|Updates| WM
+    Agents -->|Decisions| SM
+    Agents -->|History| EM
+    Agents -->|Progress| PM
+```
+
+### Memory Flow with Agents
+```mermaid
+sequenceDiagram
+    participant AC as AI Conductor
+    participant WM as Working Memory
+    participant SM as Semantic Memory
+    participant EM as Episodic Memory
+    participant PM as Procedural Memory
+    participant AG as Agents
+
+    Note over AC,AG: Session Start
+    AC->>AG: Assign Roles
+    SM->>AG: Load Knowledge
+    EM->>AG: Load Context
+    PM->>AG: Assign Tasks
+
+    Note over AC,AG: During Development
+    AG->>WM: Update State
+    AG->>PM: Report Progress
+    AG->>EM: Record Actions
+    AG->>SM: Store Decisions
+
+    Note over AC,AG: Session End
+    AC->>EM: Save History
+    AC->>PM: Update Tasks
+    AC->>SM: Update Knowledge
+    AC->>WM: Clear State
 ```
 
 ## Memory Interaction
 
 ### Command Integration
 Different commands interact with specific memory types:
-- `/aide start`: Loads and processes all memory types
-- `/aide save`: Updates all relevant memory types
-- `/aide status`: Focuses on working memory
-- `/aide task`: Focuses on procedural memory
-- `/aide context`: Quick working memory refresh
+- `/aegis start`: Loads and processes all memory types
+- `/aegis save`: Updates all relevant memory types
+- `/aegis status`: Focuses on working memory
+- `/aegis task`: Focuses on procedural memory
+- `/aegis context`: Quick working memory refresh
 
 ### Memory Flow
 ```mermaid
@@ -196,7 +268,7 @@ graph TB
 
 ### 1. Context Loss
 - **Problem**: Losing track of current context
-- **Solution**: Use `/aide context` for quick refresh
+- **Solution**: Use `/aegis context` for quick refresh
 
 ### 2. Information Overload
 - **Problem**: Too much information to process
@@ -204,7 +276,7 @@ graph TB
 
 ### 3. State Inconsistency
 - **Problem**: Memory types out of sync
-- **Solution**: Regular use of `/aide save`
+- **Solution**: Regular use of `/aegis save`
 
 ## Tips for Effective Use
 
@@ -246,3 +318,125 @@ The framework provides templates for:
 - Archive old sessions
 - Update references
 - Maintain relationships
+
+### 4. Agent Memory Integration
+- **Role-based Access**:
+  - Each agent type has specific memory access patterns
+  - Memory permissions based on agent role
+  - State persistence per agent
+
+- **State Management**:
+  - Agent state tracking in working memory
+  - Knowledge sharing between agents
+  - Context preservation across sessions
+
+- **Memory Optimization**:
+  - Agent-specific caching
+  - Selective memory loading
+  - State cleanup on role change
+
+### 5. Memory Performance
+- **Caching Strategies**
+  ```yaml
+  cache_config:
+    semantic:
+      ttl: 24h
+      max_size: 100MB
+      priority: high
+    episodic:
+      ttl: 12h
+      max_size: 50MB
+      priority: medium
+    procedural:
+      ttl: 6h
+      max_size: 25MB
+      priority: high
+    working:
+      ttl: 1h
+      max_size: 10MB
+      priority: critical
+  ```
+
+- **Access Patterns**
+  ```yaml
+  access_patterns:
+    semantic:
+      read_ratio: 0.8
+      write_ratio: 0.2
+      batch_size: 100
+    episodic:
+      read_ratio: 0.6
+      write_ratio: 0.4
+      batch_size: 50
+    procedural:
+      read_ratio: 0.7
+      write_ratio: 0.3
+      batch_size: 25
+    working:
+      read_ratio: 0.9
+      write_ratio: 0.1
+      batch_size: 10
+  ```
+
+- **Cleanup Rules**
+  ```yaml
+  cleanup_rules:
+    semantic:
+      archive_after: 90d
+      delete_after: never
+      compress_after: 30d
+    episodic:
+      archive_after: 30d
+      delete_after: 365d
+      compress_after: 7d
+    procedural:
+      archive_after: 14d
+      delete_after: 90d
+      compress_after: 3d
+    working:
+      archive_after: 1d
+      delete_after: 7d
+      compress_after: 6h
+  ```
+
+### 6. Memory Monitoring
+- **Metrics**
+  - Access patterns
+  - Cache hit rates
+  - Memory usage
+  - Agent interactions
+  - State transitions
+
+- **Alerts**
+  - Memory pressure
+  - Cache invalidation
+  - Access violations
+  - State conflicts
+  - Reference errors
+
+- **Optimization**
+  - Automatic cleanup
+  - Cache warming
+  - Access pattern tuning
+  - State compaction
+  - Reference pruning
+
+## Tips for Success
+
+1. **Regular Updates**
+   - Save after significant changes
+   - Document decisions immediately
+   - Update task status regularly
+   - Maintain clear contexts
+
+2. **Organized Structure**
+   - Follow directory structure
+   - Use templates
+   - Maintain hierarchies
+   - Clean up regularly
+
+3. **Effective Retrieval**
+   - Use specific commands
+   - Reference relevant contexts
+   - Build on existing knowledge
+   - Maintain clear links

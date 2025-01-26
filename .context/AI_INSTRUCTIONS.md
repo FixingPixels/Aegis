@@ -125,32 +125,60 @@ Progress:  # [working]
   - Dependencies
 ```
 
-## 4. Save Operation Flow
-```mermaid
-graph TD
-    A[Save Request] --> B[Check Memory Types]
-    B --> C{Update Files}
-    C --> D[current_state.md]
-    C --> E[sessions/*.md]
-    C --> F[tasks/*.md]
-    D --> G[Verify References]
-    E --> G
-    F --> G
+## 4. Memory File Requirements
+
+All memory files MUST include the following frontmatter:
+
+```yaml
+---
+# Required Fields
+title: Descriptive title of the memory item
+memory_types: [type1, type2]  # Must match file location
+references: []                # List of related memory files
+
+# Optional Fields (recommended)
+priority: [high | medium | low]
 ```
 
-### Save Checklist
-1. For each modified file:
-   - Check memory types
-   - Apply relevant updates
-   - Update timestamps
-   - Verify references
+Additional fields by type:
 
-2. Cross-reference updates:
-   - Link related changes
-   - Update task references
-   - Connect decisions
+1. **Tasks**:
+   ```yaml
+   id: TASK-XXX
+   created: timestamp
+   updated: timestamp
+   status: [planned | active | completed | blocked]
+   ```
 
-3. Verify consistency:
-   - All referenced files exist
-   - All statuses accurate
-   - All links valid
+2. **Decisions**:
+   ```yaml
+   id: DEC-XXX
+   created: timestamp
+   updated: timestamp
+   status: [proposed | accepted | deprecated | superseded]
+   ```
+
+3. **Sessions**:
+   ```yaml
+   # No additional required fields
+   # Title should follow format: "Session Summary YYYY-MM-DD"
+   ```
+
+## 5. Save Operation Flow
+
+When executing `/aegis save`, follow these steps:
+
+1. Create session log:
+   - Record progress and decisions
+   - Update task statuses
+   - Note any blockers or dependencies
+
+2. Update task progress:
+   - Move completed tasks
+   - Update task statuses
+   - Record dependencies
+
+3. Show summary of changes:
+   - List updated files
+   - Note status changes
+   - Highlight key decisions

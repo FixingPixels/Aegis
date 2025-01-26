@@ -5,17 +5,17 @@ Aegis (pronounced **EE-jis** or **AY-jis**) is a simple, flexible framework desi
 
 ### Why Choose Aegis?
 
-- **Zero Dependencies**: Aegis runs entirely on text files—no software downloads, plugins, or configurations required. You can start using it immediately with any AI-powered development tool.  
+- **Zero Dependencies**: Aegis runs entirely on text files—no software downloads, plugins, or configurations required. You can start using it immediately with any AI-powered development tool.
 - **Universal Compatibility**: Works seamlessly with popular tools like Codeium, Cursor, and Cline, or even standalone systems with your own API keys.
-- **Lightweight and Portable**: All your project’s structure and data are stored in plain text files that you can share, back up, or edit anywhere.  
-- **Beginner-Friendly**: Start with just a few simple commands and let Aegis guide you through your project.  
+- **Lightweight and Portable**: All your project's structure and data are stored in plain text files that you can share, back up, or edit anywhere.
+- **Beginner-Friendly**: Start with just a few simple commands and let Aegis guide you through your project.
 
 ### What Can Aegis Do For You?
 
 - **Stay Organized**: Track tasks, progress, and decisions effortlessly.  
 - **Work Smart**: Collaborate with AI agents to brainstorm ideas, build plans, and solve problems.  
 - **Plan Your Way**: Design your projects step-by-step with easy-to-follow workflows.  
-- **Save Time**: Let the framework remember your past work so you can focus on what’s next.  
+- **Save Time**: Let the framework remember your past work so you can focus on what's next.  
 
 ### Who Is Aegis For?
 
@@ -64,9 +64,9 @@ Now your project is ready to work with Aegis!
 
 To make sure your AI assistant understands how to interact with Aegis, update its global rules. This only needs to be done once, and we provide simple instructions for popular AI tools:
 
-- **Cursor**: Copy the contents of [COMMANDS.md](COMMANDS.md) to Cursor's Rules for AI.  
+- **Cursor**: Copy the contents of [COMMANDS.md](COMMANDS.md) to Cursor's Rules for AI.
 - **Codeium**: Copy the commands to Windsurf's Global AI Rules.  
-- **Cline**: Rename [COMMANDS.md](COMMANDS.md) to `.clinerules`.  
+- ~~**Cline**: Rename [COMMANDS.md](COMMANDS.md) to `.clinerules`.~~ *(Currently incompatible - Cline cannot access hidden directories like `.context`)*
 - **Aider**: Save the commands in `aegis_commands.md` and configure Aider to load them automatically.  
 
 For detailed instructions, see our [Getting Started Guide](./docs/getting_started.md).
@@ -88,7 +88,7 @@ Once you've set up your environment, you're ready to start using Aegis! Open you
    /aegis start
    ```
 
-That's it! Aegis will load your project’s context, process its memory, and prepare everything for you to dive into development.
+That's it! Aegis will load your project's context, process its memory, and prepare everything for you to dive into development.
 
 ## 🛠️ Commands Overview
 
@@ -123,7 +123,7 @@ This memory system ensures that your AI assistant stays informed and effective t
 
 At the heart of Aegis is the **AI Conductor**, which coordinates specialized agents to help you:
 
-- Plan your project’s architecture.
+- Plan your project's architecture.
 - Collaborate on problem-solving with expert agents.
 - Assess risks and refine strategies iteratively based on your feedback.
 
@@ -151,7 +151,7 @@ This structure keeps everything clear, accessible, and easy to maintain.
 
 ## 🌟 Best Practices
 
-Here’s how to make the most of Aegis:
+Here's how to make the most of Aegis:
 
 ### Memory Management
 - Keep files focused and concise.  

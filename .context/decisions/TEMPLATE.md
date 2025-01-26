@@ -1,7 +1,8 @@
-# [Title of Decision]
+# [Decision Title]
 
 ---
 id: DEC-XXX
+title: [Decision Title]
 created: ${timestamp}
 updated: ${timestamp}
 memory_types: [semantic, episodic]
@@ -20,18 +21,18 @@ references: []
 - Key factors considered
 - Alternatives evaluated
 - Trade-offs made
+- Dependencies affected
 
-## Impact
-- Benefits gained
-- Challenges introduced
-- Areas affected
+## Consequences
+- Positive outcomes expected
+- Potential risks
+- Required changes
+- Impact on existing components
 
-## Validation
-- Success criteria
-- Metrics to track
-- Review timeline
+## Implementation Notes
+- Technical considerations
+- Migration steps if needed
+- Validation requirements
 
-## Notes for AI
-- Pattern implications
-- Implementation guidance
-- Future considerations
+## Status History
+- [Date] - [Status Change] - [Reason]

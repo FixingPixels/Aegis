@@ -1,6 +1,5 @@
-# Session Summary {{DATE}}
-
 ---
+title: Session Summary {{DATE}}
 memory_types: [episodic, working]
 references: []
 priority: medium
