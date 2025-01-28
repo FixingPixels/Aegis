@@ -153,6 +153,8 @@ Aegis uses a cognitive-inspired memory system:
 Here are the key commands with examples:
 
 ### 1. Project Planning
+The `/aegis plan` command can be used with various types of context to guide the planning process. See the [planning command details](/planning/README.md) for examples.
+
 ```bash
 # Create or update planning document
 /aegis plan
