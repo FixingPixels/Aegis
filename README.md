@@ -3,6 +3,8 @@
 **Welcome to Aegis!**  
 Aegis (pronounced **EE-jis** or **AY-jis**) is a simple, flexible framework designed to make your AI-powered projects smarter and more organized. Whether you're a developer or just starting out, Aegis helps you manage tasks, track progress, and plan efficiently—all using only text files. No special tools, no installations—just you, your ideas, and your favorite AI assistant.
 
+> **Important**: All `/aegis` commands are meant to be typed in your AI assistant's chat window, not in the terminal. These commands help guide your AI assistant through project management tasks.
+
 ### Why Choose Aegis?
 
 - **Zero Dependencies**: Aegis runs entirely on text files—no software downloads, plugins, or configurations required. You can start using it immediately with any AI-powered development tool.
@@ -26,7 +28,7 @@ Aegis (pronounced **EE-jis** or **AY-jis**) is a simple, flexible framework desi
 
 ### See Aegis in Action
 
-Here's how easy it is to get started. Type the following into your AI assistant's chat window:
+Here's how easy it is to get started. Type the following commands into your AI assistant's chat window (not your terminal):
 ```bash
 /aegis init .
 /aegis plan
@@ -92,7 +94,7 @@ That's it! Aegis will load your project's context, process its memory, and prepa
 
 ## 🛠️ Commands Overview
 
-Aegis uses simple yet powerful commands that you enter into your AI assistant. Here's a comprehensive guide to each command:
+Aegis uses simple yet powerful commands that you enter into your AI assistant's chat window (not your terminal). These commands help your AI assistant manage your project effectively. Here's a comprehensive guide to each command:
 
 ### `/aegis init <path>`
 Initializes the Aegis framework by copying the `.context` directory structure:

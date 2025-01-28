@@ -1,9 +1,12 @@
 # `/aegis status` Command
 
-The `status` command provides a quick overview of your project's current state. It's a read-only operation that shows active tasks, recent changes, and current focus areas without modifying any files.
+The `status` command shows the current working memory, including active tasks and recent changes.
+
+> **Important**: This command should be typed in your AI assistant's chat window, not in your terminal. The command helps guide your AI assistant in providing project status.
 
 ## Usage
 
+Type in your AI assistant's chat window:
 ```bash
 /aegis status
 ```

@@ -2,8 +2,11 @@
 
 The `task` command focuses on procedural memory, providing detailed information about active tasks, their implementation progress, and any blockers or dependencies. It helps manage and track the actual development work being done.
 
+> **Important**: This command should be typed in your AI assistant's chat window, not in your terminal. The command helps guide your AI assistant in managing tasks.
+
 ## Usage
 
+Type in your AI assistant's chat window:
 ```bash
 /aegis task
 ```

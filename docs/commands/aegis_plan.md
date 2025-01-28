@@ -1,18 +1,23 @@
 # `/aegis plan` Command
 
-The `plan` command helps create and improve the project's planning document. It focuses solely on working with `planning_document.md` in the project root, providing guidance and structure for effective project planning.
+The `plan` command helps create and refine your project's planning document, focusing solely on `planning_document.md`.
 
-> **IMPORTANT**: This command works ONLY with `planning_document.md` in the project root.
-> - DO NOT create or modify any other files
-> - DO NOT create tasks
-> - DO NOT update current_state.md
-> - DO NOT modify the .context directory
-> - ONLY focus on creating and improving the planning document
+> **Important**: This command should be typed in your AI assistant's chat window, not in your terminal. The command helps guide your AI assistant in project planning.
 
 ## Usage
 
-```bash
+Type in your AI assistant's chat window:
+```
 /aegis plan
+```
+
+Or with specific requirements:
+```
+/aegis plan
+Requirements:
+- Mobile and desktop support
+- Offline capabilities
+- User authentication
 ```
 
 ## Workflow

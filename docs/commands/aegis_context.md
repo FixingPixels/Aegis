@@ -1,9 +1,12 @@
 # `/aegis context` Command
 
-The `context` command provides a quick refresh of the current working context without performing a full memory reload. It focuses on the most relevant information for the current work, helping maintain focus and productivity during development sessions.
+The `context` command performs a quick refresh of the current context, showing relevant information for current work.
+
+> **Important**: This command should be typed in your AI assistant's chat window, not in your terminal. The command helps guide your AI assistant in understanding context.
 
 ## Usage
 
+Type in your AI assistant's chat window:
 ```bash
 /aegis context
 ```

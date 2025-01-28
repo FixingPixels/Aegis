@@ -1,9 +1,12 @@
 # `/aegis save` Command
 
-The `save` command preserves the current development state and updates all relevant memory types in the Aegis framework. It ensures that project knowledge, progress, and context are properly recorded and organized.
+The `save` command preserves the current development session progress, creating a session log and updating task status.
+
+> **Important**: This command should be typed in your AI assistant's chat window, not in your terminal. The command helps guide your AI assistant in recording your progress.
 
 ## Usage
 
+Type in your AI assistant's chat window:
 ```bash
 /aegis save
 ```

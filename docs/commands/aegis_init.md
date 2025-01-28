@@ -2,8 +2,11 @@
 
 The `init` command initializes the Aegis framework in your project. It sets up the necessary directory structure and files to enable AI-assisted development with structured memory management.
 
+> **Important**: This command should be typed in your AI assistant's chat window, not in your terminal. The command helps guide your AI assistant in setting up your project structure.
+
 ## Usage
 
+Type in your AI assistant's chat window:
 ```bash
 /aegis init <path>
 ```
@@ -82,18 +85,20 @@ The command creates the following structure:
 ## Examples
 
 1. **Initialize in Current Directory**
+   Type in AI chat:
    ```bash
    /aegis init .
    ```
 
 2. **Create New Project**
-   ```bash
+   Type in AI chat:
+   ```
    /aegis init my-project
    ```
 
 ## Next Steps
 
-After initialization:
+After initialization, type in your AI assistant's chat:
 ```bash
 /aegis start     # Begin development
 ```

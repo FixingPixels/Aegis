@@ -10,18 +10,21 @@ Welcome to Aegis! This guide will help you get started with the zero-dependency 
 
 ## Command Rules
 
-Aegis uses text-based commands that start with `/aegis`. Here are the core rules:
+Aegis uses text-based commands that start with `/aegis`. These commands are meant to be typed in your AI assistant's chat window, not in your terminal. They help guide your AI assistant in managing your project.
 
-1. **Case-insensitive**: Commands work regardless of case
-2. **Must start with `/aegis`**: All commands begin with this prefix
-3. **Can be used anytime**: Commands work at any point during a session
-4. **Maintains context**: Context is preserved between commands
+Here are the core rules:
+
+1. **Commands are for AI chat**: Always type commands in your AI assistant's chat window
+2. **Case-insensitive**: Commands work regardless of case
+3. **Must start with `/aegis`**: All commands begin with this prefix
+4. **Can be used anytime**: Commands work at any point during a session
+5. **Maintains context**: Context is preserved between commands
 
 ## Quick Start
 
 ### Step 1: Initialize Aegis in Your Project
 
-You can initialize Aegis in two ways:
+You can initialize Aegis by typing one of these commands in your AI assistant's chat window:
 
 1. In the current directory:
 ```bash
@@ -94,7 +97,7 @@ Configure your AI assistant to recognize Aegis commands:
 
 ### Step 3: Start Your First Session
 
-Begin a new development session:
+Begin a new development session by typing in your AI assistant's chat window:
 
 ```bash
 /aegis start
@@ -150,11 +153,9 @@ Aegis uses a cognitive-inspired memory system:
 
 ## Essential Commands
 
-Here are the key commands with examples:
+Here are the key commands to type in your AI assistant's chat window:
 
 ### 1. Project Planning
-The `/aegis plan` command can be used with various types of context to guide the planning process. See the [planning command details](/docs/planning/README.md) for examples.
-
 ```bash
 # Create or update planning document
 /aegis plan

@@ -1,6 +1,8 @@
 # `/aegis start` Command
 
-The `start` command begins a new development session with the Aegis framework. It loads and processes all context from the project's memory system, providing a comprehensive overview of the project state and preparing for development tasks.
+The `start` command begins a new development session, loading project context and preparing for development work.
+
+> **Important**: This command should be typed in your AI assistant's chat window, not in your terminal. The command helps guide your AI assistant in managing your development session.
 
 > **Related Documentation**
 > - [Memory System](../memory_system.md) - Understanding memory types
@@ -11,6 +13,7 @@ The `start` command begins a new development session with the Aegis framework. I
 
 ## Usage
 
+Type in your AI assistant's chat window:
 ```bash
 /aegis start
 ```
