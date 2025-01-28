@@ -40,7 +40,7 @@ The `/aegis plan` command focuses solely on helping you create or refine your pr
 
 - **[Step-by-Step Guide](./docs/getting_started.md)**: Walkthrough for beginners.  
 - **[Memory System Overview](./docs/memory_system.md)**: Learn how Aegis keeps track of everything.  
-- **[Command Reference](./docs/commands.md)**: A simple reference for all Aegis commands.
+- **[Command Reference](./docs/commands/aegis_start.md)**: A simple reference for all Aegis commands.
 
 ## 🚀 Quick Start
 
@@ -175,7 +175,7 @@ Performs a quick context refresh:
 > - Can be used at any point during session
 > - Will maintain context between commands
 
-For detailed information about each command, including workflows and best practices, see our [Command Reference](./docs/commands/aegis_start.md).
+For detailed information about each command, including workflows and best practices, see our [Command Reference](./docs/commands/).
 
 ## 🧠 Intelligent Memory System
 
