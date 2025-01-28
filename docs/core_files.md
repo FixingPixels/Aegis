@@ -1,6 +1,6 @@
 # Core Framework Files
 
-Aegis uses a set of core files to maintain system state, guide AI behavior, and orchestrate multi-agent development. These files are central to the framework's operation and require special attention.
+Aegis uses a set of core files to maintain system state and guide project development. These files are central to the framework's operation and require special attention.
 
 > **Related Documentation**
 > - [Memory System](./memory_system.md) - Understanding how memory types work
@@ -8,7 +8,6 @@ Aegis uses a set of core files to maintain system state, guide AI behavior, and 
 > - [Task Management](./tasks.md) - Working with tasks
 > - [Session Management](./sessions.md) - Managing development sessions
 > - [Templates](./templates.md) - Standard templates for core files
-> - [Agent Integration](./planning/agents.md) - Working with specialized agents
 
 ## Overview
 
@@ -17,7 +16,8 @@ graph TD
     A[Core Files] --> B[AI_INSTRUCTIONS.md]
     A --> C[current_state.md]
     A --> D[roadmap.md]
-    A --> E[ai_conductor.json]
+    A --> P[planning_document.md]
+    A --> T[Templates]
     
     B --> B1[Session Flow]
     B --> B2[Memory Types]
@@ -33,18 +33,22 @@ graph TD
     D --> D2[Future Direction]
     D --> D3[Achievement Log]
     
-    E --> E1[Agent Roles]
-    E --> E2[Workflow]
-    E --> E3[Feedback]
-    E --> E4[States]
+    P --> P1[Goals]
+    P --> P2[Architecture]
+    P --> P3[Implementation]
+    P --> P4[Timeline]
+    
+    T --> T1[tasks/TEMPLATE.md]
+    T --> T2[sessions/TEMPLATE.md]
+    T --> T3[decisions/TEMPLATE.md]
 ```
 
 ## 1. AI_INSTRUCTIONS.md
 
-This file provides operational instructions for AI assistants using the framework.
+This file provides operational instructions for the framework.
 
 ### Purpose
-- Guides AI behavior
+- Guides behavior
 - Defines processing flows
 - Establishes memory management
 - Sets operational standards
@@ -86,20 +90,18 @@ graph TD
 ```
 
 ### Usage
-- AI assistants follow these instructions
 - Framework maintains consistency
 - Operations stay standardized
 - Context remains organized
 
 ## 2. current_state.md
 
-This file maintains the current state of the project and active agent contexts.
+This file maintains the current state of the project.
 
 ### Purpose
 - Tracks project state
 - Maintains active context
 - Records technical state
-- Manages agent states
 - Guides development
 
 ### Structure
@@ -110,7 +112,6 @@ last_updated: ${timestamp}
 memory_types: [semantic, working]
 current_phase: ${phase}
 sprint_status: ${status}
-active_agents: []
 priority: high
 references: []
 ---
@@ -123,32 +124,28 @@ references: []
 - Technical stack
 - Key terminology
 - Version requirements
-- Agent knowledge
 
 #### Active Development [working]
 - Completed features
 - In-progress work
 - Upcoming features
 - References to tasks
-- Agent assignments
 
 #### Technical State [semantic]
 - Core dependencies
 - Environment details
 - Configuration state
 - System requirements
-- Agent configurations
 
 #### Current Focus [working]
 - Active priorities
 - Immediate needs
 - Recent changes
 - Task references
-- Agent states
 
 ### Usage
 - Updated each session
-- Referenced by AI
+- Referenced by commands
 - Guides development
 - Maintains context
 
@@ -194,234 +191,110 @@ last_updated: ${timestamp}
 - Guides planning
 - Tracks progress
 - Sets priorities
-- Records history
 
-## 4. ai_conductor.json
+## 4. planning_document.md
 
-This file configures the AI Conductor and specialized agent roles.
+This file contains the project's planning details.
 
 ### Purpose
-- Defines agent roles
-- Configures workflows
-- Manages feedback
-- Tracks states
-- Orchestrates development
+- Documents goals
+- Defines architecture
+- Plans implementation
+- Sets timeline
 
 ### Structure
-```json
-{
-  "role": "AI Conductor",
-  "objective": "Orchestrate AI agents",
-  "workflow_diagram": "workflow.mmd",
-  "agent_interactions": "agents.mmd",
-  "decision_flow": "feedback.mmd",
-  "document_states": "document_states.mmd"
-}
+
+```yaml
+---
+last_updated: ${timestamp}
+memory_types: [semantic]
+priority: high
+references: []
+---
 ```
 
-### Key Components
+### Key Sections
 
-#### Agent Roles
-- Product Manager
-- Tech Lead
-- UX Designer
-- QA Specialist
-- DevOps Engineer
+#### Project Goals
+- Main objectives
+- Requirements
+- Constraints
+- Success criteria
 
-#### Workflow Management
-```mermaid
-graph TD
-    A[User Alignment] -->|Requirements| B[Team Creation]
-    B -->|Specialized Agents| C[Problem Solving]
-    C -->|Architecture & Timeline| D[Refinement]
-    D -->|User Feedback| E[Finalization]
-```
+#### Technical Architecture
+- System design
+- Technology stack
+- Components
+- Integration
 
-#### Feedback System
-```mermaid
-graph TD
-    A[User Feedback] -->|Analysis| B[Agent Review]
-    B -->|Tasks| C[Refinement]
-    C -->|Changes| D[Update]
-    D -->|Review| E[Approval]
-```
+#### Implementation Plan
+- Major steps
+- Dependencies
+- Resources
+- Testing
 
-#### State Machine
-```mermaid
-graph TD
-    A[Draft] -->|Review| B[Under Review]
-    B -->|Approve| C[Active]
-    B -->|Reject| A
-    C -->|Update| D[Updating]
-    D -->|Review| B
-    C -->|Deprecate| E[Deprecated]
-    C -->|Replace| F[Superseded]
-    
-    style A fill:#f9f,stroke:#333
-    style B fill:#bbf,stroke:#333
-    style C fill:#bfb,stroke:#333
-    style D fill:#fbf,stroke:#333
-    style E fill:#fbb,stroke:#333
-    style F fill:#fbb,stroke:#333
-```
+#### Timeline
+- Project phases
+- Key milestones
+- Dependencies
+- Estimates
 
 ### Usage
-- Orchestrates development
-- Manages agent roles
-- Handles feedback
-- Tracks states
-- Guides workflow
+- Created by `/aegis plan`
+- Guides development
+- Sets direction
+- Tracks progress
+
+## File Templates
+
+### 1. Task Template
+- Location: `.context/tasks/TEMPLATE.md`
+- Used for: Creating new tasks
+- Sections:
+  - Task details
+  - Implementation steps
+  - Dependencies
+  - Progress tracking
+
+### 2. Session Template
+- Location: `.context/sessions/TEMPLATE.md`
+- Used for: Recording sessions
+- Sections:
+  - Context
+  - Progress
+  - Decisions
+  - Next steps
+
+### 3. Decision Template
+- Location: `.context/decisions/TEMPLATE.md`
+- Used for: Recording decisions
+- Sections:
+  - Context
+  - Options
+  - Decision
+  - Impact
 
 ## Best Practices
 
-### 1. File Updates
-- Regular maintenance
-- Consistent format
-- Complete information
-- Valid references
-- Agent state tracking
-
-### 2. Memory Types
-- Proper assignment
-- Clear boundaries
-- Regular validation
-- Context maintenance
-- Agent memory integration
-
-### 3. State Management
-- Current information
-- Active references
-- Clear status
-- Updated timestamps
-- Agent state synchronization
-
-### 4. Documentation
-- Clear purpose
-- Complete context
-- Accurate links
-- Regular updates
-
-## Integration Points
-
-### 1. Commands
-- `/aegis start`: Initializes all components
-- `/aegis save`: Updates state and memory
-- `/aegis status`: Reads current state
-- `/aegis task`: Manages tasks and agents
-- `/aegis plan`: Engages AI Conductor
-
-### 2. Memory System
-- Guides processing
-- Maintains context
-- Tracks state
-- Records history
-- Manages agent memory
-
-### 3. Agent System
-- Role definitions
-- State management
-- Memory access
-- Task coordination
-- Feedback handling
-
-## Tips for Success
-
-1. **Consistency**
+1. **File Management**
    - Regular updates
-   - Standard format
    - Clear structure
-   - Valid references
+   - Proper references
+   - Version control
 
-2. **Completeness**
-   - Full context
-   - All sections
-   - Clear status
-   - Updated references
+2. **Content Quality**
+   - Clear writing
+   - Complete info
+   - Good format
+   - Useful details
 
-3. **Clarity**
-   - Clear purpose
-   - Complete information
-   - Accurate state
-   - Valid links
+3. **Organization**
+   - Logical structure
+   - Easy navigation
+   - Good references
+   - Clean layout
 
-4. **Maintenance**
-   - Regular reviews
-   - Timely updates
-   - Valid references
-   - Clean structure
-
-## Memory Integration
-
-### 1. File System
-- Organized structure
-- Clear hierarchy
-- Version control
-- Access control
-
-### 2. Memory Types
-- Semantic: Long-term knowledge
-- Episodic: Project history
-- Procedural: Task management
-- Working: Current focus
-
-### 3. Agent System
-- Role definitions
-- State management
-- Memory access
-- Task coordination
-- Feedback handling
-
-### Agent Configuration
-```json
-{
-  "agents": {
-    "AGENT-PM": {
-      "role": "Product Manager",
-      "memory_access": ["semantic", "working"],
-      "responsibilities": [
-        "Requirements gathering",
-        "Feature prioritization",
-        "Project planning"
-      ],
-      "state_transitions": {
-        "active": ["standby", "completed"],
-        "standby": ["active", "blocked"],
-        "blocked": ["active", "standby"],
-        "completed": ["standby"]
-      }
-    },
-    "AGENT-TL": {
-      "role": "Tech Lead",
-      "memory_access": ["semantic", "procedural"],
-      "responsibilities": [
-        "Technical architecture",
-        "Implementation guidance",
-        "Code review"
-      ],
-      "state_transitions": {
-        "active": ["standby", "completed"],
-        "standby": ["active", "blocked"],
-        "blocked": ["active", "standby"],
-        "completed": ["standby"]
-      }
-    }
-  },
-  "workflow": {
-    "planning": {
-      "lead": "AGENT-PM",
-      "participants": ["AGENT-TL"],
-      "memory_types": ["semantic", "working"]
-    },
-    "implementation": {
-      "lead": "AGENT-TL",
-      "participants": ["AGENT-QA", "AGENT-DEVOPS"],
-      "memory_types": ["procedural", "working"]
-    },
-    "review": {
-      "lead": "AGENT-QA",
-      "participants": ["AGENT-TL", "AGENT-PM"],
-      "memory_types": ["semantic", "procedural"]
-    }
-  }
-}
-```
+For more information, see:
+- [Memory System](memory_system.md)
+- [Cross-Referencing](cross_referencing.md)
+- [Templates Guide](templates.md)

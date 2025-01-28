@@ -11,196 +11,105 @@ The `status` command provides a quick overview of your project's current state. 
 ## Workflow
 
 ```mermaid
-sequenceDiagram
-    actor U as User
-    participant AI as AI Assistant
-    participant M as Memory System
-    participant CS as Current State
-    participant T as Tasks
-    participant S as Sessions
+graph TD
+    A[Command Start] --> B[Show Memory]
+    B --> C[Show Status]
+    C --> D[Done]
 
-    U->>AI: /aegis status
-
-    rect rgb(240, 245, 255)
-        Note over AI,M: Working Memory Check
-        AI->>M: Load working memory
-        par Status Checks
-            M->>T: Get active tasks
-            M->>CS: Get current focus
-            M->>S: Get recent changes
-        end
+    subgraph "Working Memory"
+        B --> B1[Active Tasks]
+        B --> B2[Recent Changes]
+        B --> B3[Current Focus]
     end
 
-    rect rgb(245, 240, 255)
-        Note over AI,U: Progress Summary
-        AI->>U: Active Tasks
-        Note over AI,U: - Task status
-        Note over AI,U: - Blockers
-        Note over AI,U: - Dependencies
+    subgraph "Status Info"
+        C --> C1[Progress]
+        C --> C2[Changes]
+        C --> C3[Focus]
     end
-
-    rect rgb(255, 240, 245)
-        Note over AI,U: Recent Changes
-        AI->>U: Code Changes
-        AI->>U: Documentation Updates
-        AI->>U: Decisions Made
-    end
-
-    rect rgb(240, 255, 245)
-        Note over AI,U: Current Focus
-        AI->>U: Active Development
-        AI->>U: Immediate Goals
-        AI->>U: Open Questions
-    end
-
-    Note over AI,U: No file updates made
 ```
 
-## Process Details
+## Process Steps
 
-1. **Working Memory Check**
-   - Quick load of working memory
-   - Parallel status checks:
-     - Active tasks and progress
-     - Current development focus
-     - Recent project changes
+1. **Show Working Memory**
+   - Active tasks
+   - Recent changes
+   - Current focus
+   - Open items
 
-2. **Progress Summary**
-   - Active task overview
-   - Blocker identification
-   - Dependency status
-   - Implementation progress
+2. **Present Status**
+   - Task progress
+   - Recent updates
+   - Focus areas
+   - Next steps
 
-3. **Recent Changes**
-   - Code modifications
-   - Documentation updates
-   - New decisions
-   - Recent milestones
-
-4. **Current Focus**
-   - Active development areas
-   - Immediate objectives
-   - Outstanding questions
-   - Work in progress
+3. **No File Updates**
+   - Read-only operation
+   - Quick snapshot
+   - Current state
+   - Safe to run
 
 ## Status Components
 
 ### Active Tasks
-- Current implementation tasks
-- Task priorities
-- Completion status
-- Blocking issues
+- Current work
+- Progress
+- Blockers
 - Dependencies
 
 ### Recent Changes
 - Code updates
-- Documentation changes
-- Configuration modifications
-- New features
-- Bug fixes
+- Documentation
+- Configuration
+- Features
 
 ### Current Focus
-- Development priorities
-- Active problems
-- Immediate goals
-- Open questions
+- Priorities
+- Problems
+- Goals
+- Questions
 
-## Key Features
+## Common Issues
 
-1. **Read-Only Operation**
-   - No file modifications
-   - Safe to run anytime
-   - Quick execution
-   - Current snapshot
+1. **State Check**
+   - Current info
+   - Clear view
+   - Quick read
+   - No changes
 
-2. **Comprehensive Overview**
-   - Task progress
-   - Recent activity
-   - Current priorities
-   - Project health
+2. **Information**
+   - Key points
+   - Progress
+   - Changes
+   - Focus
 
-3. **Quick Context**
-   - Immediate state
-   - Active work
-   - Recent history
-   - Next steps
-
-## Common Uses
-
-1. **Progress Tracking**
-   - Check task status
-   - Review changes
-   - Monitor blockers
-   - Track dependencies
-
-2. **Context Switching**
-   - Quick project overview
-   - Current state check
-   - Active work review
-   - Priority verification
-
-3. **Team Updates**
-   - Share progress
-   - Report status
-   - Highlight blockers
-   - Show priorities
+3. **Usage**
+   - Regular checks
+   - Quick views
+   - Team updates
+   - Planning
 
 ## Best Practices
 
-1. **Regular Checks**
-   - Start of session
-   - After major changes
+1. **Regular Use**
+   - Session start
+   - After changes
    - Before meetings
-   - End of day
+   - Day end
 
-2. **Effective Review**
-   - Note blockers
-   - Check dependencies
-   - Verify progress
-   - Plan next steps
+2. **Review**
+   - Note blocks
+   - Check deps
+   - See progress
+   - Plan next
 
-3. **Status Interpretation**
-   - Identify patterns
-   - Spot bottlenecks
-   - Track progress
-   - Plan actions
-
-## Tips
-
-1. **Quick Overview**
-   - Focus on changes
-   - Note blockers
-   - Check priorities
-   - Review progress
-
-2. **Context Awareness**
-   - Understand current state
-   - Track dependencies
-   - Monitor progress
-   - Plan ahead
-
-3. **Decision Support**
-   - Identify issues
-   - Plan work
-   - Set priorities
-   - Make adjustments
-
-## Next Steps
-
-1. **After Status Check**
-   - Address blockers
-   - Update priorities
-   - Plan work
-   - Take action
-
-2. **Common Actions**
-   - Update tasks
-   - Remove blockers
+3. **Action**
+   - Fix blocks
+   - Update work
    - Adjust focus
-   - Plan sprints
+   - Move forward
 
-3. **Follow-up**
-   - Document issues
-   - Update plans
-   - Communicate status
-   - Track progress
+For more information, see:
+- [Memory System](../memory_system.md)
+- [Getting Started](../getting_started.md)
+- [Core Files](../core_files.md)

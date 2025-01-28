@@ -9,7 +9,6 @@ graph TD
     A[Templates] --> B[Decisions]
     A --> C[Sessions]
     A --> D[Tasks]
-    A --> E[Agents]
     
     B --> B1[Semantic Memory]
     B --> B2[Episodic Memory]
@@ -19,10 +18,6 @@ graph TD
     
     D --> D1[Procedural Memory]
     D --> D2[Working Memory]
-    
-    E --> E1[Agent States]
-    E --> E2[Memory Access]
-    E --> E3[Role Definitions]
 ```
 
 ## Common Structure
@@ -31,20 +26,27 @@ All templates share a common metadata structure using YAML frontmatter:
 
 ```yaml
 ---
-memory_types: [type1, type2]    # Types of memory this document represents
-references: []                  # Links to related documents
-priority: [high|medium|low]     # Importance level
-agent_roles: []                # Involved agent roles
-agent_states: {}               # Current agent states
-memory_access: []              # Memory access patterns
+id: [ID format based on type]     # Unique identifier for the document
+title: [Document title]           # Clear, descriptive title
+created: ${timestamp}             # Creation timestamp
+updated: ${timestamp}             # Last update timestamp
+memory_types: [type1, type2]      # Types of memory this document represents
+status: [status based on type]    # Current status (if applicable)
+priority: [high|medium|low]       # Importance level
+references: []                    # Links to related documents
 ---
 ```
 
 ### Memory Types
-- **semantic**: Long-term project knowledge and decisions
-- **episodic**: Historical events and progress
-- **procedural**: Tasks and implementation steps
-- **working**: Current focus and active context
+These memory types are used to organize and process project information:
+- **semantic**: Project knowledge and patterns
+- **episodic**: Development history
+- **procedural**: Implementation steps
+- **working**: Current focus
+
+### Status Values
+- **Tasks**: planned | active | completed | blocked
+- **Decisions**: proposed | accepted | deprecated | superseded
 
 ### Priority Levels
 - **high**: Critical information needed frequently
@@ -56,10 +58,11 @@ memory_access: []              # Memory access patterns
 Location: `.context/decisions/TEMPLATE.md`
 
 ```markdown
-# [Title of Decision]
+# [Decision Title]
 
 ---
 id: DEC-XXX
+title: [Decision Title]
 created: ${timestamp}
 updated: ${timestamp}
 memory_types: [semantic, episodic]
@@ -78,83 +81,57 @@ references: []
 - Key factors considered
 - Alternatives evaluated
 - Trade-offs made
+- Dependencies affected
 
-## Impact
-- Benefits gained
-- Challenges introduced
-- Areas affected
+## Consequences
+- Positive outcomes expected
+- Potential risks
+- Required changes
+- Impact on existing components
 
-## Validation
-- Success criteria
-- Metrics to track
-- Review timeline
+## Implementation Notes
+- Technical considerations
+- Migration steps if needed
+- Validation requirements
 
-## Notes for AI
-- Pattern implications
-- Implementation guidance
-- Future considerations
-- Agent responsibilities
-- Memory access patterns
+## Status History
+- [Date] - [Status Change] - [Reason]
 ```
-
-### Usage
-- Record architectural decisions
-- Document technical choices
-- Track design patterns
-- Maintain system constraints
 
 ## Session Template
 
 Location: `.context/sessions/TEMPLATE.md`
 
 ```markdown
-# Session Summary {{DATE}}
-
 ---
+title: Session Summary {{DATE}}
 memory_types: [episodic, working]
 references: []
 priority: medium
-agent_roles: [AGENT-PM, AGENT-TL]
-agent_states:
-  AGENT-PM: active
-  AGENT-TL: active
-memory_access: [semantic, working]
 ---
 
 ## Context
-- Previous session: [link]
+- Previous session: [link to previous session file]
 - Related tasks: []
-- Current focus: [Brief description]
-- Active agents: [AGENT-PM, AGENT-TL]
+- Current focus: [Brief description of main focus]
 
 ## Progress
-### Agent Contributions
-#### Product Manager [AGENT-PM]
-- Decisions made:
-  - [Decision]
-  - Rationale
-  - Impact
-- Tasks managed:
-  - [Task references]
-  - Status updates
-
-#### Tech Lead [AGENT-TL]
-- Technical decisions:
-  - Architecture choices
-  - Implementation details
-- Code reviews:
-  - Components reviewed
-  - Feedback provided
-
 ### Changes Made
 - Code changes:
-  - [Component/Feature]
-  - Specific changes
+  - [Component/Feature Name]
+  - Specific changes made
   - Implementation details
-  - Test coverage
+  - Test coverage added
 - Documentation updates:
-  - Created/updated files
-  - Brief descriptions
+  - Created/updated files:
+    - `[filename]`: [brief description]
+    - `[filename]`: [brief description]
+- Decisions made:
+  - [Decision 1]
+  - Rationale
+  - Alternatives considered
+  - Impact on project
+  - References: []
 
 ### Insights Gained
 - Technical insights
@@ -167,38 +144,27 @@ memory_access: [semantic, working]
 - Follow-up items
 
 ## Notes for AI
-- Key context
+- Key context to maintain
 - Important patterns
 - Special considerations
-- Agent state transitions
-- Memory access updates
 ```
-
-### Usage
-- Track development sessions
-- Record progress
-- Document insights
-- Plan next steps
 
 ## Task Template
 
 Location: `.context/tasks/TEMPLATE.md`
 
 ```markdown
-# [Task Name]
+# [Task Title]
 
 ---
 id: TASK-XXX
+title: [Task Title]
 created: ${timestamp}
 updated: ${timestamp}
 memory_types: [procedural, working]
 status: [planned | active | completed | blocked]
 priority: [high | medium | low]
 references: []
-assigned_agents: [AGENT-TL]
-agent_states:
-  AGENT-TL: active
-memory_access: [procedural, working]
 ---
 
 ## Description
@@ -212,25 +178,20 @@ memory_access: [procedural, working]
   - Technical approach
   - Validation criteria
 
-## Progress
-- Started: [date]
-- Current status: [details]
-- Blockers: [if any]
-- Sessions: [session-ids]
+## Dependencies
+- List any blocking dependencies
+- Required resources or access
 
-## Notes for AI
-- Key considerations
-- Related patterns
-- Implementation guidance
-- Agent responsibilities
-- Memory access rules
+## Validation
+- [ ] Test cases defined
+- [ ] Implementation verified
+- [ ] Documentation updated
+
+## Notes
+- Additional context
+- Implementation decisions
+- Lessons learned
 ```
-
-### Usage
-- Track implementation tasks
-- Document progress
-- Manage blockers
-- Guide development
 
 ## Agent Template
 

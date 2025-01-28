@@ -158,6 +158,27 @@ Additional fields by type:
    status: [proposed | accepted | deprecated | superseded]
    ```
 
+   Create a decision entry when:
+   - Making significant architectural choices
+   - Choosing technologies or frameworks
+   - Setting coding standards or patterns
+   - Making security-related decisions
+   - Changing project structure
+   - Selecting third-party services
+   - Making performance trade-offs
+   - Defining data models
+   - Setting up infrastructure
+   - Making breaking changes
+   - Establishing workflows
+   - Creating conventions
+
+   Each decision should:
+   - Have clear rationale
+   - Consider alternatives
+   - Document trade-offs
+   - Note impact
+   - Include validation
+
 3. **Sessions**:
    ```yaml
    # No additional required fields

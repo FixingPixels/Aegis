@@ -65,18 +65,32 @@ When the USER types any of these commands, follow the corresponding instructions
    - Active tasks (procedural)
    - Current focus (working)
    - Recent history (episodic)
-6. Indicate readiness for requests
+6. Create decisions for any significant choices in planning_document.md:
+   - Architecture decisions
+   - Technology choices
+   - Framework selections
+   - Infrastructure setup
+   - Security approaches
+7. Indicate readiness for requests
 
 ### `/aegis save`
 1. Create session log
-2. Update task progress
-3. Show summary of changes made
+2. Create decision records for any significant changes:
+   - Architecture changes
+   - Technology choices
+   - Pattern implementations
+   - Security decisions
+   - Breaking changes
+   - Convention creation
+3. Update task progress
+4. Show summary of changes made
 
 ### `/aegis status`
 1. Show current working memory:
    - Active task progress
    - Recent changes
    - Current focus
+   - Pending decisions
 2. No file updates, just information
 
 ### `/aegis task`
@@ -84,10 +98,20 @@ When the USER types any of these commands, follow the corresponding instructions
 2. Show active task details
 3. Present implementation progress
 4. List any blockers or dependencies
+5. Create decisions for any significant implementation choices:
+   - Design patterns
+   - Data models
+   - API designs
+   - Performance optimizations
+   - Security measures
 
 ### `/aegis context`
 1. Quick refresh of current context
-2. Show most relevant information for current work
+2. Show most relevant information for current work:
+   - Active tasks
+   - Recent changes
+   - Important decisions
+   - Open questions
 3. No full reload, just working memory update
 
 ### `/aegis plan`

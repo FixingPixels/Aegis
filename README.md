@@ -34,7 +34,7 @@ Here's how easy it is to get started. Type the following into your AI assistant'
 ```
 That's it! Aegis creates a clear structure for your project, helping you track tasks, make decisions, and plan efficiently—all using your favorite AI tool. The `/aegis init .` command (alternatively, `/aegis init new-project`) will initialize the framework in your project. 
 
-The `/aegis plan` command focuses solely on helping you create and refine your project's `planning_document.md`. This document outlines your project's goals, architecture, and implementation approach. Once you're happy with your planning document, use `/aegis start` to begin a new development session - this is when tasks will be created and project state initialized based on your planning document.
+The `/aegis plan` command focuses solely on helping you create or refine your project's `planning_document.md`. This document outlines your project's goals, architecture, and implementation approach. Once you're happy with your planning document, use `/aegis start` to begin a new development session - this is when tasks will be created and project state initialized based on your planning document.
 
 ### Ready to Get Started?
 
@@ -92,23 +92,92 @@ That's it! Aegis will load your project's context, process its memory, and prepa
 
 ## 🛠️ Commands Overview
 
-Aegis is driven by simple text commands that you enter into your AI assistant. Here's a quick reference for the base commands:
+Aegis uses simple yet powerful commands that you enter into your AI assistant. Here's a comprehensive guide to each command:
 
-| Command             | Description                            |
-|---------|-------------|
-| `/aegis init <path>` | Initialize Aegis in your project       |
-| `/aegis start`      | Start a new development session        |
-| `/aegis save`       | Save the current project state         |
-| `/aegis status`     | Check project progress and status      |
-| `/aegis task`       | Focus on specific tasks or workflows   |
-| `/aegis context`    | Refresh the current project context    |
-| `/aegis plan`       | Collaborate with AI for project planning |
+### `/aegis init <path>`
+Initializes the Aegis framework by copying the `.context` directory structure:
+- Use `.` to copy to the current directory
+- Use a folder name to create and initialize that folder
+```bash
+/aegis init .              # Initialize in current directory
+/aegis init new-project    # Initialize in new-project directory
+```
+The command copies the complete `.context` structure with all templates and maintains all memory type assignments.
 
-For a complete list of commands and their uses, see our [Command Reference](./docs/commands/aegis_start.md).
+### `/aegis plan`
+Creates or refines the `planning_document.md` in your project root. Focuses solely on planning without modifying other files:
+```bash
+# Basic planning
+/aegis plan
 
-## 🎯 Core Features
+# Planning with project context
+/aegis plan I want to build a task management system with real-time features
 
-### 🧠 Intelligent Memory System
+# Planning with specific requirements
+/aegis plan
+Requirements:
+- Mobile and desktop support
+- Offline capabilities
+- User authentication
+```
+The planning document will define clear objectives, technical decisions, implementation steps, and success criteria.
+
+### `/aegis start`
+Begins a new development session by:
+1. Reading AI_INSTRUCTIONS.md
+2. Following Session Start Flow
+3. Loading all context by memory type
+4. Creating/updating roadmap.md from planning_document.md
+5. Presenting organized project summary
+```bash
+/aegis start
+```
+
+### `/aegis save`
+Preserves session progress by:
+1. Creating a session log
+2. Updating task progress
+3. Showing changes summary
+```bash
+/aegis save
+```
+
+### `/aegis status`
+Shows current working memory without updating files:
+- Active task progress
+- Recent changes
+- Current focus
+```bash
+/aegis status
+```
+
+### `/aegis task`
+Focuses on procedural memory to:
+1. Show active task details
+2. Present implementation progress
+3. List blockers and dependencies
+```bash
+/aegis task
+```
+
+### `/aegis context`
+Performs a quick context refresh:
+1. Shows most relevant information
+2. Updates working memory
+3. No full reload needed
+```bash
+/aegis context
+```
+
+> **Usage Notes**:
+> - Commands are case-insensitive
+> - Must start with `/aegis`
+> - Can be used at any point during session
+> - Will maintain context between commands
+
+For detailed information about each command, including workflows and best practices, see our [Command Reference](./docs/commands/aegis_start.md).
+
+## 🧠 Intelligent Memory System
 
 Aegis is inspired by how the human brain organizes information, giving your project structure and continuity:  
 

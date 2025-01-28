@@ -5,6 +5,17 @@ All notable changes to the Aegis Framework will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2025-01-27
+
+### Changed
+- Updated all command documentation to match command rules:
+  - Removed AI conductor and agent references
+  - Added exact directory structure to init command
+  - Added decision creation guidance
+  - Simplified command workflows
+  - Added file operation restrictions
+  - Improved clarity and consistency
+
 ## [1.0.0] - 2025-01-20
 
 ### Added

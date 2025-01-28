@@ -11,225 +11,105 @@ The `context` command provides a quick refresh of the current working context wi
 ## Workflow
 
 ```mermaid
-sequenceDiagram
-    actor U as User
-    participant AI as AI Assistant
-    participant WM as Working Memory
-    participant CS as Current State
-    participant T as Tasks
-    participant D as Decisions
+graph TD
+    A[Command Start] --> B[Quick Refresh]
+    B --> C[Show Context]
+    C --> D[Ready State]
 
-    U->>AI: /aegis context
-
-    rect rgb(240, 245, 255)
-        Note over AI,WM: Quick Context Load
-        AI->>WM: Load working memory
-        par Context Check
-            WM->>CS: Get active focus
-            WM->>T: Get current task
-            WM->>D: Get recent decisions
-        end
+    subgraph "Quick Refresh"
+        B --> B1[Working Memory]
+        B --> B2[Current Task]
+        B --> B3[Recent Changes]
     end
 
-    rect rgb(245, 240, 255)
-        Note over AI,U: Current Focus
-        AI->>U: Active Development
-        Note over AI,U: - Current task
-        Note over AI,U: - Implementation details
-        Note over AI,U: - Technical context
+    subgraph "Context Info"
+        C --> C1[Focus Area]
+        C --> C2[Progress]
+        C --> C3[Next Steps]
     end
-
-    rect rgb(255, 240, 245)
-        Note over AI,U: Recent Activity
-        AI->>U: Latest Changes
-        AI->>U: Recent Decisions
-        AI->>U: Active Discussions
-    end
-
-    rect rgb(240, 255, 245)
-        Note over AI,U: Immediate Context
-        AI->>U: Technical Requirements
-        AI->>U: Dependencies
-        AI->>U: Resources
-    end
-
-    Note over AI,U: No state changes made
 ```
 
-## Process Details
-
-1. **Quick Context Load**
-   - Loads working memory only
-   - Parallel context checks:
-     - Active development focus
-     - Current task details
-     - Recent decisions
-     - Immediate context
-
-2. **Current Focus**
-   - Active development area
-   - Current task details
-   - Implementation progress
-   - Technical requirements
-
-3. **Recent Activity**
-   - Latest code changes
-   - Recent decisions
-   - Active discussions
-   - Progress updates
-
-4. **Immediate Context**
-   - Technical requirements
-   - Dependencies
-   - Resources
-   - Constraints
-
-## Context Components
-
-### Working Memory
-- Active development focus
-- Current implementation details
-- Immediate technical context
-- Open questions
-
-### Current State
-- Active task progress
-- Implementation status
-- Technical requirements
-- Resource availability
-
-### Recent Activity
-- Code changes
-- Decisions made
-- Discussions held
-- Progress achieved
-
-## Key Features
+## Process Steps
 
 1. **Quick Refresh**
-   - No full reload
-   - Working memory focus
-   - Immediate context
-   - Current state
-
-2. **Relevant Information**
-   - Active focus
-   - Current work
+   - Working memory
+   - Current task
    - Recent changes
-   - Immediate needs
+   - Active focus
 
-3. **Context Maintenance**
-   - Development continuity
-   - Focus preservation
-   - Progress tracking
-   - State awareness
-
-## Common Uses
-
-1. **Focus Recovery**
-   - After interruptions
-   - Context switches
-   - Session resumption
-   - Task transitions
-
-2. **Progress Check**
-   - Current status
-   - Recent progress
+2. **Show Context**
+   - Focus area
+   - Current progress
    - Next steps
    - Blockers
 
-3. **Quick Reference**
-   - Technical details
-   - Implementation notes
-   - Requirements
-   - Dependencies
-
-## Best Practices
-
-1. **Regular Use**
-   - After interruptions
-   - Before task switches
-   - During reviews
-   - Session resumption
-
-2. **Context Review**
-   - Check focus
-   - Verify progress
-   - Note changes
+3. **Ready State**
+   - Maintain focus
+   - Continue work
+   - Track progress
    - Plan ahead
 
-3. **Effective Recovery**
-   - Quick orientation
-   - State verification
-   - Progress check
-   - Next steps
+## Context Types
 
-## Tips
+### Working Memory
+- Active focus
+- Current work
+- Technical details
+- Open items
 
-1. **Quick Recovery**
-   - Scan recent changes
-   - Check current focus
-   - Review progress
-   - Note blockers
+### Current Task
+- Progress
+- Status
+- Requirements
+- Resources
 
-2. **Context Awareness**
-   - Maintain focus
-   - Track progress
-   - Note changes
-   - Plan work
-
-3. **Productivity**
-   - Minimize interruptions
-   - Quick recovery
-   - Clear focus
-   - Forward momentum
+### Recent Changes
+- Code updates
+- Decisions
+- Progress
+- Notes
 
 ## Common Issues
 
 1. **Context Loss**
-   - Interrupted work
+   - Interruptions
    - Lost focus
-   - Missing details
+   - Missing info
    - Unclear state
 
-2. **Information Overload**
-   - Too much detail
-   - Unclear priorities
-   - Mixed contexts
-   - Scattered focus
+2. **Information**
+   - Too detailed
+   - Not clear
+   - Mixed focus
+   - Scattered
 
-3. **Recovery Challenges**
-   - Complex state
-   - Multiple tasks
-   - Unclear progress
-   - Missing context
+3. **Recovery**
+   - Complex work
+   - Many tasks
+   - Unclear path
+   - Missing notes
 
-## Next Steps
+## Best Practices
 
-1. **After Context Check**
-   - Confirm understanding
-   - Verify focus
-   - Check progress
-   - Plan work
+1. **Regular Use**
+   - After breaks
+   - Task switches
+   - Reviews
+   - Resuming
 
-2. **Common Actions**
-   - Resume work
-   - Update status
-   - Address issues
-   - Move forward
+2. **Review**
+   - Check focus
+   - See progress
+   - Note changes
+   - Plan next
 
-3. **Productivity**
-   - Maintain focus
-   - Track progress
-   - Document changes
-   - Stay organized
+3. **Recovery**
+   - Quick scan
+   - State check
+   - Progress view
+   - Next steps
 
-## Differentiation from Start
-
-Unlike `/aegis start`, the context command:
-- Performs no full reload
-- Focuses on working memory
-- Provides immediate context
-- Maintains current focus
-- Quick execution
-- No state changes
+For more information, see:
+- [Memory System](../memory_system.md)
+- [Getting Started](../getting_started.md)
+- [Core Files](../core_files.md)

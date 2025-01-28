@@ -1,6 +1,6 @@
 # Architectural Decision Records (ADR)
 
-The Aegis framework uses a structured decision-recording system to maintain a clear history of architectural and technical decisions. This system helps both human developers and AI assistants understand the context, rationale, and implications of important project decisions.
+The Aegis framework uses a structured decision-recording system to maintain a clear history of architectural and technical decisions. This system helps maintain project knowledge and understand the context, rationale, and implications of important decisions.
 
 ## Overview
 
@@ -8,26 +8,21 @@ The Aegis framework uses a structured decision-recording system to maintain a cl
 graph TD
     A[Decision] --> B[Metadata]
     A --> C[Content]
-    A --> D[Agent Input]
     
     B --> B1[ID]
-    B --> B2[Timestamps]
-    B --> B3[Memory Types]
-    B --> B4[Status]
-    B --> B5[Priority]
-    B --> B6[References]
+    B --> B2[Title]
+    B --> B3[Timestamps]
+    B --> B4[Memory Types]
+    B --> B5[Status]
+    B --> B6[Priority]
+    B --> B7[References]
     
     C --> C1[Context]
     C --> C2[Decision]
     C --> C3[Rationale]
     C --> C4[Impact]
     C --> C5[Validation]
-    C --> C6[AI Notes]
-    
-    D --> D1[Proposer]
-    D --> D2[Reviewers]
-    D --> D3[Approvers]
-    D --> D4[Memory Access]
+    C --> C6[Notes]
 ```
 
 ## Decision Record Structure
@@ -36,31 +31,25 @@ graph TD
 ```yaml
 ---
 id: DEC-XXX
+title: [Decision Title]
 created: ${timestamp}
 updated: ${timestamp}
 memory_types: [semantic, episodic]
 status: [proposed | accepted | deprecated | superseded]
 priority: [high | medium | low]
 references: []
-proposing_agent: AGENT-TL
-reviewing_agents: [AGENT-PM, AGENT-QA]
-approving_agent: AGENT-PM
-memory_access: [semantic]
 ---
 ```
 
 #### Fields Explained
 - **id**: Unique identifier (format: DEC-XXX)
+- **title**: Clear, descriptive title
 - **created**: Initial creation timestamp
 - **updated**: Last modification timestamp
-- **memory_types**: How this decision should be processed in memory
+- **memory_types**: How this decision should be processed (semantic and episodic)
 - **status**: Current state of the decision
 - **priority**: Importance level
-- **references**: Links to related decisions or resources
-- **proposing_agent**: Agent who proposed the decision
-- **reviewing_agents**: Agents who reviewed the decision
-- **approving_agent**: Agent who approved the decision
-- **memory_access**: Memory types needed for this decision
+- **references**: Links to related decisions, tasks, or sessions
 
 ### Content Sections
 
@@ -69,53 +58,53 @@ memory_access: [semantic]
    - Current situation
    - Problem statement
    - Motivating factors
-   - Agent perspectives
-   - Role considerations
-   - Memory context
+   - Requirements
+   - Constraints
+   - Dependencies
 
 2. **Decision**
    - Clear statement of the decision
    - Specific changes proposed
    - Implementation approach
-   - Agent rationale
-   - Role impacts
-   - Memory implications
+   - Technical details
+   - Design patterns
+   - Architecture impacts
 
 3. **Rationale**
    - Key factors considered
    - Alternatives evaluated
    - Trade-offs made
    - Reasoning process
-   - Agent insights
-   - Role-specific factors
-   - Memory requirements
+   - Technical insights
+   - Performance impacts
+   - Security considerations
 
 4. **Impact**
    - Benefits gained
    - Challenges introduced
    - Areas affected
    - Risk assessment
-   - Agent responsibilities
-   - Role changes
-   - Memory updates
+   - Migration needs
+   - Timeline impacts
+   - Resource requirements
 
 5. **Validation**
    - Success criteria
    - Metrics to track
    - Review timeline
-   - Validation process
-   - Agent verification
-   - Role validation
-   - Memory consistency
+   - Testing approach
+   - Performance benchmarks
+   - Security validation
+   - Quality checks
 
-6. **Notes for AI**
-   - Pattern implications
-   - Implementation guidance
+6. **Notes**
+   - Implementation details
+   - Technical patterns
    - Future considerations
-   - AI-specific context
-   - Agent guidance
-   - Role boundaries
-   - Memory access
+   - Known limitations
+   - Open questions
+   - Related research
+   - Reference materials
 
 ## Decision States
 
@@ -124,41 +113,36 @@ memory_access: [semantic]
    - Under discussion
    - Pending review
    - Open for feedback
-   - Proposing agent active
-   - Reviewers assigned
-   - Memory access set
+   - Gathering input
+   - Collecting data
+   - Initial assessment
 
-2. **Under Review**
-   - Reviewers active
-   - Feedback collection
-   - Memory validation
-
-3. **Accepted**
+2. **Accepted**
    - Approved for implementation
    - Active decision
    - Current approach
    - In effect
-   - Approver signed off
-   - Roles updated
-   - Memory committed
+   - Ready for use
+   - Fully documented
+   - Implementation started
 
-4. **Deprecated**
+3. **Deprecated**
    - No longer recommended
    - Being phased out
    - Historical reference
    - Should be avoided
-   - Agent notifications
-   - Role adjustments
-   - Memory archival
+   - Migration needed
+   - Alternatives listed
+   - Timeline for removal
 
-5. **Superseded**
+4. **Superseded**
    - Replaced by newer decision
    - Historical reference
    - Points to replacement
    - Archived state
-   - Agent transitions
-   - Role updates
-   - Memory migration
+   - Migration path
+   - Transition plan
+   - Legacy support
 
 ## Memory Integration
 
@@ -167,12 +151,18 @@ memory_access: [semantic]
 - System design patterns
 - Technical constraints
 - Implementation guidelines
+- Best practices
+- Project standards
+- Design decisions
 
 ### Episodic Memory
 - Decision-making context
 - Historical progression
 - Problem-solving approaches
 - Evolution of solutions
+- Learning outcomes
+- Past challenges
+- Success stories
 
 ## Best Practices
 
@@ -180,8 +170,10 @@ memory_access: [semantic]
 - Use clear, descriptive titles
 - Provide comprehensive context
 - Explain rationale thoroughly
-- Consider all stakeholders
-- Document AI implications
+- Consider all impacts
+- Document thoroughly
+- Link related items
+- Include examples
 
 ### 2. Updating Decisions
 - Maintain accurate status
@@ -189,6 +181,8 @@ memory_access: [semantic]
 - Add new references
 - Document changes
 - Preserve history
+- Track dependencies
+- Note impacts
 
 ### 3. Referencing Decisions
 - Link related decisions
@@ -196,109 +190,129 @@ memory_access: [semantic]
 - Show relationships
 - Track dependencies
 - Update references
+- Cross-reference tasks
+- Connect sessions
 
-### 4. Agent Coordination
-- Clear role definition
-- Proper review process
-- Documented approvals
-- Memory access control
+### 4. Documentation
+- Clear descriptions
+- Complete context
+- Technical details
+- Implementation notes
+- Migration paths
+- Testing plans
+- Review process
 
 ## Example Decision
 
 ```markdown
-# Implement Multi-Agent Architecture
+# Use PostgreSQL for Primary Database
 
 ---
 id: DEC-001
-created: 2025-01-20T14:30:00-05:00
-updated: 2025-01-20T16:45:00-05:00
+title: PostgreSQL as Primary Database
+created: 2025-01-20T19:48:53-05:00
+updated: 2025-01-20T19:48:53-05:00
 memory_types: [semantic, episodic]
 status: accepted
 priority: high
-references: [DEC-002, TASK-001]
-proposing_agent: AGENT-TL
-reviewing_agents: [AGENT-PM, AGENT-QA]
-approving_agent: AGENT-PM
-memory_access: [semantic]
+references: [DEC-002, TASK-001, SESSION-20250120]
 ---
 
 ## Context
-Project needs a structured approach to handle multiple specialized AI agents working together effectively.
-
-### Agent Perspectives
-- **Tech Lead**: Need for clear technical boundaries and interfaces
-- **Product Manager**: User story and workflow considerations
-- **QA**: Testing and validation requirements
+- Need a robust, scalable database solution
+- Must support complex queries and transactions
+- High reliability and data integrity required
+- Active community and support important
+- Cost considerations for scaling
 
 ## Decision
-Implement a multi-agent architecture with specialized roles and memory access patterns.
-
-### Agent Considerations
-- **Tech Lead**: Technical design and implementation approach
-- **Product Manager**: User experience and workflow impact
-- **QA**: Quality assurance and testing strategy
+We will use PostgreSQL as our primary database system:
+- Version: PostgreSQL 16.x
+- Deployment: AWS RDS
+- Replication: Multi-AZ
+- Backup: Daily snapshots
+- Monitoring: AWS CloudWatch
 
 ## Rationale
-### Technical Factors
-- Clear separation of concerns
-- Efficient memory management
-- Scalable architecture
+1. Technical Benefits:
+   - ACID compliance
+   - Advanced features (JSON, Full-text search)
+   - Excellent performance
+   - Strong security
 
-### Agent Insights
-- TL: Technical feasibility and implementation path
-- PM: User workflow and interaction patterns
-- QA: Testing strategy and quality metrics
+2. Alternatives Considered:
+   - MySQL: Less feature-rich
+   - MongoDB: ACID limitations
+   - DynamoDB: Cost concerns
+
+3. Key Factors:
+   - Performance benchmarks
+   - Feature comparison
+   - Community support
+   - Cost analysis
 
 ## Impact
-### System Changes
-- New agent management system
-- Memory access controls
-- State management
+1. Benefits:
+   - Robust data integrity
+   - Advanced querying
+   - Easy maintenance
+   - Good scalability
 
-### Role Responsibilities
-- TL: Implementation and technical documentation
-- PM: Workflow documentation and user guides
-- QA: Test plan and validation procedures
+2. Challenges:
+   - Team training needed
+   - Migration planning
+   - Performance tuning
+   - Resource sizing
 
 ## Validation
-### Success Criteria
-- All agent roles implemented
-- Memory access controls working
-- State management verified
+1. Success Criteria:
+   - Query performance
+   - Data integrity
+   - Backup/restore
+   - High availability
 
-### Role Verification
-- TL: Technical implementation review
-- PM: Workflow validation
-- QA: System-wide testing
+2. Testing Plan:
+   - Performance testing
+   - Failover testing
+   - Backup validation
+   - Load testing
 
-## Notes for AI
-- Follow agent role boundaries
-- Respect memory access patterns
-- Maintain state consistency
-- Document role interactions
+## Notes
+- Consider connection pooling
+- Monitor query performance
+- Regular maintenance
+- Backup verification
+- Security updates
 ```
 
 ## Integration with Commands
 
-Different commands interact with decisions in specific ways:
+### 1. `/aegis start`
+- Loads decision records
+- Processes semantic memory
+- Updates project context
+- Tracks decision states
 
-1. **`/aegis start`**
-   - Loads agent context
-   - Sets role access
-   - Initializes state
+### 2. `/aegis save`
+- Records new decisions
+- Updates decision status
+- Maintains references
+- Archives old decisions
 
-2. **`/aegis save`**
-   - Updates agent states
-   - Records decisions
-   - Manages access
+### 3. `/aegis status`
+- Shows active decisions
+- Lists recent changes
+- Displays impacts
+- Reports progress
 
-3. **`/aegis status`**
-   - Shows agent roles
-   - Lists decisions
-   - Reports access
+### 4. `/aegis context`
+- Refreshes decision context
+- Shows relevant decisions
+- Lists dependencies
+- Updates status
 
-4. **`/aegis plan`**
-   - Coordinates agents
-   - Manages decisions
-   - Controls access
-   - Tracks workflow
+For more information, see:
+- [Memory System](./memory_system.md)
+- [Cross-Referencing](./cross_referencing.md)
+- [Task Management](./tasks.md)
+- [Session Management](./sessions.md)

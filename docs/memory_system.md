@@ -1,6 +1,6 @@
 # Aegis Memory System
 
-The Aegis framework implements a cognitive-inspired memory system that helps AI assistants maintain context and make informed decisions throughout your project's lifecycle. This document explains how the memory system works and how to effectively use it.
+The Aegis framework implements a cognitive-inspired memory system that helps maintain context and make informed decisions throughout your project's lifecycle. This document explains how the memory system works and how to effectively use it.
 
 > **Related Documentation**
 > - [Core Framework Files](./core_files.md) - Learn about the essential framework files
@@ -11,7 +11,7 @@ The Aegis framework implements a cognitive-inspired memory system that helps AI 
 
 ## Overview
 
-Think of the Aegis memory system as similar to human memory - it has different types of memory for different purposes, each optimized for specific kinds of information and timeframes.
+The Aegis memory system is designed like human memory - it has different types of memory for different purposes, each optimized for specific kinds of information and timeframes.
 
 ```mermaid
 graph TD
@@ -20,26 +20,26 @@ graph TD
     A --> D[Procedural Memory]
     A --> E[Working Memory]
 
-    B --> B1[Project Decisions]
-    B --> B2[Architecture]
+    B --> B1[Project Knowledge]
+    B --> B2[Architecture Patterns]
 
     C --> C1[Session History]
-    C --> C2[Decision Log]
+    C --> C2[Development Progress]
     C --> C3[Problem Solutions]
 
     D --> D1[Active Tasks]
-    D --> D2[Workflows]
-    D --> D3[Processes]
+    D --> D2[Implementation Steps]
+    D --> D3[Validation Rules]
 
     E --> E1[Current Focus]
     E --> E2[Active Context]
-    E --> E3[Immediate Goals]
+    E --> E3[Recent Changes]
 ```
 
 ## Memory Types
 
-### 1. Semantic Memory (Decisions & Architecture)
-- **Purpose**: Long-term storage of project decisions and architecture
+### 1. Semantic Memory (Project Knowledge)
+- **Purpose**: Long-term storage of project knowledge and patterns
 - **Location**: `.context/decisions/`
 - **Contains**:
   - Architecture decisions
@@ -47,17 +47,17 @@ graph TD
   - Design patterns
   - System constraints
   - Implementation choices
-  - Agent knowledge base
-  - Conductor configurations
+  - Best practices
+  - Project standards
 - **When Used**: 
   - Making architectural decisions
   - Technical planning
   - System design
   - Implementation guidance
-  - Agent role definition
-  - Conductor orchestration
+  - Pattern recognition
+  - Standard enforcement
 
-### 2. Episodic Memory (Project History)
+### 2. Episodic Memory (Development History)
 - **Purpose**: Record of project events, decisions, and their contexts
 - **Location**: `.context/sessions/`
 - **Contains**:
@@ -66,17 +66,17 @@ graph TD
   - Decision contexts
   - Implementation history
   - Debugging sessions
-  - Agent interactions
-  - Feedback cycles
+  - Learning outcomes
+  - Progress tracking
 - **When Used**:
   - Learning from past decisions
   - Understanding problem contexts
   - Tracking project evolution
   - Debugging similar issues
-  - Improving agent performance
+  - Improving processes
   - Refining workflows
 
-### 3. Procedural Memory (Task Management)
+### 3. Procedural Memory (Implementation Steps)
 - **Purpose**: Managing active development and processes
 - **Location**: `.context/tasks/`
 - **Contains**:
@@ -85,15 +85,15 @@ graph TD
   - Testing procedures
   - Deployment processes
   - Maintenance routines
-  - Agent workflows
   - Validation rules
+  - Quality checks
 - **When Used**:
   - Task execution
   - Process following
   - Implementation guidance
   - Testing procedures
-  - Agent task assignment
-  - Workflow orchestration
+  - Quality assurance
+  - Progress tracking
 
 ### 4. Working Memory (Current Focus)
 - **Purpose**: Maintaining immediate context and focus
@@ -104,339 +104,131 @@ graph TD
   - Current challenges
   - Recent changes
   - Open questions
-  - Active agent states
-  - Current feedback
+  - Current status
+  - Next steps
 - **When Used**:
   - Current development
   - Active problem-solving
   - Immediate decisions
   - Context switching
-  - Agent coordination
-  - State management
+  - Progress updates
+  - Status tracking
 
 ## Directory Structure
 
 ```
 .context/
-├── AI_INSTRUCTIONS.md     # Framework instructions
-├── current_state.md      # Working Memory
-├── decisions/           # Semantic Memory
-├── plan/               # Project Planning
-│   ├── README.md       # Planning overview
-│   ├── ai_conductor.json # Conductor config
-│   ├── agents.mmd      # Agent definitions
-│   ├── workflow.mmd    # Process flow
-│   ├── feedback.mmd    # Refinement system
-│   └── document_states.mmd # State machine
-├── roadmap.md          # Project Direction
-├── sessions/           # Episodic Memory
-└── tasks/              # Procedural Memory
-    ├── active/
-    ├── completed/
-    ├── hold/
-    └── planned/
+├── plan/
+│   ├── README.md           # Planning overview
+│   ├── document_states.mmd # Document workflow
+│   └── workflow.mmd       # Planning workflow
+├── current_state.md       # Working memory
+├── roadmap.md            # Project direction
+├── tasks/
+│   ├── TEMPLATE.md       # Task template
+│   ├── active/          # Current tasks
+│   ├── planned/         # Future tasks
+│   ├── hold/           # Blocked tasks
+│   └── completed/      # Finished tasks
+├── sessions/
+│   └── TEMPLATE.md      # Session log template
+└── decisions/
+    └── TEMPLATE.md      # Decision record template
 ```
 
-## Memory Integration with AI Conductor
-
-### Agent Memory Management
-```mermaid
-graph TD
-    AC[AI Conductor] -->|Manages| SM[Semantic Memory]
-    AC -->|Records| EM[Episodic Memory]
-    AC -->|Coordinates| PM[Procedural Memory]
-    AC -->|Updates| WM[Working Memory]
-
-    SM -->|Knowledge Base| Agents
-    EM -->|Learning| Agents
-    PM -->|Tasks| Agents
-    WM -->|State| Agents
-
-    Agents -->|Updates| WM
-    Agents -->|Decisions| SM
-    Agents -->|History| EM
-    Agents -->|Progress| PM
-```
-
-### Memory Flow with Agents
-```mermaid
-sequenceDiagram
-    participant AC as AI Conductor
-    participant WM as Working Memory
-    participant SM as Semantic Memory
-    participant EM as Episodic Memory
-    participant PM as Procedural Memory
-    participant AG as Agents
-
-    Note over AC,AG: Session Start
-    AC->>AG: Assign Roles
-    SM->>AG: Load Knowledge
-    EM->>AG: Load Context
-    PM->>AG: Assign Tasks
-
-    Note over AC,AG: During Development
-    AG->>WM: Update State
-    AG->>PM: Report Progress
-    AG->>EM: Record Actions
-    AG->>SM: Store Decisions
-
-    Note over AC,AG: Session End
-    AC->>EM: Save History
-    AC->>PM: Update Tasks
-    AC->>SM: Update Knowledge
-    AC->>WM: Clear State
-```
-
-## Memory Interaction
-
-### Command Integration
-Different commands interact with specific memory types:
-- `/aegis start`: Loads and processes all memory types
-- `/aegis save`: Updates all relevant memory types
-- `/aegis status`: Focuses on working memory
-- `/aegis task`: Focuses on procedural memory
-- `/aegis context`: Quick working memory refresh
+## Memory Integration
 
 ### Memory Flow
 ```mermaid
-sequenceDiagram
-    participant WM as Working Memory
-    participant SM as Semantic Memory
-    participant EM as Episodic Memory
-    participant PM as Procedural Memory
+graph TD
+    Start([aegis start]) -->|Load| SM[Semantic Memory]
+    Start -->|Process| EM[Episodic Memory]
+    Start -->|Track| PM[Procedural Memory]
+    Start -->|Update| WM[Working Memory]
 
-    Note over WM,PM: Session Start
-    SM->>WM: Load project decisions
-    EM->>WM: Load recent history
-    PM->>WM: Load active tasks
+    SM -->|Knowledge| Implementation[Implementation]
+    EM -->|History| Implementation
+    PM -->|Tasks| Implementation
+    WM -->|Context| Implementation
 
-    Note over WM,PM: During Development
-    WM->>PM: Update task progress
-    WM->>EM: Record decisions
-    WM->>SM: Update decisions
+    Implementation -->|Changes| WM
+    Implementation -->|Decisions| SM
+    Implementation -->|Progress| EM
+    Implementation -->|Updates| PM
 
-    Note over WM,PM: Session End
-    WM->>EM: Save session history
-    WM->>PM: Update task status
-    WM->>SM: Update project decisions
+    WM -->|Save| Save([aegis save])
+    PM -->|Status| Save
+    EM -->|Record| Save
+    SM -->|Update| Save
 ```
 
-### Memory Type Usage
-```mermaid
-graph TB
-    CS[current_state.md]
-    S[sessions/*.md]
-    T[tasks/*.md]
-    D[decisions/*.md]
-    P[planning/*.md]
-    
-    CS --> |"Semantic + Working"| K[Knowledge]
-    S --> |"Episodic + Working"| H[History]
-    T --> |"Procedural + Working"| W[Workflow]
-    D --> |"Semantic + Episodic"| A[Architecture]
-    P --> |"All Memory Types"| PL[Project Plan]
-    
-    K --> C[Context]
-    H --> C
-    W --> C
-    A --> C
-    PL --> C
-    C --> R[Response]
-```
+## Command Integration
+
+Different commands interact with specific memory types:
+
+### 1. `/aegis start`
+- Loads all memory types
+- Processes project context
+- Sets up working memory
+- Initializes current state
+
+### 2. `/aegis save`
+- Updates working memory
+- Records session progress
+- Updates task status
+- Stores decisions
+
+### 3. `/aegis status`
+- Shows working memory
+- Displays current focus
+- Lists recent changes
+- Reports progress
+
+### 4. `/aegis task`
+- Focuses on procedural memory
+- Shows task details
+- Lists implementation steps
+- Tracks progress
+
+### 5. `/aegis context`
+- Quick working memory refresh
+- Shows current focus
+- Lists active tasks
+- Displays status
+
+### 6. `/aegis plan`
+- Creates/updates planning_document.md
+- Documents project goals
+- Records technical decisions
+- Defines implementation steps
 
 ## Best Practices
 
-### 1. Memory Organization
-- Keep related information together
-- Use consistent naming conventions
-- Maintain clear hierarchies
-- Regular cleanup of outdated information
-
-### 2. Memory Updates
-- Save significant changes
-- Document important decisions
-- Update task progress regularly
-- Maintain clear contexts
-
-### 3. Memory Usage
-- Reference relevant history
-- Build on existing knowledge
-- Follow established processes
-- Maintain focus
-
-## Common Issues and Solutions
-
-### 1. Context Loss
-- **Problem**: Losing track of current context
-- **Solution**: Use `/aegis context` for quick refresh
-
-### 2. Information Overload
-- **Problem**: Too much information to process
-- **Solution**: Focus on relevant memory types
-
-### 3. State Inconsistency
-- **Problem**: Memory types out of sync
-- **Solution**: Regular use of `/aegis save`
-
-## Tips for Effective Use
-
 1. **Regular Updates**
-   - Save after significant changes
-   - Document decisions immediately
-   - Update task status regularly
-   - Maintain clear contexts
+   - Save progress frequently
+   - Document decisions
+   - Update task status
+   - Record sessions
 
-2. **Organized Structure**
-   - Follow directory structure
-   - Use templates
-   - Maintain hierarchies
-   - Clean up regularly
+2. **Clear Context**
+   - Keep current state focused
+   - Document decisions clearly
+   - Link related information
+   - Track dependencies
 
-3. **Effective Retrieval**
-   - Use specific commands
-   - Reference relevant contexts
-   - Build on existing knowledge
-   - Maintain clear links
+3. **Effective Planning**
+   - Document goals clearly
+   - Define clear steps
+   - Track progress
+   - Update regularly
 
-## Advanced Usage
+4. **Memory Management**
+   - Organize by type
+   - Cross-reference related items
+   - Clean up completed tasks
+   - Archive old sessions
 
-### 1. Memory Templates
-The framework provides templates for:
-- Task documentation
-- Session records
-- Decision logs
-- Context updates
-
-### 2. Memory Integration
-- Integration with version control
-- CI/CD pipeline integration
-- Documentation generation
-- Analytics and insights
-
-### 3. Memory Optimization
-- Regular cleanup
-- Archive old sessions
-- Update references
-- Maintain relationships
-
-### 4. Agent Memory Integration
-- **Role-based Access**:
-  - Each agent type has specific memory access patterns
-  - Memory permissions based on agent role
-  - State persistence per agent
-
-- **State Management**:
-  - Agent state tracking in working memory
-  - Knowledge sharing between agents
-  - Context preservation across sessions
-
-- **Memory Optimization**:
-  - Agent-specific caching
-  - Selective memory loading
-  - State cleanup on role change
-
-### 5. Memory Performance
-- **Caching Strategies**
-  ```yaml
-  cache_config:
-    semantic:
-      ttl: 24h
-      max_size: 100MB
-      priority: high
-    episodic:
-      ttl: 12h
-      max_size: 50MB
-      priority: medium
-    procedural:
-      ttl: 6h
-      max_size: 25MB
-      priority: high
-    working:
-      ttl: 1h
-      max_size: 10MB
-      priority: critical
-  ```
-
-- **Access Patterns**
-  ```yaml
-  access_patterns:
-    semantic:
-      read_ratio: 0.8
-      write_ratio: 0.2
-      batch_size: 100
-    episodic:
-      read_ratio: 0.6
-      write_ratio: 0.4
-      batch_size: 50
-    procedural:
-      read_ratio: 0.7
-      write_ratio: 0.3
-      batch_size: 25
-    working:
-      read_ratio: 0.9
-      write_ratio: 0.1
-      batch_size: 10
-  ```
-
-- **Cleanup Rules**
-  ```yaml
-  cleanup_rules:
-    semantic:
-      archive_after: 90d
-      delete_after: never
-      compress_after: 30d
-    episodic:
-      archive_after: 30d
-      delete_after: 365d
-      compress_after: 7d
-    procedural:
-      archive_after: 14d
-      delete_after: 90d
-      compress_after: 3d
-    working:
-      archive_after: 1d
-      delete_after: 7d
-      compress_after: 6h
-  ```
-
-### 6. Memory Monitoring
-- **Metrics**
-  - Access patterns
-  - Cache hit rates
-  - Memory usage
-  - Agent interactions
-  - State transitions
-
-- **Alerts**
-  - Memory pressure
-  - Cache invalidation
-  - Access violations
-  - State conflicts
-  - Reference errors
-
-- **Optimization**
-  - Automatic cleanup
-  - Cache warming
-  - Access pattern tuning
-  - State compaction
-  - Reference pruning
-
-## Tips for Success
-
-1. **Regular Updates**
-   - Save after significant changes
-   - Document decisions immediately
-   - Update task status regularly
-   - Maintain clear contexts
-
-2. **Organized Structure**
-   - Follow directory structure
-   - Use templates
-   - Maintain hierarchies
-   - Clean up regularly
-
-3. **Effective Retrieval**
-   - Use specific commands
-   - Reference relevant contexts
-   - Build on existing knowledge
-   - Maintain clear links
+For more information, see:
+- [Core Files Guide](core_files.md)
+- [Cross-Referencing](cross_referencing.md)
+- [Templates Guide](templates.md)

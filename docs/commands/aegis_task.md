@@ -11,96 +11,56 @@ The `task` command focuses on procedural memory, providing detailed information 
 ## Workflow
 
 ```mermaid
-sequenceDiagram
-    actor U as User
-    participant AI as AI Assistant
-    participant T as Tasks
-    participant CS as Current State
-    participant D as Decisions
-    participant P as Plan
+graph TD
+    A[Command Start] --> B[Focus on Tasks]
+    B --> C[Show Details]
+    C --> D[Show Progress]
+    D --> E[Show Blockers]
 
-    U->>AI: /aegis task
-
-    rect rgb(240, 245, 255)
-        Note over AI,T: Task Loading Phase
-        AI->>T: Load task directories
-        par Task Status Check
-            T->>T: Check active tasks
-            T->>T: Check planned tasks
-            T->>T: Check blocked tasks
-            T->>T: Check completed tasks
-        end
+    subgraph "Task Focus"
+        B --> B1[Active Tasks]
+        B --> B2[Current State]
+        B --> B3[Dependencies]
     end
 
-    rect rgb(245, 240, 255)
-        Note over AI,CS: Context Check
-        AI->>CS: Get current focus
-        AI->>D: Get related decisions
-        AI->>P: Get plan alignment
+    subgraph "Task Details"
+        C --> C1[Description]
+        C --> C2[Requirements]
+        C --> C3[Resources]
     end
 
-    rect rgb(255, 240, 245)
-        Note over AI,U: Task Overview
-        AI->>U: Active Tasks
-        Note over AI,U: - Priority
-        Note over AI,U: - Progress
-        Note over AI,U: - Dependencies
-    end
-
-    rect rgb(240, 255, 245)
-        Note over AI,U: Implementation Details
-        AI->>U: Current Steps
-        AI->>U: Blockers
-        AI->>U: Required Resources
-    end
-
-    rect rgb(245, 255, 240)
-        Note over AI,U: Related Information
-        AI->>U: Linked Decisions
-        AI->>U: Plan Alignment
-        AI->>U: Dependencies
-    end
-
-    opt Task Management
-        U->>AI: Update task status
-        AI->>T: Move task file
-        AI->>CS: Update current state
+    subgraph "Progress"
+        D --> D1[Status]
+        D --> D2[Steps]
+        D --> D3[Validation]
     end
 ```
 
-## Process Details
+## Process Steps
 
-1. **Task Loading Phase**
-   - Loads all task directories
-   - Parallel status checks:
-     - Active tasks in progress
-     - Planned future tasks
-     - Tasks on hold/blocked
-     - Recently completed tasks
+1. **Focus on Tasks**
+   - Load active tasks
+   - Check current state
+   - Review dependencies
+   - Gather resources
 
-2. **Context Check**
-   - Current development focus
-   - Related architectural decisions
-   - Alignment with project plan
-   - Dependencies and requirements
+2. **Show Task Details**
+   - Task description
+   - Requirements
+   - Resources needed
+   - Dependencies
 
-3. **Task Overview**
-   - Priority levels
-   - Progress indicators
-   - Dependency chains
-   - Resource requirements
+3. **Present Progress**
+   - Implementation status
+   - Completed steps
+   - Validation state
+   - Quality checks
 
-4. **Implementation Details**
-   - Current implementation steps
-   - Technical requirements
-   - Blocking issues
-   - Resource allocation
-
-5. **Related Information**
-   - Linked decisions
-   - Plan alignment status
-   - External dependencies
-   - Required resources
+4. **List Blockers**
+   - Dependencies
+   - Resources
+   - Technical issues
+   - External factors
 
 ## Task Organization
 
@@ -116,142 +76,70 @@ tasks/
 
 ### Task States
 1. **Active**
-   - Currently in development
-   - Being implemented
+   - In development
    - Under review
-   - In testing
+   - Testing
+   - Validation
 
 2. **Planned**
-   - Ready for development
-   - Dependencies resolved
-   - Resources available
+   - Ready
+   - Dependencies met
+   - Resources ready
    - Prioritized
 
 3. **Hold**
-   - Blocked by dependencies
-   - Awaiting resources
-   - Technical limitations
-   - Strategic delays
+   - Blocked
+   - Waiting
+   - Limited
+   - Delayed
 
 4. **Completed**
-   - Implementation done
-   - Tests passed
-   - Documentation updated
-   - Reviewed and merged
-
-## Task Components
-
-### Required Fields
-- Title
-- Description
-- Priority
-- Status
-- Dependencies
-- Resources
-
-### Optional Fields
-- Technical details
-- Implementation steps
-- Testing requirements
-- Documentation needs
-- Review criteria
-
-## Common Operations
-
-1. **Task Review**
-   - Check progress
-   - Verify dependencies
-   - Review blockers
-   - Update status
-
-2. **Task Management**
-   - Create new tasks
-   - Update status
-   - Move between states
-   - Archive completed
-
-3. **Task Planning**
-   - Set priorities
-   - Allocate resources
-   - Schedule work
-   - Plan dependencies
-
-## Best Practices
-
-1. **Task Creation**
-   - Use clear titles
-   - Detailed descriptions
-   - Specific requirements
-   - Clear acceptance criteria
-
-2. **Task Updates**
-   - Regular progress updates
-   - Clear blocker documentation
-   - Dependency tracking
-   - Status changes
-
-3. **Task Organization**
-   - Logical grouping
-   - Clear priorities
-   - Maintained dependencies
-   - Updated status
-
-## Tips
-
-1. **Effective Management**
-   - Regular reviews
-   - Clear communication
-   - Dependency tracking
-   - Progress monitoring
-
-2. **Status Updates**
-   - Frequent updates
-   - Clear progress markers
-   - Blocker documentation
-   - Dependency status
-
-3. **Task Flow**
-   - Smooth transitions
-   - Clear handoffs
-   - Progress tracking
-   - Status clarity
+   - Done
+   - Tested
+   - Documented
+   - Reviewed
 
 ## Common Issues
 
-1. **Task Clarity**
-   - Unclear requirements
-   - Missing details
-   - Ambiguous goals
-   - Undefined scope
+1. **Task Details**
+   - Clear requirements
+   - Complete info
+   - Defined goals
+   - Set scope
 
-2. **Dependency Management**
-   - Circular dependencies
-   - Missing requirements
-   - Blocked progress
-   - Resource conflicts
+2. **Dependencies**
+   - Track chains
+   - Note requirements
+   - Watch progress
+   - Handle conflicts
 
-3. **Status Tracking**
-   - Outdated status
-   - Missing updates
-   - Unclear progress
-   - Lost context
+3. **Status**
+   - Keep current
+   - Show progress
+   - Note changes
+   - Maintain context
 
-## Next Steps
+## Best Practices
 
-1. **After Task Review**
-   - Update progress
-   - Address blockers
-   - Check dependencies
-   - Plan next actions
+1. **Task Management**
+   - Clear titles
+   - Good descriptions
+   - Track progress
+   - Note blockers
 
-2. **Task Updates**
-   - Document changes
+2. **Updates**
+   - Regular status
+   - Document blocks
+   - Track deps
+   - Show changes
+
+3. **Organization**
+   - Group logically
+   - Set priority
+   - Track deps
    - Update status
-   - Move between states
-   - Update dependencies
 
-3. **Planning**
-   - Review priorities
-   - Allocate resources
-   - Schedule work
-   - Set milestones
+For more information, see:
+- [Memory System](../memory_system.md)
+- [Getting Started](../getting_started.md)
+- [Core Files](../core_files.md)

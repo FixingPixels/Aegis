@@ -1,63 +1,63 @@
 # Getting Started with Aegis
 
-Welcome to Aegis! This guide will help you get started with the zero-dependency framework for AI-assisted development. Aegis is designed to work seamlessly with any AI code assistant while providing structured memory management and multi-agent planning capabilities.
+Welcome to Aegis! This guide will help you get started with the zero-dependency framework for AI-assisted development. Aegis provides structured memory management and project planning capabilities.
 
 ## Prerequisites
 
-- **An AI-powered code assistant** (e.g., GitHub Copilot, Codeium, Cursor, Amazon CodeWhisperer)  
+- **An AI-powered code assistant** (e.g., GitHub Copilot, Codeium, Amazon CodeWhisperer)  
 - **Git** (optional - for version control)  
 - **That's it!** Aegis has no other dependencies.
+
+## Command Rules
+
+Aegis uses text-based commands that start with `/aegis`. Here are the core rules:
+
+1. **Case-insensitive**: Commands work regardless of case
+2. **Must start with `/aegis`**: All commands begin with this prefix
+3. **Can be used anytime**: Commands work at any point during a session
+4. **Maintains context**: Context is preserved between commands
 
 ## Quick Start
 
 ### Step 1: Initialize Aegis in Your Project
 
-To begin, copy the `.context` directory structure to your project:
+You can initialize Aegis in two ways:
 
-> **Note**: The directory is named ".context" with a leading dot. Make sure to include the dot when copying or referencing the directory.
-
+1. In the current directory:
 ```bash
 /aegis init .
 ```
 
-This command creates the following directory structure in your project:
+2. In a new project directory:
+```bash
+/aegis init my-project
+```
 
+This creates the following directory structure:
 ```
 .context/
-├── planning/            # Project planning
-├── current_state.md     # Working Memory
-├── decisions/           # Semantic Memory
-├── roadmap.md           # Project Direction
-├── sessions/            # Episodic Memory
-└── tasks/               # Procedural Memory
-    ├── active/
-    ├── completed/
-    ├── hold/
-    └── planned/
+├── AI_INSTRUCTIONS.md     # Framework instructions
+├── plan/
+│   ├── README.md           # Planning overview
+│   ├── document_states.mmd # Document workflow
+│   └── workflow.mmd       # Planning workflow
+├── current_state.md       # Working memory
+├── roadmap.md            # Project direction
+├── tasks/
+│   ├── TEMPLATE.md       # Task template
+│   ├── active/          # Current tasks
+│   ├── planned/         # Future tasks
+│   ├── hold/           # Blocked tasks
+│   └── completed/      # Finished tasks
+├── sessions/
+│   └── TEMPLATE.md      # Session log template
+└── decisions/
+    └── TEMPLATE.md      # Decision record template
 ```
 
-### Step 2: Configure AI Conductor
+### Step 2: Set Up Global Rules for Your AI Assistant
 
-Aegis uses an AI Conductor to orchestrate specialized AI agents for enhanced project planning and development:
-
-```mermaid
-graph TD
-    Conductor[AI Conductor] -->|Guides| PM[Product Manager]
-    Conductor -->|Assigns| TL[Tech Lead]
-    Conductor -->|Delegates| UX[UX Designer]
-    Conductor -->|Oversees| QA[QA Specialist]
-    Conductor -->|Manages| DevOps[DevOps Engineer]
-```
-
-The conductor configuration is stored in `.context/plan/ai_conductor.json`. Key features:
-- Specialized agent roles for different aspects of development
-- Structured workflow for project planning
-- Integrated feedback system
-- Document lifecycle management
-
-### Step 3: Set Up Global Rules for Your AI Assistant
-
-Aegis uses text-based commands to guide your AI assistant. To ensure seamless integration, you'll need to configure global rules for your specific AI tool. Here's how:
+Configure your AI assistant to recognize Aegis commands:
 
 #### **Cursor**
 1. Copy the contents of [COMMANDS.md](COMMANDS.md) to Cursor's **Rules for AI**.  
@@ -77,14 +77,6 @@ Aegis uses text-based commands to guide your AI assistant. To ensure seamless in
    /aegis start
    ```
 
-#### **Cline**
-1. Rename [COMMANDS.md](COMMANDS.md) to `.clinerules`.  
-2. Start Aegis with:  
-   ```bash
-   /aegis init .
-   /aegis start
-   ```
-
 #### **Aider**
 1. Save the commands in `aegis_commands.md` in your project root.  
 2. Configure Aider to load the commands automatically by editing `.aider.conf.yml`:  
@@ -98,174 +90,117 @@ Aegis uses text-based commands to guide your AI assistant. To ensure seamless in
    /aegis start
    ```
 
-> For other AI tools, simply copy the commands to your assistant's rule configuration, ensuring it recognizes `/aegis` commands.
+> For other AI tools, copy the commands to your assistant's rule configuration, ensuring it recognizes `/aegis` commands.
 
-### Step 4: Start Your First Session
+### Step 3: Start Your First Session
 
-Once set up, you can start a new session:
+Begin a new development session:
 
 ```bash
 /aegis start
 ```
 
-This command:  
-- Loads your project's context.  
-- Initializes the memory systems.  
-- Prepares for development.  
-- Displays the current project state.
+This command:
+1. Reads AI_INSTRUCTIONS.md
+2. Follows Session Start Flow
+3. Loads and processes all context by memory type
+4. Creates/updates roadmap.md based on planning_document.md
+5. Presents organized summary of:
+   - Project knowledge (semantic)
+   - Active tasks (procedural)
+   - Current focus (working)
+   - Recent history (episodic)
+6. Indicates readiness for requests
 
 ## Memory System Overview
 
-Aegis uses a cognitive-inspired memory system integrated with the AI Conductor:
+Aegis uses a cognitive-inspired memory system:
 
-1. **Semantic Memory** (Long-term Knowledge)  
+1. **Semantic Memory** (Project Knowledge)  
    - Architecture decisions
-   - Technical documentation
-   - Implementation standards
-   - Agent knowledge base
+   - Technical decisions
+   - Design patterns
+   - Implementation choices
+   - Best practices
+   - Project standards
 
-2. **Episodic Memory** (Project History)  
+2. **Episodic Memory** (Development History)  
    - Development sessions
+   - Problem solutions
    - Decision contexts
    - Implementation history
-   - Agent interactions
+   - Learning outcomes
+   - Progress tracking
 
-3. **Procedural Memory** (Task Management)  
-   - Tasks and workflows
+3. **Procedural Memory** (Implementation Steps)  
+   - Active tasks
    - Implementation steps
-   - Agent processes
-   - Validation procedures
+   - Testing procedures
+   - Deployment processes
+   - Validation rules
+   - Quality checks
 
 4. **Working Memory** (Current Focus)  
+   - Active development
    - Immediate goals
    - Current challenges
    - Recent changes
-   - Active agent states
+   - Open questions
+   - Next steps
 
 ## Essential Commands
 
-Here are the key commands you'll use with Aegis:
+Here are the key commands with examples:
 
-| Command | Description |
-|---------|-------------|
-| `/aegis init <path>` | Initialize Aegis in your project |
-| `/aegis start` | Start a new development session |
-| `/aegis save` | Save the current project state |
-| `/aegis status` | Check project progress and status |
-| `/aegis task` | Focus on specific tasks or workflows |
-| `/aegis context` | Refresh the current project context |
-| `/aegis plan` | Collaborate with AI for project planning |
+### 1. Project Planning
+```bash
+# Create or update planning document
+/aegis plan
 
-For a full list of commands and their descriptions, check the [Command Reference](./commands/).
+# Planning with requirements in planning_document.md:
+- Must support mobile and desktop
+- Need offline capabilities
+- User authentication required
+- Data must be encrypted
 
-## Agent System Overview
+# Planning with technical stack in planning_document.md:
+- Python backend
+- React frontend
+- PostgreSQL database
+- AWS deployment
 
-Aegis uses specialized AI agents coordinated by the AI Conductor:
-
-1. **Product Manager (AGENT-PM)**
-   - Requirements gathering
-   - User story development
-   - Feature prioritization
-   - Project planning
-   - Memory Access: [semantic, working]
-
-2. **Tech Lead (AGENT-TL)**
-   - Technical architecture
-   - Implementation guidance
-   - Code review
-   - Technical documentation
-   - Memory Access: [semantic, procedural]
-
-3. **UX Designer (AGENT-UX)**
-   - User experience design
-   - Interface mockups
-   - Interaction flows
-   - Usability testing
-   - Memory Access: [semantic, working]
-
-4. **QA Specialist (AGENT-QA)**
-   - Test planning
-   - Quality assurance
-   - Validation procedures
-   - Bug tracking
-   - Memory Access: [procedural]
-
-5. **DevOps Engineer (AGENT-DEVOPS)**
-   - Deployment planning
-   - Infrastructure setup
-   - CI/CD pipelines
-   - Monitoring
-   - Memory Access: [procedural]
-
-### Agent States
-- **active**: Currently working on tasks
-- **standby**: Ready but not engaged
-- **blocked**: Waiting for dependencies
-- **completed**: Finished current tasks
-
-### Memory Integration
-Each agent has specific memory access patterns:
-```yaml
-memory_permissions:
-  semantic:
-    read: [AGENT-PM, AGENT-TL, AGENT-UX]
-    write: [AGENT-PM, AGENT-TL]
-  working:
-    read: [all]
-    write: [AGENT-PM]
-  procedural:
-    read: [AGENT-TL, AGENT-QA, AGENT-DEVOPS]
-    write: [AGENT-TL]
-  episodic:
-    read: [all]
-    write: [AGENT-PM, AGENT-TL]
+# Planning with timeline in planning_document.md:
+- Beta launch in 6 weeks
+- Security audit in week 4
+- User testing in week 5
 ```
 
-## Best Practices
+### 2. Development Flow
+```bash
+# Start a session
+/aegis start
 
-1. **Set Up Rules for Your AI Assistant**  
-   Ensure your assistant recognizes `/aegis` commands for seamless interaction.
+# Check status
+/aegis status
 
-2. **Use the AI Conductor**  
-   - Let it guide specialized agents
-   - Follow the structured planning process
-   - Engage with feedback loops
-   - Track document lifecycles
+# View task details
+/aegis task
 
-3. **Save Progress Frequently**  
-   Use `/aegis save` to maintain memory state and agent context.
+# Quick context refresh
+/aegis context
 
-4. **Document Decisions**  
-   Keep the semantic memory updated with architecture and design choices.
+# Save progress
+/aegis save
+```
 
-5. **Update Context**  
-   Refresh working memory and agent states with `/aegis context`.
+## Next Steps
 
-## Common Issues and Solutions
+1. Review the [Memory System](memory_system.md) guide
+2. Learn about [Task Management](tasks.md)
+3. Understand [Decision Records](decisions.md)
+4. Explore [Session Logs](sessions.md)
 
-### 1. Framework Can't Find Context
-**Cause**: `.context` directory is missing or misconfigured.  
-**Solution**: Verify the `.context` directory structure.
-
-### 2. AI Assistant Doesn't Recognize Commands
-**Cause**: Global rules not configured.  
-**Solution**: Check the instructions for your specific AI tool in [Step 3](#step-3-set-up-global-rules-for-your-ai-assistant).
-
-### 3. Losing Track of Tasks
-**Cause**: Task updates not saved.  
-**Solution**: Use `/aegis save` after updates and `/aegis status` to review progress.
-
-### 4. Agent Communication Issues
-**Cause**: Misconfigured AI Conductor or agent roles.  
-**Solution**: Check `.context/plan/ai_conductor.json` and agent configurations.
-
-### 5. Memory Integration Problems
-**Cause**: Memory types not properly linked to agent states.  
-**Solution**: Review memory system integration in AI Conductor configuration.
-
-## Getting Help
-
-- Review the [Memory System](./memory_system.md) documentation
-- Check the [Command Reference](./commands/) for detailed usage
-- Explore the [Planning System](./planning/overview.md) for AI-guided planning
-- Read about [Agent Integration](./planning/agents.md) for AI Conductor details
+For more detailed information, check out:
+- [Core Files Guide](core_files.md)
+- [Cross-Referencing](cross_referencing.md)
+- [Templates Guide](templates.md)
