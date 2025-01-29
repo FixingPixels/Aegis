@@ -138,7 +138,7 @@ Requirements:
 - Offline capabilities
 - User authentication
 ```
-The planning document will define clear objectives, technical decisions, implementation steps, and success criteria.
+The planning document will define clear objectives, technical decisions, implementation steps, and success criteria. Read more about the `/aegis plan` command [here](./docs/planning/README.md).
 
 ### `/aegis start`
 Begins a new development session by:
