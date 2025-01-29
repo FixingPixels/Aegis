@@ -12,6 +12,20 @@ Aegis (pronounced **EE-jis** or **AY-jis**) is a simple, flexible framework desi
 - **Lightweight and Portable**: All your project's structure and data are stored in plain text files that you can share, back up, or edit anywhere.
 - **Beginner-Friendly**: Start with just a few simple commands and let Aegis guide you through your project.
 
+### Important Considerations
+
+While Aegis helps structure AI-assisted development, it's essential to remember:
+
+- **Not a Magic Solution**: Aegis is a framework that helps organize AI-assisted development, but it doesn't replace good development practices or human oversight.
+
+- **Review Generated Content**: Always review files created in the `.context` directory just as you would review code in your main codebase. AI assistants can make mistakes or misunderstand requirements.
+
+- **Maintain Control**: While AI assistants can help with planning and implementation, you should remain in control of critical decisions about your project's architecture, security, and design.
+
+- **Regular Verification**: Periodically review task progress, decision records, and session logs to ensure they align with your project's goals and requirements.
+
+- **Security First**: Never commit sensitive information (like API keys or credentials) to the `.context` directory. Treat it with the same security considerations as your main codebase.
+
 ### What Can Aegis Do For You?
 
 - **Stay Organized**: Track tasks, progress, and decisions effortlessly.  
