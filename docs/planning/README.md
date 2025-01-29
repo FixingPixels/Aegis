@@ -31,7 +31,7 @@ The Aegis framework implements a sophisticated multi-agent planning system orche
 
 ## Quick Start
 
-1. Initiate planning with `/aide plan`
+1. Initiate planning with `/aegis plan`
 2. Follow the AI Conductor's guidance
 3. Provide feedback when requested
 4. Review and approve the final plan
@@ -52,7 +52,17 @@ Initiates the basic planning process with the AI Conductor.
 ```
 Provides immediate project context to guide the planning process.
 
-### 3. Planning with Requirements
+### 3. Planning from a File
+```bash
+/aegis plan @idea.txt
+```
+Provides the AI Conductor with detailed context from any plain text or markdown file. This is useful when you want to:
+- Write out your ideas in detail first
+- Share planning input from team members
+- Include complex requirements or specifications
+- Reference existing documentation
+
+### 4. Planning with Requirements
 ```bash
 /aegis plan
 Requirements:
@@ -63,7 +73,7 @@ Requirements:
 ```
 Starts planning with specific technical requirements.
 
-### 4. Planning with Business Goals
+### 5. Planning with Business Goals
 ```bash
 /aegis plan
 Business Goals:
@@ -74,7 +84,7 @@ Business Goals:
 ```
 Initiates planning with business objectives.
 
-### 5. Planning with Technical Stack
+### 6. Planning with Technical Stack
 ```bash
 /aegis plan
 Tech Stack:
@@ -85,7 +95,7 @@ Tech Stack:
 ```
 Starts planning with technical stack constraints.
 
-### 6. Planning with Timeline Focus
+### 7. Planning with Timeline Focus
 ```bash
 /aegis plan
 Timeline critical:
@@ -95,7 +105,7 @@ Timeline critical:
 ```
 Emphasizes timeline and milestone requirements.
 
-### 7. Planning with Resource Constraints
+### 8. Planning with Resource Constraints
 ```bash
 /aegis plan
 Available Resources:
@@ -106,7 +116,7 @@ Available Resources:
 ```
 Starts planning with resource considerations.
 
-### 8. Planning with Integration Requirements
+### 9. Planning with Integration Requirements
 ```bash
 /aegis plan
 Must integrate with:
@@ -144,9 +154,9 @@ Note: The AI Conductor and its specialized agents will use the provided context 
 ## Integration Points
 
 1. **Commands**
-   - `/aide plan`: Start planning process
-   - `/aide save`: Save planning state
-   - `/aide status`: Check planning progress
+   - `/aegis plan`: Start planning process
+   - `/aegis save`: Save planning state
+   - `/aegis status`: Check planning progress
 
 2. **Memory System**
    - Procedural memory for workflows
