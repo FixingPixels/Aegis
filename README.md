@@ -1,7 +1,15 @@
 # Aegis: The Zero-Dependency Framework for AI-Assisted Development
 
 **Welcome to Aegis!**  
-Aegis (pronounced **EE-jis** or **AY-jis**) is a simple, flexible framework designed to make your AI-powered projects smarter and more organized. Whether you're a developer or just starting out, Aegis helps you manage tasks, track progress, and plan efficiently—all using only text files. No special tools, no installations—just you, your ideas, and your favorite AI assistant.
+Aegis is a framework that transforms how developers work with AI coding assistants by introducing a structured memory system inspired by human cognition. Just as our brains organize information into different types of memory (semantic, procedural, episodic, and working), Aegis provides a similar structure for AI interactions.
+
+This organization enables your AI assistant to:
+- Maintain consistent project context across sessions
+- Access and update information in a natural, human-like way
+- Separate long-term project knowledge from active development tasks
+- Scale effectively as your project grows
+
+Unlike traditional approaches that store AI context in simple markdown files, Aegis provides a carefully designed directory structure and command system that mirrors how developers naturally think about and organize their work.
 
 > **Important**: All `/aegis` commands are meant to be typed in your AI assistant's chat window, not in the terminal. These commands help guide your AI assistant through project management tasks.
 
@@ -108,6 +116,25 @@ Once you've set up your environment, you're ready to start using Aegis! Open you
 
 That's it! Aegis will load your project's context, process its memory, and prepare everything for you to dive into development.
 
+## 🧠 Intelligent Memory System
+
+Aegis is inspired by how the human brain organizes information, giving your project structure and continuity:  
+
+- **Semantic Memory**: Retains long-term project knowledge, such as architecture decisions and key concepts.  
+- **Episodic Memory**: Tracks your development history, including progress, changes, and milestones.  
+- **Procedural Memory**: Manages workflows, implementation steps, and task validation.  
+- **Working Memory**: Keeps immediate tasks and goals front and center for active problem-solving.  
+
+This memory system ensures that your AI assistant stays informed and effective throughout the development lifecycle.
+
+### 🎭 Multi-Agent Planning
+
+At the heart of Aegis is the **AI Conductor**, which coordinates specialized agents to help you:
+
+- Plan your project's architecture.
+- Collaborate on problem-solving with expert agents.
+- Assess risks and refine strategies iteratively based on your feedback.
+
 ## 🛠️ Commands Overview
 
 Aegis uses simple yet powerful commands that you enter into your AI assistant's chat window (not your terminal). These commands help your AI assistant manage your project effectively. Here's a comprehensive guide to each command:
@@ -195,46 +222,8 @@ Performs a quick context refresh:
 
 For detailed information about each command, including workflows and best practices, see our [Command Reference](./docs/commands/).
 
-## 🧠 Intelligent Memory System
 
-Aegis is inspired by how the human brain organizes information, giving your project structure and continuity:  
 
-- **Semantic Memory**: Retains long-term project knowledge, such as architecture decisions and key concepts.  
-- **Episodic Memory**: Tracks your development history, including progress, changes, and milestones.  
-- **Procedural Memory**: Manages workflows, implementation steps, and task validation.  
-- **Working Memory**: Keeps immediate tasks and goals front and center for active problem-solving.  
-
-This memory system ensures that your AI assistant stays informed and effective throughout the development lifecycle.
-
-### 🎭 Multi-Agent Planning
-
-At the heart of Aegis is the **AI Conductor**, which coordinates specialized agents to help you:
-
-- Plan your project's architecture.
-- Collaborate on problem-solving with expert agents.
-- Assess risks and refine strategies iteratively based on your feedback.
-
-### 📊 Project Management Made Simple
-
-Aegis organizes your project with an intuitive file structure:
-
-```
-.context/
-├── planning/          # Project planning
-│   ├── initial_plan.md
-│   └── ai_conductor.json
-├── current_state.md   # Project knowledge
-├── roadmap.md         # Future direction
-├── tasks/             # Task management
-│   ├── active/        # Current tasks
-│   ├── completed/     # Finished tasks
-│   ├── planned/       # Future tasks
-│   └── hold/          # Blocked tasks
-├── decisions/         # Architecture decisions
-└── sessions/          # Development history
-```
-
-This structure keeps everything clear, accessible, and easy to maintain.
 
 ## 🌟 Best Practices
 
