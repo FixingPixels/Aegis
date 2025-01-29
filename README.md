@@ -52,6 +52,8 @@ That's it! Aegis creates a clear structure for your project, helping you track t
 
 The `/aegis plan` command focuses solely on helping you create or refine your project's `planning_document.md`. This document outlines your project's goals, architecture, and implementation approach. Once you're happy with your planning document, use `/aegis start` to begin a new development session - this is when tasks will be created and project state initialized based on your planning document.
 
+Read more about the `/aegis plan` command [here](./docs/planning/README.md).
+
 ### Ready to Get Started?
 
 - **[Step-by-Step Guide](./docs/getting_started.md)**: Walkthrough for beginners.  
