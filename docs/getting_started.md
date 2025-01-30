@@ -72,7 +72,7 @@ Configure your AI assistant to recognize Aegis commands:
    ```
 
 #### **Codeium**
-1. Copy the contents of [COMMANDS.md](COMMANDS.md) to Windsurf's **Global AI Rules**.  
+1. Copy the contents of [COMMANDS.md](../COMMANDS.md) to Windsurf's **Global AI Rules**.  
    Instructions are available [here](https://docs.codeium.com/windsurf/memories#global-rules).  
 2. Start Aegis with:  
    ```bash
