@@ -63,7 +63,7 @@ This creates the following directory structure:
 Configure your AI assistant to recognize Aegis commands:
 
 #### **Cursor**
-1. Copy the contents of [COMMANDS.md](COMMANDS.md) to Cursor's **Rules for AI**.  
+1. Copy the contents of [COMMANDS.md](../COMMANDS.md) to Cursor's **Rules for AI**.  
    Instructions are available [here](https://docs.cursor.com/context/rules-for-ai).  
 2. Start Aegis with:  
    ```bash
