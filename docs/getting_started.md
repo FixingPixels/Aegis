@@ -81,7 +81,7 @@ Configure your AI assistant to recognize Aegis commands:
    ```
 
 #### **Aider**
-1. Save the commands in `aegis_commands.md` in your project root.  
+1. Copy the contents of [COMMANDS.md](../COMMANDS.md) to `aegis_commands.md` and save it to your project root.  
 2. Configure Aider to load the commands automatically by editing `.aider.conf.yml`:  
    ```yaml
    # alone
