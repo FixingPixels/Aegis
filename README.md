@@ -173,12 +173,12 @@ All commands are typed in your AI assistant's chat window:
 
 ## 📚 Documentation
 
-- [Getting Started Guide](./docs/getting_started.md)
-- [Memory System](./docs/operations/memory_types.md)
-- [Command Reference](./docs/commands/README.md)
-- [Operation Patterns](./docs/operations/patterns.md)
-- [Task Management](./docs/tasks.md)
-- [Framework Structure](./docs/framework/structure.md)
+- [Getting Started Guide](https://fixing-pixels.gitbook.io/aegis-docs)
+- [Memory System](https://fixing-pixels.gitbook.io/aegis-docs/operations/memory_types)
+- [Command Reference](https://fixing-pixels.gitbook.io/aegis-docs/commands)
+- [Operation Patterns](https://fixing-pixels.gitbook.io/aegis-docs/operations)
+- [Task Management](https://fixing-pixels.gitbook.io/aegis-docs/tasks)
+- [Framework Structure](https://fixing-pixels.gitbook.io/aegis-docs/structure)
 
 ## 🤝 Contributing
 
