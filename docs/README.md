@@ -3,7 +3,6 @@
 <figure><img src=".gitbook/assets/aegis-logo.png" alt="" width="375"><figcaption></figcaption></figure>
 
 
-
 Welcome to Aegis! This guide will help you start using the zero-dependency framework for AI-assisted development. Aegis provides a structured approach to managing project information and collaborating with AI assistants.
 
 ## Prerequisites
@@ -18,8 +17,8 @@ Welcome to Aegis! This guide will help you start using the zero-dependency frame
 
 First, you need to set up the Aegis framework structure:
 
-1. Download the latest Aegis release package
-2.  Copy the `.context` directory to your project's root folder:
+1. Download the latest Aegis release package from the [releases page](https://github.com/FixingPixels/Aegis/releases)
+2. Copy the `.context` directory to your project's root folder:
 
     ```bash
     your-project/          # Your project root
