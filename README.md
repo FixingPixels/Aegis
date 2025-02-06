@@ -18,7 +18,7 @@ Aegis transforms AI-assisted development by providing a structured memory system
 
 ### 1. Set Up Framework Structure
 
-1. Download the Aegis framework package
+1. Download the Aegis framework package from the [releases page](https://github.com/FixingPixels/Aegis/releases)
 2. **IMPORTANT**: Copy the `.context` directory to your project root:
    ```bash
    your-project/          # Your project root
