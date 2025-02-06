@@ -1,49 +1,98 @@
 # Task Management
 
-The Aegis framework uses a structured task management system to track development activities and implementation details. This document explains how tasks are managed, validated, and integrated with the framework's operation patterns.
+The Aegis framework uses a structured task management system to track development activities and implementation details. Tasks can be created manually or automatically generated from planning documents. This document explains how tasks are managed, validated, and integrated with the framework's operation patterns.
 
 ## Overview
 
 Tasks in Aegis are organized into several key aspects:
 
-1. **Task Organization**
+1. **Task Creation**
+   - Automatic creation from planning phases
+   - Manual creation using templates
+   - Phase-based task organization
+   - Priority derived from timeline
+
+2. **Task Organization**
    - Tasks are stored in specific directories based on their status
-   - Each task has a unique timestamp-based ID for tracking
+   - Each task has a unique phase-based or timestamp-based ID
    - Tasks move between states as work progresses
    - All changes are tracked and validated
 
-2. **Task Components**
+3. **Task Components**
    - Metadata tracks ID, timestamps, status, and references
    - Description explains what needs to be done
    - Implementation details how to do it
    - Dependencies show what's needed
    - Validation ensures it's done right
 
-3. **Task States**
+4. **Task States**
    - 'Planned' tasks are ready for implementation
    - 'Active' tasks are currently being worked on
    - 'Hold' tasks are blocked by dependencies
    - 'Completed' tasks have met all criteria
 
-4. **Memory Integration**
+5. **Memory Integration**
    - Tasks are stored in procedural memory for implementation steps
    - Active tasks are part of working memory for current focus
    - Task progress is recorded in sessions (episodic memory)
    - Task decisions reference semantic memory
 
 This structure helps you:
+- Generate tasks from planning documents
 - Track what needs to be done
 - Know what's being worked on
 - Handle dependencies properly
 - Validate completed work
 - Maintain project progress
 
+## Task Creation Methods
+
+### 1. Automatic Creation from Planning
+Tasks can be automatically generated from the implementation phases defined in your planning document:
+
+```markdown
+## Implementation Approach
+### Phase 1: Initial Setup
+1. Configure development environment
+2. Set up basic structure
+3. Initialize core components
+
+### Phase 2: Core Features
+1. Implement feature A
+2. Implement feature B
+3. Add validation
+```
+
+This structure automatically generates:
+- Task files in tasks/planned/
+- Sequential task numbering (01, 02, etc.)
+- Phase-based task names
+- Linked dependencies between phases
+
+### 2. Manual Creation from Template
+Tasks can also be created manually using the template:
+
+```markdown
+# [Task Title]
+
+---
+id: YYMMDD_HHMM_task_name
+title: [Task Title]
+created: ${timestamp}
+updated: ${timestamp}
+memory_types: [procedural, working]
+status: [planned | active | completed | hold]
+priority: [high | medium | low]
+references: []
+---
+```
+
 ## Task Structure
 
 ### Metadata Section
 ```yaml
 ---
-id: 240205_1430_task_name
+id: [NN_phase_name | YYMMDD_HHMM_task_name]
 title: [Task Title]
 created: ${timestamp}
 updated: ${timestamp}
@@ -223,12 +272,22 @@ state_management:
 
 ## Task Naming Convention
 
-Tasks use a timestamp-based naming convention:
+Tasks use either a phase-based or timestamp-based naming convention:
 
+### 1. Phase-Based Naming (Automatic Creation)
+```
+NN_phase_name.md
+```
+Where:
+- `NN`: Sequential number (01, 02, etc.)
+- `phase_name`: Lowercase, underscored phase name
+
+Example: `01_initial_setup.md`
+
+### 2. Timestamp-Based Naming (Manual Creation)
 ```
 YYMMDD_HHMM_descriptive_name.md
 ```
-
 Where:
 - `YYMMDD`: Creation date (e.g., 240205)
 - `HHMM`: Creation time (24-hour format)
@@ -239,14 +298,20 @@ Example: `240205_1430_implement_feature.md`
 ### Naming Rules
 ```yaml
 naming_rules:
-  format:
-    date: "\\d{6}"      # YYMMDD
-    time: "\\d{4}"      # HHMM
-    name: "[a-z_]+"     # snake_case
+  phase_based:
+    number: "\\d{2}"
+    name: "[a-z_]+"
+    format: "${number}_${name}"
+  
+  timestamp_based:
+    date: "\\d{6}"
+    time: "\\d{4}"
+    name: "[a-z_]+"
+    format: "${date}_${time}_${name}"
   
   validation:
     - unique: true
-    - chronological: true
+    - valid_format: true
     - descriptive: true
 ```
 
@@ -354,3 +419,38 @@ Implement secure user authentication system based on [DECISION-001].
 - [Validation Rules](operations/validation.md)
 - [Error Handling](operations/error_handling.md)
 - [State Management](operations/state_management.md)
+
+## Task Creation Rules
+
+### 1. Phase Extraction
+```yaml
+phase_extraction:
+  source: implementation_approach
+  pattern: "### Phase \\d+: (.+)"
+  content: numbered_list
+  validate: [phase_name, content_structure]
+```
+
+### 2. Task Generation
+```yaml
+task_generation:
+  template: tasks/TEMPLATE.md
+  target: tasks/planned
+  naming: phase_based
+  fields:
+    id: "NN_phase_name"
+    title: "Phase Name"
+    status: "planned"
+    priority: from_timeline
+```
+
+### 3. Dependency Management
+```yaml
+dependency_management:
+  link_style: sequential
+  rules:
+    - earlier_phases_first
+    - maintain_order
+    - no_cycles
+  validate: [links, order, cycles]
+```

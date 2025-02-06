@@ -1,6 +1,6 @@
 # Plan Command Documentation
 
-The `/aegis plan` command is a primary entry point for new projects, focusing on creating and maintaining the project planning document. It guides users through defining project goals, technical architecture, and implementation approach.
+The `/aegis plan` command is a primary entry point for new projects, focusing on creating and maintaining the project planning document and automatically creating initial tasks. It guides users through defining project goals, technical architecture, and implementation approach, then converts the implementation phases into planned tasks.
 
 ## Usage
 
@@ -11,17 +11,19 @@ The `/aegis plan` command is a primary entry point for new projects, focusing on
 ## Important Rules
 
 1. File Scope:
-   - ONLY works with `planning_document.md` in project root
-   - DO NOT create or modify other files
-   - DO NOT create tasks
+   - Works with `planning_document.md` in project root
+   - Creates initial tasks in `.context/tasks/planned`
+   - Uses task template from `.context/tasks/TEMPLATE.md`
    - DO NOT update current_state.md
-   - DO NOT modify .context directory
+   - DO NOT modify .context directory structure
 
 2. Document Focus:
    - Clear project objectives
    - Concrete technical decisions
    - Specific implementation steps
    - Defined success criteria
+   - Phase-based implementation
+   - Task-ready structure
 
 ## Workflow
 
@@ -45,6 +47,13 @@ The `/aegis plan` command is a primary entry point for new projects, focusing on
    - Clarify ambiguous points
    - Maintain document focus
 
+4. Task Creation:
+   - Extract implementation phases
+   - Create task files from phases
+   - Set task priorities from timeline
+   - Link task dependencies
+   - Maintain phase order
+
 ## Document Structure
 
 ```markdown
@@ -67,10 +76,15 @@ The `/aegis plan` command is a primary entry point for new projects, focusing on
 - Security Considerations
 
 ## Implementation Approach
-- Development Phases
-- Key Milestones
-- Risk Management
-- Quality Assurance
+### Phase 1: [Phase Name]
+1. [Task Description]
+2. [Task Description]
+3. [Task Description]
+
+### Phase 2: [Phase Name]
+1. [Task Description]
+2. [Task Description]
+3. [Task Description]
 
 ## Timeline and Milestones
 - Phase Breakdown
@@ -79,6 +93,30 @@ The `/aegis plan` command is a primary entry point for new projects, focusing on
 - Dependencies
 ```
 
+## Task Creation Rules
+
+1. Task Structure:
+   - Each phase becomes a task
+   - Phase name becomes task title
+   - Phase content becomes task description
+   - Tasks numbered sequentially
+   - Initial status set to "planned"
+
+2. Task Naming:
+   - Format: `NN_phase_name`
+   - NN: Sequential number (01, 02, etc.)
+   - phase_name: Lowercase, underscored
+
+3. Task Priority:
+   - Derived from timeline position
+   - Earlier phases get higher priority
+   - Maintains implementation order
+
+4. Task Dependencies:
+   - Based on phase order
+   - Earlier phases link to later ones
+   - Maintains project flow
+
 ## Validation Rules
 
 1. Document Format:
@@ -86,18 +124,21 @@ The `/aegis plan` command is a primary entry point for new projects, focusing on
    - Required sections present
    - Clear section hierarchy
    - Consistent formatting
+   - Phase-based implementation
 
 2. Content Quality:
    - Clear objectives
    - Specific requirements
    - Actionable steps
    - Measurable criteria
+   - Task-ready phases
 
 3. Document Focus:
    - Project-specific content
    - Technical clarity
    - Implementation details
    - Timeline realism
+   - Phase dependencies
 
 ## Success Criteria
 
@@ -107,6 +148,8 @@ The `/aegis plan` command is a primary entry point for new projects, focusing on
 4. Technical decisions are documented
 5. Implementation steps are defined
 6. Timeline is realistic and detailed
+7. Tasks created for all phases
+8. Task dependencies correctly linked
 
 ## Error Handling
 
@@ -128,13 +171,20 @@ The `/aegis plan` command is a primary entry point for new projects, focusing on
    Solution: Adding template sections with guidance
    ```
 
+4. Task Creation Failed:
+   ```
+   Error: Failed to create tasks from phases
+   Solution: Check phase structure and task template
+   ```
+
 ## Next Steps
 
 After planning completion:
 1. Review planning document
-2. Begin implementation with `/aegis start`
-3. Create initial tasks
-4. Start development work
+2. Review created tasks in .context/tasks/planned
+3. Begin implementation with `/aegis start`
+4. Activate first planned task
+5. Start development work
 
 ## Related Documentation
 
@@ -142,3 +192,4 @@ After planning completion:
 - [Technical Architecture](../framework/architecture.md)
 - [Implementation Guide](../framework/implementation.md)
 - [Project Timeline](../framework/timeline.md)
+- [Task Management](../framework/tasks.md)

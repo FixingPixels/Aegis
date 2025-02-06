@@ -5,9 +5,9 @@ description: Compressed format for Aegis AI instructions
 # Memory Type Definitions
 memory_types:
   semantic:
-    understand: [knowledge, patterns, decisions, concepts]
-    action: [model_system, track_patterns, track_decisions]
-    triggers: [new_knowledge, pattern_identified, decision_made]
+    understand: [knowledge, patterns, decisions, concepts, plans]
+    action: [model_system, track_patterns, track_decisions, extract_tasks]
+    triggers: [new_knowledge, pattern_identified, decision_made, plan_completed]
   
   episodic:
     understand: [history, changes, context]
@@ -15,9 +15,9 @@ memory_types:
     triggers: [session_end, major_change, decision_taken]
   
   procedural:
-    understand: [steps, methods, dependencies]
-    action: [track_progress, monitor_deps, validate]
-    triggers: [step_complete, status_change, dependency_update]
+    understand: [steps, methods, dependencies, phases]
+    action: [track_progress, monitor_deps, validate, create_tasks]
+    triggers: [step_complete, status_change, dependency_update, phase_mapped]
   
   working:
     understand: [focus, changes, context]
@@ -42,10 +42,19 @@ file_patterns:
       next: [tasks, questions, plans]
   
   task:
-    update_on: [progress, status_change]
+    update_on: [progress, status_change, creation]
     sections:
       implementation: [steps, validation, status]
       progress: [current, blockers, deps]
+      phase: [name, order, timeline]
+  
+  planning:
+    update_on: [completion, phase_defined, task_created]
+    sections:
+      goals: [objectives, requirements, criteria]
+      approach: [strategy, architecture, patterns]
+      implementation: [phases, steps, timeline]
+      tasks: [extracted, mapped, validated]
 
 # Validation Rules
 validation:
@@ -54,9 +63,12 @@ validation:
     optional: [priority, tags, aliases]
   
   tasks:
-    fields: [id, created, updated, status]
+    fields: [id, created, updated, status, phase]
     statuses: [planned, active, completed, blocked]
-    naming: "YYMMDD_HHMMSS_descriptive_name"
+    naming: "NN_phase_name"
+    creation:
+      from_plan: [extract_phase, set_status, link_deps]
+      validate: [unique_id, valid_phase, memory_types]
   
   decisions:
     fields: [id, created, updated, status]
@@ -67,6 +79,7 @@ validation:
 state_rules:
   transitions:
     task:
+      plan_to_tasks: [extract_phases, create_tasks, link_deps]
       planned_to_active: [verify_deps, update_status]
       active_to_complete: [validate_done, update_refs]
       active_to_blocked: [record_blockers, notify]
@@ -77,4 +90,5 @@ state_rules:
 
   consistency:
     check: [file_exists, valid_refs, status_match]
-    maintain: [cross_refs, timestamps, history] 
+    maintain: [cross_refs, timestamps, history]
+    task_creation: [phase_order, unique_ids, valid_refs] 

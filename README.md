@@ -18,7 +18,7 @@ Aegis transforms AI-assisted development by providing a structured memory system
 
 ### 1. Set Up Framework Structure
 
-1. Download the Aegis framework package from the [releases page](https://github.com/FixingPixels/Aegis/releases)
+1. Download the Aegis framework package
 2. **IMPORTANT**: Copy the `.context` directory to your project root:
    ```bash
    your-project/          # Your project root
@@ -173,12 +173,12 @@ All commands are typed in your AI assistant's chat window:
 
 ## 📚 Documentation
 
-- [Getting Started Guide](https://fixing-pixels.gitbook.io/aegis-docs)
-- [Memory System](https://fixing-pixels.gitbook.io/aegis-docs/operations/memory_types)
-- [Command Reference](https://fixing-pixels.gitbook.io/aegis-docs/commands)
-- [Operation Patterns](https://fixing-pixels.gitbook.io/aegis-docs/operations)
-- [Task Management](https://fixing-pixels.gitbook.io/aegis-docs/tasks)
-- [Framework Structure](https://fixing-pixels.gitbook.io/aegis-docs/structure)
+- [Getting Started Guide](./docs/getting_started.md)
+- [Memory System](./docs/operations/memory_types.md)
+- [Command Reference](./docs/commands/README.md)
+- [Operation Patterns](./docs/operations/patterns.md)
+- [Task Management](./docs/tasks.md)
+- [Framework Structure](./docs/framework/structure.md)
 
 ## 🤝 Contributing
 

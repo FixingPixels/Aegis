@@ -6,23 +6,28 @@ See `.context/ai/operations/` for detailed operation patterns.
 ## Core Commands
 
 ### `/aegis plan`
-> **IMPORTANT**: Works ONLY with `planning_document.md` in project root.
+> **IMPORTANT**: Creates/updates `planning_document.md` and generates initial tasks.
 > See `.context/ai/operations/plan.yaml` for implementation details.
 
 1. Core Purpose:
    - Create/update project planning document
+   - Generate initial project tasks
    - Guide planning process
    - Maintain planning focus
 
 2. Key Rules:
-   - Only modify planning_document.md
-   - No task creation
+   - Primary work on planning_document.md
+   - Creates tasks in tasks/planned
+   - Uses phase-based planning
+   - Maintains task dependencies
    - No state updates
    - No other file modifications
 
 3. Basic Steps:
    - Create/edit planning document
    - Guide planning process
+   - Extract implementation phases
+   - Create task files
    - Update based on feedback
    - Keep document focused
 
@@ -127,7 +132,9 @@ See `.context/ai/operations/` for detailed operation patterns.
 
 ### Setup Commands
 1. After `/aegis plan`:
-   - New projects: Begin with `/aegis start`
+   - Review planning document
+   - Check generated tasks
+   - Begin with `/aegis start`
    - Updates: Continue current work
 
 ### Regular Commands

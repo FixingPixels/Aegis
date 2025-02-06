@@ -11,29 +11,32 @@ The `/aegis start` command begins a new development session by validating the fr
 ## Workflow
 
 1. Framework Validation:
-   * Verify `.context` directory structure exists
-   * Check all required files are present
-   * Validate file permissions
-   * Ensure memory types are consistent
-   * Check reference integrity
+   - Verify `.context` directory structure exists
+   - Check all required files are present
+   - Validate file permissions
+   - Ensure memory types are consistent
+   - Check reference integrity
+
 2. Context Loading:
-   * Read AI\_INSTRUCTIONS.md
-   * Load current\_state.md
-   * Process active tasks
-   * Check recent sessions
-   * Load relevant decisions
+   - Read AI_INSTRUCTIONS.md
+   - Load current_state.md
+   - Process active tasks
+   - Check recent sessions
+   - Load relevant decisions
+
 3. State Analysis:
-   * Identify active tasks
-   * Check project priorities
-   * Review recent changes
-   * Note pending decisions
-   * Validate memory consistency
+   - Identify active tasks
+   - Check project priorities
+   - Review recent changes
+   - Note pending decisions
+   - Validate memory consistency
+
 4. Session Setup:
-   * Set current focus
-   * Prepare working memory
-   * Initialize procedural tracking
-   * Link relevant context
-   * Enable command readiness
+   - Set current focus
+   - Prepare working memory
+   - Initialize procedural tracking
+   - Link relevant context
+   - Enable command readiness
 
 ## Required Files
 
@@ -52,22 +55,24 @@ The `/aegis start` command begins a new development session by validating the fr
 ## Validation Rules
 
 1. Framework Structure:
-   * All required directories exist
-   * Required files present
-   * Correct file permissions
-   * Valid memory types
-   * Consistent references
+   - All required directories exist
+   - Required files present
+   - Correct file permissions
+   - Valid memory types
+   - Consistent references
+
 2. State Consistency:
-   * Valid current\_state.md
-   * Active tasks present
-   * Recent sessions recorded
-   * Memory types aligned
-   * References resolved
+   - Valid current_state.md
+   - Active tasks present
+   - Recent sessions recorded
+   - Memory types aligned
+   - References resolved
+
 3. Memory Integration:
-   * Semantic knowledge loaded
-   * Procedural steps ready
-   * Working memory initialized
-   * Episodic context linked
+   - Semantic knowledge loaded
+   - Procedural steps ready
+   - Working memory initialized
+   - Episodic context linked
 
 ## Success Criteria
 
@@ -79,35 +84,33 @@ The `/aegis start` command begins a new development session by validating the fr
 
 ## Error Handling
 
-1.  Missing Framework:
+1. Missing Framework:
+   ```
+   Error: Framework not found
+   Solution: Copy .context directory to project root
+   ```
 
-    ```
-    Error: Framework not found
-    Solution: Copy .context directory to project root
-    ```
-2.  Invalid Structure:
+2. Invalid Structure:
+   ```
+   Error: Invalid framework structure
+   Solution: Verify required directories and files
+   ```
 
-    ```
-    Error: Invalid framework structure
-    Solution: Verify required directories and files
-    ```
-3.  State Issues:
+3. State Issues:
+   ```
+   Error: State consistency error
+   Solution: Check current_state.md format and content
+   ```
 
-    ```
-    Error: State consistency error
-    Solution: Check current_state.md format and content
-    ```
-4.  Memory Problems:
-
-    ```
-    Error: Memory type mismatch
-    Solution: Verify memory types in affected files
-    ```
+4. Memory Problems:
+   ```
+   Error: Memory type mismatch
+   Solution: Verify memory types in affected files
+   ```
 
 ## Next Steps
 
 After successful start:
-
 1. Review active tasks
 2. Check project status
 3. Begin development work
@@ -115,14 +118,13 @@ After successful start:
 
 ## Related Documentation
 
-* [Framework Structure](../structure.md)
-* [Memory System](../operations/memory_types.md)
-* [State Management](../operations/state_management.md)
-* [Error Handling](../operations/error_handling.md)
+- [Framework Structure](../framework/structure.md)
+- [Memory System](../operations/memory_types.md)
+- [State Management](../operations/state_management.md)
+- [Error Handling](../operations/error_handling.md)
 
 ## See Also
-
-* [Framework Structure](../structure.md)
-* [Memory System](../operations/memory_types.md)
-* [State Management](../operations/state_management.md)
-* [Error Handling](../operations/error_handling.md)
+- [Framework Structure](../framework/structure.md)
+- [Memory System](../operations/memory_types.md)
+- [State Management](../operations/state_management.md)
+- [Error Handling](../operations/error_handling.md)

@@ -1,7 +1,7 @@
 # Plan Operation Pattern
 version: 1.0
 command: plan
-description: Create or update project planning document
+description: Create or update project planning document and initial tasks
 
 # Operation Flow
 flow:
@@ -35,6 +35,24 @@ flow:
         - technical_approach: {prompt: true, required: true}
         - implementation: {prompt: true, required: true}
         - timeline: {prompt: true, required: true}
+    
+    5_create_tasks:
+      action: create_initial_tasks
+      source: planning_document.md
+      target: tasks/planned
+      template: tasks/TEMPLATE.md
+      process:
+        - read_implementation_section
+        - for_each_phase:
+          - create_task_file:
+            title: from_phase_name
+            description: from_phase_content
+            status: planned
+            priority: from_timeline_position
+            id: sequential_number
+        - update_references:
+          - link_dependencies
+          - set_memory_types
 
 # Validation Rules
 validation:
@@ -46,6 +64,11 @@ validation:
   context_files:
     optional: [current_state.md, roadmap.md]
     check: [exists, readable]
+  
+  task_creation:
+    required_fields: [id, title, status, priority, description]
+    validate: [format, dependencies]
+    status: planned
 
 # Error Handling
 errors:
@@ -58,6 +81,11 @@ errors:
     msg: "Invalid planning document"
     action: show_template
     help: "Follow planning document template"
+  
+  task_creation_failed:
+    msg: "Failed to create tasks"
+    action: show_task_errors
+    help: "Check task template and planning document structure"
 
 # Templates
 templates:
@@ -68,10 +96,29 @@ templates:
       - approach: "Technical Approach"
       - implementation: "Implementation Plan"
       - timeline: "Timeline and Milestones"
+  
+  task_creation:
+    naming: "${number}_${phase_name}"
+    content:
+      - copy_template
+      - replace_variables:
+        - title: phase_name
+        - description: phase_content
+        - status: "planned"
+        - created: current_date
+        - updated: current_date
+        - id: "TASK-${number}"
 
 # Important Notes
 notes:
   usage:
     - entry_point: "Can be used as first command"
     - prerequisites: "Only needs .context structure"
-    - state: "Will create initial state if needed" 
+    - state: "Will create initial state if needed"
+    - tasks: "Creates initial planned tasks"
+  
+  task_creation:
+    - uses_template: "Based on TEMPLATE.md"
+    - text_only: "No programming required"
+    - sequential: "Creates tasks in phase order"
+    - maintains_refs: "Updates task references" 

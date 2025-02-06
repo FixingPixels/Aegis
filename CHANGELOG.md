@@ -155,3 +155,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `/aegis task`: Task management
   - `/aegis context`: Context refresh
   - `/aegis plan`: AI-guided planning
+
+## [0.1.1-beta] - 2024-02-06
+
+### Added
+- Automatic task creation in `/aegis plan` command:
+  - Extracts tasks from planning document phases
+  - Creates task files in planned directory
+  - Sets up task dependencies automatically
+  - Maintains phase-based ordering
+- Enhanced documentation for task creation:
+  - Added phase-to-task conversion examples
+  - Updated getting started guide with task workflow
+  - Added troubleshooting guidance for task creation
+  - Enhanced best practices for task management
+
+### Changed
+- Updated plan command documentation:
+  - Added task creation workflow details
+  - Enhanced implementation approach section
+  - Added phase structure examples
+  - Improved validation rules
+- Enhanced framework documentation:
+  - Updated memory type integration
+  - Improved operation pattern clarity
+  - Added task creation best practices
+  - Enhanced troubleshooting coverage
+
+### Fixed
+- Documentation gaps in task creation workflow
+- Missing examples in getting started guide
+- Unclear phase-to-task conversion process
+- Incomplete troubleshooting guidance

@@ -12,16 +12,18 @@ processing:
     knowledge_build: [semantic, episodic]
     state_update: [working, semantic]
     history_track: [episodic, semantic]
+    plan_to_tasks: [semantic, procedural]
 
 # Memory Type Behaviors
 behaviors:
   semantic:
     retention: permanent
     scope: project_wide
-    update_triggers: [new_pattern, decision, concept]
+    update_triggers: [new_pattern, decision, concept, plan_created]
     processing:
       on_read: [extract_patterns, link_concepts]
       on_write: [validate_consistency, update_refs]
+      on_plan: [extract_tasks, map_dependencies]
   
   episodic:
     retention: long_term
@@ -34,15 +36,16 @@ behaviors:
   procedural:
     retention: task_duration
     scope: task_focused
-    update_triggers: [task_progress, status_change]
+    update_triggers: [task_progress, status_change, tasks_created]
     processing:
       on_read: [check_progress, verify_deps]
       on_write: [update_status, record_steps]
+      on_create: [set_initial_state, link_phases]
   
   working:
     retention: immediate
     scope: current_focus
-    update_triggers: [focus_change, state_update]
+    update_triggers: [focus_change, state_change]
     processing:
       on_read: [load_context, check_state]
       on_write: [update_focus, record_changes]
@@ -63,6 +66,7 @@ file_memory:
       implementation: procedural
       progress: working
       requirements: semantic
+      phase_info: semantic
   
   sessions:
     primary: [episodic, working]
@@ -70,6 +74,14 @@ file_memory:
       context: working
       progress: episodic
       decisions: semantic
+  
+  planning:
+    primary: [semantic, procedural]
+    sections:
+      goals: semantic
+      approach: semantic
+      implementation: procedural
+      timeline: semantic
 
 # Memory Validation
 validation:
@@ -83,4 +95,9 @@ validation:
   
   state_consistency:
     monitor: [file_states, memory_states, references]
-    resolve: [conflicts, missing_refs, invalid_states] 
+    resolve: [conflicts, missing_refs, invalid_states]
+  
+  task_creation:
+    verify: [template_usage, phase_mapping, dependencies]
+    enforce: [unique_ids, valid_status, memory_types]
+    maintain: [phase_order, timeline_alignment] 
