@@ -1,5 +1,9 @@
 # Getting Started with Aegis
 
+<figure><img src=".gitbook/assets/aegis-logo.png" alt="" width="375"><figcaption></figcaption></figure>
+
+
+
 Welcome to Aegis! This guide will help you start using the zero-dependency framework for AI-assisted development. Aegis provides a structured approach to managing project information and collaborating with AI assistants.
 
 ## Prerequisites
