@@ -1,0 +1,86 @@
+# Memory Patterns
+version: 1.0
+description: Memory handling patterns for AI processing
+
+# Memory Processing Rules
+processing:
+  load_order: [semantic, episodic, procedural, working]
+  priority: {working: 1, procedural: 2, semantic: 3, episodic: 4}
+  
+  combinations:
+    task_focus: [working, procedural]
+    knowledge_build: [semantic, episodic]
+    state_update: [working, semantic]
+    history_track: [episodic, semantic]
+
+# Memory Type Behaviors
+behaviors:
+  semantic:
+    retention: permanent
+    scope: project_wide
+    update_triggers: [new_pattern, decision, concept]
+    processing:
+      on_read: [extract_patterns, link_concepts]
+      on_write: [validate_consistency, update_refs]
+  
+  episodic:
+    retention: long_term
+    scope: session_based
+    update_triggers: [session_end, major_event]
+    processing:
+      on_read: [build_timeline, link_events]
+      on_write: [record_context, update_history]
+  
+  procedural:
+    retention: task_duration
+    scope: task_focused
+    update_triggers: [task_progress, status_change]
+    processing:
+      on_read: [check_progress, verify_deps]
+      on_write: [update_status, record_steps]
+  
+  working:
+    retention: immediate
+    scope: current_focus
+    update_triggers: [focus_change, state_update]
+    processing:
+      on_read: [load_context, check_state]
+      on_write: [update_focus, record_changes]
+
+# File Type Memory Mappings
+file_memory:
+  current_state:
+    primary: [semantic, working]
+    sections:
+      knowledge_base: semantic
+      active_dev: working
+      tech_state: semantic
+      notes: working
+  
+  tasks:
+    primary: [procedural, working]
+    sections:
+      implementation: procedural
+      progress: working
+      requirements: semantic
+  
+  sessions:
+    primary: [episodic, working]
+    sections:
+      context: working
+      progress: episodic
+      decisions: semantic
+
+# Memory Validation
+validation:
+  type_consistency:
+    check: [file_location, content_type, references]
+    enforce: [required_fields, valid_combinations]
+  
+  reference_integrity:
+    verify: [cross_refs, file_exists, valid_status]
+    maintain: [history, context, links]
+  
+  state_consistency:
+    monitor: [file_states, memory_states, references]
+    resolve: [conflicts, missing_refs, invalid_states] 

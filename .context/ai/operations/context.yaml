@@ -1,0 +1,76 @@
+# Context Operation Pattern
+version: 1.0
+command: context
+description: Quick context refresh and memory update
+
+# Operation Flow
+flow:
+  pre_checks:
+    - framework_ready: {verify: framework_check, error: "Framework not ready"}
+  
+  steps:
+    1_load_context:
+      action: load_context
+      files:
+        - current_state: {path: "current_state.md", required: true}
+        - active_tasks: {dir: "tasks/active", pattern: "*.md"}
+        - recent_sessions: {dir: "sessions", pattern: "*.md", limit: 3}
+    
+    2_process_memory:
+      action: process_memory
+      types:
+        - working: {from: current_state}
+        - procedural: {from: active_tasks}
+        - episodic: {from: recent_sessions}
+    
+    3_show_context:
+      action: show_context
+      display:
+        - current: {focus: true, tasks: true}
+        - recent: {changes: true, decisions: true}
+        - next: {actions: true, priorities: true}
+
+# Validation Rules
+validation:
+  context_files:
+    required: [current_state.md]
+    optional: [tasks/*, sessions/*]
+    check: [exists, readable]
+  
+  memory:
+    types: [working, procedural, episodic]
+    verify: [consistency, references]
+
+# Error Handling
+errors:
+  not_ready:
+    msg: "Framework not ready"
+    action: show_setup_instructions
+    help: "Copy .context directory to your project and ensure all required files exist"
+  
+  missing_state:
+    msg: "Current state file missing"
+    action: list_missing
+    help: "Ensure current_state.md exists"
+  
+  invalid_state:
+    msg: "Invalid state format"
+    action: show_format
+    help: "Check state file format"
+
+# Memory Processing
+memory:
+  types:
+    read: [working, procedural, episodic]
+    no_write: true
+  
+  processing:
+    on_load: [validate, cross_reference]
+    on_display: [summarize, prioritize]
+
+# Important Notes
+notes:
+  usage:
+    - quick_refresh: "Fast context update"
+    - read_only: "No state changes"
+    - memory_types: "All memory systems" 

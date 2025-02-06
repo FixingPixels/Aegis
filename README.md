@@ -1,261 +1,198 @@
-# Aegis: The Zero-Dependency Framework for AI-Assisted Development
+# Aegis: Zero-Dependency Framework for AI-Assisted Development
 
-**Welcome to Aegis!**  
-Aegis is a framework that transforms how developers work with AI coding assistants by introducing a structured memory system inspired by human cognition. Just as our brains organize information into different types of memory (semantic, procedural, episodic, and working), Aegis provides a similar structure for AI interactions.
+**Welcome to Aegis!** 🚀
 
-This organization enables your AI assistant to:
-- Maintain consistent project context across sessions
-- Access and update information in a natural, human-like way
-- Separate long-term project knowledge from active development tasks
-- Scale effectively as your project grows
+Aegis transforms AI-assisted development by providing a structured memory system inspired by human cognition. Just as our brains organize information into distinct memory types, Aegis helps your AI assistant maintain and process project information more effectively.
 
-Unlike traditional approaches that store AI context in simple markdown files, Aegis provides a carefully designed directory structure and command system that mirrors how developers naturally think about and organize their work.
+## Key Features
 
-> **Important**: All `/aegis` commands are meant to be typed in your AI assistant's chat window, not in the terminal. These commands help guide your AI assistant through project management tasks.
+- **📝 Zero Dependencies**: Pure text-based framework - no installations or configurations needed
+- **🔄 Universal Compatibility**: Works with any AI coding assistant (Cursor, Codeium, etc.)
+- **🧠 Cognitive-Inspired**: Organizes project information like human memory
+- **🚀 Instant Setup**: Start with just a few simple commands
+- **📦 Portable**: Everything stored in plain text files - easy to share and back up
 
-### Why Choose Aegis?
+## Quick Start Guide
 
-- **Zero Dependencies**: Aegis runs entirely on text files—no software downloads, plugins, or configurations required. You can start using it immediately with any AI-powered development tool.
-- **Universal Compatibility**: Works seamlessly with popular tools like Codeium, Cursor, and Cline, or even standalone systems with your own API keys.
-- **Lightweight and Portable**: All your project's structure and data are stored in plain text files that you can share, back up, or edit anywhere.
-- **Beginner-Friendly**: Start with just a few simple commands and let Aegis guide you through your project.
+### 1. Set Up Framework Structure
 
-### Important Considerations
-
-While Aegis helps structure AI-assisted development, it's essential to remember:
-
-- **Not a Magic Solution**: Aegis is a framework that helps organize AI-assisted development, but it doesn't replace good development practices or human oversight.
-
-- **Review Generated Content**: Always review files created in the `.context` directory just as you would review code in your main codebase. AI assistants can make mistakes or misunderstand requirements.
-
-- **Maintain Control**: While AI assistants can help with planning and implementation, you should remain in control of critical decisions about your project's architecture, security, and design.
-
-- **Regular Verification**: Periodically review task progress, decision records, and session logs to ensure they align with your project's goals and requirements.
-
-- **Security First**: Never commit sensitive information (like API keys or credentials) to the `.context` directory. Treat it with the same security considerations as your main codebase.
-
-### What Can Aegis Do For You?
-
-- **Stay Organized**: Track tasks, progress, and decisions effortlessly.  
-- **Work Smart**: Collaborate with AI agents to brainstorm ideas, build plans, and solve problems.  
-- **Plan Your Way**: Design your projects step-by-step with easy-to-follow workflows.  
-- **Save Time**: Let the framework remember your past work so you can focus on what's next.  
-
-### Who Is Aegis For?
-
-- **Beginners**: New to development or AI tools? Aegis simplifies everything so you can focus on your ideas, not the setup.  
-- **Busy Professionals**: Save time with lightweight project tracking that stays out of your way.  
-- **Teams**: Keep everyone on the same page with clear plans, progress, and shared history.  
-- **Experimenters**: Want to try AI tools without overcomplicating things? Aegis works with just a few simple commands.  
-
-### See Aegis in Action
-
-Here's how easy it is to get started. Type the following commands into your AI assistant's chat window (not your terminal):
-```bash
-/aegis init .
-/aegis plan
-/aegis start
-```
-That's it! Aegis creates a clear structure for your project, helping you track tasks, make decisions, and plan efficiently—all using your favorite AI tool. The `/aegis init .` command (alternatively, `/aegis init new-project`) will initialize the framework in your project. 
-
-The `/aegis plan` command focuses solely on helping you create or refine your project's `planning_document.md`. This document outlines your project's goals, architecture, and implementation approach. Once you're happy with your planning document, use `/aegis start` to begin a new development session - this is when tasks will be created and project state initialized based on your planning document.
-
-Read more about the `/aegis plan` command [here](./docs/planning/README.md).
-
-### Ready to Get Started?
-
-- **[Step-by-Step Guide](./docs/getting_started.md)**: Walkthrough for beginners.  
-- **[Memory System Overview](./docs/memory_system.md)**: Learn how Aegis keeps track of everything.  
-- **[Command Reference](./docs/commands/aegis_start.md)**: A simple reference for all Aegis commands.
-
-## 🚀 Quick Start
-
-### Step 1: Add the `.context` Directory
-
-Getting started is as easy as cloning the Aegis repo to your project directory.  
-
-```bash
-git clone https://github.com/FixingPixels/Aegis.git
-```
-
-Or, you can copy the `.context` directory to your project root. This lightweight directory keeps everything organized and ensures your AI assistant has the context it needs to be effective.  
-
-```bash
-cp -r /path/to/aegis/context /your/project/root
-```
-
-Now your project is ready to work with Aegis!
-
-### Step 2: Update Global Rules
-
-To make sure your AI assistant understands how to interact with Aegis, update its global rules. This only needs to be done once, and we provide simple instructions for popular AI tools:
-
-- **Cursor**: Copy the contents of [COMMANDS.md](COMMANDS.md) to Cursor's Rules for AI.
-- **Codeium**: Copy the commands to Windsurf's Global AI Rules.  
-- ~~**Cline**: Rename [COMMANDS.md](COMMANDS.md) to `.clinerules`.~~ *(Currently incompatible - Cline cannot access hidden directories like `.context`)*
-- **Aider**: Save the commands in `aegis_commands.md` and configure Aider to load them automatically.  
-
-For detailed instructions, see our [Getting Started Guide](./docs/getting_started.md).
-
-### Step 3: Start Your First Session
-
-Once you've set up your environment, you're ready to start using Aegis! Open your AI assistant and run the following commands:
-
-**Initialize Aegis in the root directory**:
+1. Download the Aegis framework package
+2. **IMPORTANT**: Copy the `.context` directory to your project root:
    ```bash
-   /aegis init .
-   ``` 
-**(Optional)** **Initialize Aegis in a subdirectory**:
-   ```bash
-   /aegis init new-project
-   ``` 
-**Start Your Development Session**:
-   ```bash
-   /aegis start
+   your-project/          # Your project root
+   ├── .context/         # Framework directory (copy this)
+   │   ├── tasks/       # Task management
+   │   ├── sessions/    # Development history
+   │   ├── decisions/   # Project decisions
+   │   └── ...         # Other framework files
+   ├── src/            # Your project source
+   └── ...            # Other project files
    ```
+3. Verify the `.context` structure is complete
 
-That's it! Aegis will load your project's context, process its memory, and prepare everything for you to dive into development.
+### 2. Configure Your AI Assistant
+Copy the contents of [COMMANDS.md](./COMMANDS.md) to your AI assistant's rules:
 
-## 🧠 Intelligent Memory System
+- **Cursor**: Add to Rules for AI
+- **Codeium**: Add to Global AI Rules
+- **Other Tools**: Add to configuration/rules section
 
-Aegis is inspired by how the human brain organizes information, giving your project structure and continuity:  
+### 3. Start Development
+Type these commands in your AI assistant's chat (not terminal):
 
-- **Semantic Memory**: Retains long-term project knowledge, such as architecture decisions and key concepts.  
-- **Episodic Memory**: Tracks your development history, including progress, changes, and milestones.  
-- **Procedural Memory**: Manages workflows, implementation steps, and task validation.  
-- **Working Memory**: Keeps immediate tasks and goals front and center for active problem-solving.  
-
-This memory system ensures that your AI assistant stays informed and effective throughout the development lifecycle.
-
-### 🎭 Multi-Agent Planning
-
-At the heart of Aegis is the **AI Conductor**, which coordinates specialized agents to help you:
-
-- Plan your project's architecture.
-- Collaborate on problem-solving with expert agents.
-- Assess risks and refine strategies iteratively based on your feedback.
-
-## 🛠️ Commands Overview
-
-Aegis uses simple yet powerful commands that you enter into your AI assistant's chat window (not your terminal). These commands help your AI assistant manage your project effectively. Here's a comprehensive guide to each command:
-
-### `/aegis init <path>`
-Initializes the Aegis framework by copying the `.context` directory structure:
-- Use `.` to copy to the current directory
-- Use a folder name to create and initialize that folder
 ```bash
-/aegis init .              # Initialize in current directory
-/aegis init new-project    # Initialize in new-project directory
-```
-The command copies the complete `.context` structure with all templates and maintains all memory type assignments.
-
-### `/aegis plan`
-Creates or refines the `planning_document.md` in your project root. Focuses solely on planning without modifying other files:
-```bash
-# Basic planning
-/aegis plan
-
-# Planning with project context
-/aegis plan I want to build a task management system with real-time features
-
-# Planning with specific requirements
-/aegis plan
-Requirements:
-- Mobile and desktop support
-- Offline capabilities
-- User authentication
-```
-The planning document will define clear objectives, technical decisions, implementation steps, and success criteria. Read more about the `/aegis plan` command [here](./docs/planning/README.md).
-
-### `/aegis start`
-Begins a new development session by:
-1. Reading AI_INSTRUCTIONS.md
-2. Following Session Start Flow
-3. Loading all context by memory type
-4. Creating/updating roadmap.md from planning_document.md
-5. Presenting organized project summary
-```bash
-/aegis start
+/aegis plan                # Create/update project plan
+/aegis start              # Begin development session
 ```
 
-### `/aegis save`
-Preserves session progress by:
-1. Creating a session log
-2. Updating task progress
-3. Showing changes summary
-```bash
-/aegis save
-```
+That's it! Aegis will guide you through the rest.
 
-### `/aegis status`
-Shows current working memory without updating files:
-- Active task progress
+## 🧠 Memory System
+
+Aegis organizes project information into four memory types:
+
+### 1. Semantic Memory (Project Knowledge)
+- Architecture decisions
+- Technical specifications
+- Design patterns
+- Project standards
+- Implementation guidelines
+
+**Location**: `.context/decisions/`, `.context/docs/`
+
+### 2. Episodic Memory (Development History)
+- Development sessions
+- Problem solutions
+- Decision contexts
+- Implementation history
+- Progress tracking
+
+**Location**: `.context/sessions/`
+
+### 3. Procedural Memory (Implementation Steps)
+- Active tasks
+- Implementation procedures
+- Testing processes
+- Validation rules
+- Quality checks
+
+**Location**: `.context/tasks/`
+
+### 4. Working Memory (Current Focus)
+- Active development
+- Immediate goals
 - Recent changes
-- Current focus
-```bash
-/aegis status
+- Open questions
+- Next steps
+
+**Location**: `.context/current_state.md`
+
+## 🎯 Core Commands
+
+All commands are typed in your AI assistant's chat window:
+
+### Planning Commands
+- `/aegis plan`: Create/update project planning document
+  ```bash
+  # Basic planning
+  /aegis plan
+
+  # With requirements
+  /aegis plan
+  Requirements:
+  - Mobile support
+  - Offline mode
+  - User authentication
+  ```
+
+### Development Commands
+- `/aegis start`: Begin development session
+- `/aegis save`: Preserve progress
+- `/aegis status`: Check current state
+- `/aegis task`: Focus on active task
+- `/aegis context`: Quick refresh
+- `/aegis help`: Show command help
+
+## 📁 Project Structure
+
 ```
-
-### `/aegis task`
-Focuses on procedural memory to:
-1. Show active task details
-2. Present implementation progress
-3. List blockers and dependencies
-```bash
-/aegis task
+.context/
+├── AI_INSTRUCTIONS.md     # Framework guidelines
+├── current_state.md      # Working memory
+├── plan/                # Planning documents
+├── tasks/              # Task management
+│   ├── active/        # Current tasks
+│   ├── planned/       # Future tasks
+│   ├── hold/         # Blocked tasks
+│   └── completed/    # Finished tasks
+├── sessions/         # Development history
+└── decisions/        # Project decisions
 ```
-
-### `/aegis context`
-Performs a quick context refresh:
-1. Shows most relevant information
-2. Updates working memory
-3. No full reload needed
-```bash
-/aegis context
-```
-
-> **Usage Notes**:
-> - Commands are case-insensitive
-> - Must start with `/aegis`
-> - Can be used at any point during session
-> - Will maintain context between commands
-
-For detailed information about each command, including workflows and best practices, see our [Command Reference](./docs/commands/).
-
-
-
 
 ## 🌟 Best Practices
 
-Here's how to make the most of Aegis:
-
 ### Memory Management
-- Keep files focused and concise.  
-- Use cross-references to link related information.  
-- Regularly update the current state of your project.  
-- Document decisions with context and rationale.
+- Keep files focused and concise
+- Use cross-references between related information
+- Update current state regularly
+- Document decisions with context
 
 ### AI Collaboration
-- Provide clear context to your AI assistant.  
-- Follow memory type guidelines for efficient task management.  
-- Save progress frequently to avoid losing work.
+- Provide clear context in commands
+- Follow memory type guidelines
+- Save progress frequently
+- Use appropriate memory types
 
 ### Project Organization
-- Maintain task statuses (e.g., active, completed, or on hold).  
-- Record insights and key decisions during sessions.  
-- Update the roadmap regularly to stay on track.
+- Maintain clear task statuses
+- Record key decisions
+- Update roadmap regularly
+- Keep documentation aligned
+
+## ⚠️ Important Notes
+
+1. **Command Usage**
+   - Type commands in AI chat, not terminal
+   - Commands are case-insensitive
+   - All commands start with `/aegis`
+   - Available anytime during development
+
+2. **Security**
+   - Never commit sensitive data to `.context`
+   - Treat as part of your codebase
+   - Review AI-generated content
+   - Follow security best practices
+
+3. **Maintenance**
+   - Regular state updates
+   - Clean completed tasks
+   - Archive old sessions
+   - Update documentation
+
+## 📚 Documentation
+
+- [Getting Started Guide](./docs/getting_started.md)
+- [Memory System Details](./docs/memory_system.md)
+- [Command Reference](./docs/commands/README.md)
+- [Best Practices](./docs/best_practices.md)
+- [Task Management](./docs/tasks.md)
+- [Session Logging](./docs/sessions.md)
 
 ## 🤝 Contributing
 
-We welcome your contributions to Aegis! You can help by:
+We welcome contributions! You can help by:
 
-- Improving the documentation.  
-- Sharing use cases and workflows.  
-- Suggesting new features.  
-- Reporting bugs or issues.
+- Improving documentation
+- Sharing use cases
+- Suggesting features
+- Reporting issues
 
-Please see our [issues page](https://github.com/FixingPixels/Aegis/issues) for ways to contribute.
+See our [Contributing Guide](./CONTRIBUTING.md) for details.
 
 ## 📝 License
 
-Aegis is open source and available under the MIT License. Feel free to use, modify, and share it to make your projects better!
+Aegis is open source under the MIT License. Feel free to use, modify, and share!
+
+---
+
+**Remember**: Aegis is a framework to enhance AI collaboration, not replace human oversight. Always review generated content and maintain control of critical decisions. 

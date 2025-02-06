@@ -1,6 +1,6 @@
-# `/aegis task` Command
+# Task Command Documentation
 
-The `task` command focuses on procedural memory, providing detailed information about active tasks, their implementation progress, and any blockers or dependencies. It helps manage and track the actual development work being done.
+The `/aegis task` command focuses on procedural memory, providing detailed information about active tasks, their implementation progress, and any blockers or dependencies. It helps manage and track the actual development work being done.
 
 > **Important**: This command should be typed in your AI assistant's chat window, not in your terminal. The command helps guide your AI assistant in managing tasks.
 
@@ -64,6 +64,48 @@ graph TD
    - Resources
    - Technical issues
    - External factors
+
+## Task Creation
+
+When creating a new task, follow these guidelines:
+
+1. **File Naming**
+   Use the timestamp-based format:
+   ```
+   YYMMDD_HHMMSS_description.md
+   ```
+   Example: `240320_193500_implement-feature.md`
+
+   Where:
+   - YY: Year (e.g., 24)
+   - MM: Month (01-12)
+   - DD: Day (01-31)
+   - HH: Hour (00-23)
+   - MM: Minute (00-59)
+   - SS: Second (00-59)
+   - description: Kebab-case description
+
+2. **Naming Guidelines**
+   - Use current timestamp for YYMMDD_HHMMSS
+   - Use kebab-case for description (lowercase with hyphens)
+   - Keep description concise but clear
+   - Use only alphanumeric characters and hyphens
+   - Avoid special characters
+
+3. **Location**
+   - New tasks are created in `.context/tasks/planned/`
+   - Use task template from `.context/tasks/TEMPLATE.md`
+   - Follow directory structure for task states
+
+4. **Benefits**
+   - Unique task identifiers
+   - Natural chronological sorting
+   - Clear creation timeline
+   - Easy task reference
+   - No naming conflicts
+   - Works across all file systems
+
+See [Task Documentation](../tasks.md) for complete details on task management.
 
 ## Task Organization
 

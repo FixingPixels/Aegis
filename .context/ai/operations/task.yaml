@@ -1,0 +1,128 @@
+# Task Operation Pattern
+version: 1.0
+command: task
+description: Task management and tracking
+
+# Operation Flow
+flow:
+  pre_checks:
+    - framework_ready: {verify: framework_check, error: "Framework not ready"}
+  
+  steps:
+    1_load_tasks:
+      action: load_tasks
+      files:
+        - active: {dir: "tasks/active", pattern: "*.md"}
+        - planned: {dir: "tasks/planned", pattern: "*.md"}
+        - template: {path: "tasks/TEMPLATE.md", required: true}
+    
+    2_process_command:
+      action: handle_task_command
+      commands:
+        - new: {template: true, location: "tasks/planned"}
+        - list: {show: [active, planned], sort: priority}
+        - show: {active: true, details: true}
+        - move: {between: [planned, active, completed, hold]}
+    
+    3_update_state:
+      action: update_task_state
+      update:
+        - status: {if: moved}
+        - progress: {if: changed}
+        - timestamps: {always: true}
+
+# Validation Rules
+validation:
+  task_files:
+    template: {path: "tasks/TEMPLATE.md", required: true}
+    directories: [active, planned, completed, hold]
+    check: [exists, readable, writable]
+  
+  task_content:
+    required: [id, title, status, priority]
+    validate: [format, completeness]
+
+# Error Handling
+errors:
+  not_ready:
+    msg: "Framework not ready"
+    action: show_setup_instructions
+    help: "Copy .context directory to your project and ensure all required files exist"
+  
+  missing_template:
+    msg: "Task template missing"
+    action: list_missing
+    help: "Ensure tasks/TEMPLATE.md exists"
+  
+  invalid_task:
+    msg: "Invalid task format"
+    action: show_format
+    help: "Check task file format"
+
+# Task Management
+tasks:
+  locations:
+    - planned: "tasks/planned/*.md"
+    - active: "tasks/active/*.md"
+    - completed: "tasks/completed/*.md"
+    - hold: "tasks/hold/*.md"
+  
+  transitions:
+    - planned_to_active: {update: status}
+    - active_to_completed: {update: [status, completion]}
+    - active_to_hold: {update: [status, reason]}
+
+# Important Notes
+notes:
+  usage:
+    - task_creation: "Use template"
+    - task_movement: "Update status"
+    - task_tracking: "Keep current"
+
+# Task Template
+template:
+  frontmatter:
+    required:
+      - type: task
+      - status: [planned, active, completed, blocked]
+      - created: timestamp
+      - memory_types: [procedural, working]
+      - priority: [high, medium, low]
+    
+    optional:
+      - due: date
+      - tags: []
+      - links: []
+      - aliases: []
+      - mvp_priority: number
+  
+  sections:
+    - objective: "Clear task goal"
+    - requirements: "Task requirements"
+    - implementation: "Progress tracking"
+    - success_criteria: "Completion criteria"
+
+# Memory Processing
+memory:
+  types:
+    primary: [procedural, working]
+    secondary: [semantic]
+  
+  processing:
+    on_create: [set_memory_types, init_tracking]
+    on_move: [update_status, record_transition]
+    on_complete: [record_completion, update_refs]
+
+# Next Steps
+next_steps:
+  new_task:
+    suggest: implementation_start
+    reason: "Begin task implementation"
+  
+  completed_task:
+    suggest: next_task
+    reason: "Move to next task"
+  
+  blocked_task:
+    suggest: resolve_blockers
+    reason: "Address blocking issues" 

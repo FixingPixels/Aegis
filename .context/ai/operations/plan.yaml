@@ -1,0 +1,77 @@
+# Plan Operation Pattern
+version: 1.0
+command: plan
+description: Create or update project planning document
+
+# Operation Flow
+flow:
+  pre_checks:
+    - framework_ready: {verify: framework_check, error: "Framework not ready"}
+  
+  steps:
+    1_check_planning:
+      action: check_document
+      file: planning_document.md
+      create_if_missing: true
+      template: planning_template
+    
+    2_load_context:
+      action: load_context
+      files:
+        - current_state: {path: "current_state.md", required: false}
+        - roadmap: {path: "roadmap.md", required: false}
+    
+    3_process_plan:
+      action: process_planning
+      analyze:
+        - existing_plan: {if_exists: "planning_document.md"}
+        - current_state: {if_exists: "current_state.md"}
+        - roadmap: {if_exists: "roadmap.md"}
+    
+    4_guide_planning:
+      action: guide_planning
+      steps:
+        - project_goals: {prompt: true, required: true}
+        - technical_approach: {prompt: true, required: true}
+        - implementation: {prompt: true, required: true}
+        - timeline: {prompt: true, required: true}
+
+# Validation Rules
+validation:
+  planning_doc:
+    format: markdown
+    sections: [goals, approach, implementation, timeline]
+    validate: [structure, completeness]
+  
+  context_files:
+    optional: [current_state.md, roadmap.md]
+    check: [exists, readable]
+
+# Error Handling
+errors:
+  not_ready:
+    msg: "Framework not ready"
+    action: show_setup_instructions
+    help: "Copy .context directory to your project and ensure all required files exist"
+  
+  invalid_plan:
+    msg: "Invalid planning document"
+    action: show_template
+    help: "Follow planning document template"
+
+# Templates
+templates:
+  planning:
+    file: planning_document.md
+    sections:
+      - goals: "Project Goals and Requirements"
+      - approach: "Technical Approach"
+      - implementation: "Implementation Plan"
+      - timeline: "Timeline and Milestones"
+
+# Important Notes
+notes:
+  usage:
+    - entry_point: "Can be used as first command"
+    - prerequisites: "Only needs .context structure"
+    - state: "Will create initial state if needed" 

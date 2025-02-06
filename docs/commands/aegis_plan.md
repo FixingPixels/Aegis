@@ -1,140 +1,144 @@
-# `/aegis plan` Command
+# Plan Command Documentation
 
-The `plan` command helps create and refine your project's planning document, focusing solely on `planning_document.md`.
-
-> **Important**: This command should be typed in your AI assistant's chat window, not in your terminal. The command helps guide your AI assistant in project planning.
+The `/aegis plan` command is a primary entry point for new projects, focusing on creating and maintaining the project planning document. It guides users through defining project goals, technical architecture, and implementation approach.
 
 ## Usage
 
-Type in your AI assistant's chat window:
-```
+```bash
 /aegis plan
 ```
 
-Or with specific requirements:
-```
-/aegis plan
-Requirements:
-- Mobile and desktop support
-- Offline capabilities
-- User authentication
-```
+## Important Rules
+
+1. File Scope:
+   - ONLY works with `planning_document.md` in project root
+   - DO NOT create or modify other files
+   - DO NOT create tasks
+   - DO NOT update current_state.md
+   - DO NOT modify .context directory
+
+2. Document Focus:
+   - Clear project objectives
+   - Concrete technical decisions
+   - Specific implementation steps
+   - Defined success criteria
 
 ## Workflow
 
-```mermaid
-graph TD
-    A[Command Start] --> B[Check Document]
-    B --> C[Edit Document]
-    C --> D[Show Summary]
+1. Document Creation/Loading:
+   - Check for existing planning_document.md
+   - Create new document if none exists
+   - Load existing document for updates
+   - Validate document structure
 
-    subgraph "Document Check"
-        B --> B1[Exists]
-        B --> B2[New]
-    end
+2. Planning Process:
+   - Project goals and requirements
+   - Technical architecture decisions
+   - Implementation approach
+   - Timeline and milestones
+   - Success criteria definition
 
-    subgraph "Document Edit"
-        C --> C1[Goals]
-        C --> C2[Architecture]
-        C --> C3[Implementation]
-        C --> C4[Timeline]
-    end
+3. Document Updates:
+   - Incorporate user feedback
+   - Refine existing sections
+   - Add missing details
+   - Clarify ambiguous points
+   - Maintain document focus
+
+## Document Structure
+
+```markdown
+# Project Title
+
+## Project Overview
+- Current State
+- Target State
+- Success Criteria
+
+## Goals and Requirements
+- Primary Objectives
+- Technical Requirements
+- Success Metrics
+
+## Technical Architecture
+- System Design
+- Technology Choices
+- Integration Points
+- Security Considerations
+
+## Implementation Approach
+- Development Phases
+- Key Milestones
+- Risk Management
+- Quality Assurance
+
+## Timeline and Milestones
+- Phase Breakdown
+- Key Deliverables
+- Target Dates
+- Dependencies
 ```
 
-## Process Steps
+## Validation Rules
 
-1. **Check Planning Document**
-   - Look for `planning_document.md`
-   - If exists: Review and improve
-   - If new: Create with template
-   - Focus on root directory
+1. Document Format:
+   - Valid markdown syntax
+   - Required sections present
+   - Clear section hierarchy
+   - Consistent formatting
 
-2. **Guide Planning Process**
-   - Project goals
-   - Requirements list
-   - Technical choices
-   - Implementation steps
-   - Success criteria
-
-3. **Update Document**
-   - Add user feedback
-   - Improve sections
-   - Add details
-   - Clarify points
-
-4. **Keep Document Focused**
+2. Content Quality:
    - Clear objectives
-   - Technical decisions
-   - Implementation steps
-   - Success metrics
-
-## Document Sections
-
-### Project Goals
-- Main objectives
-- Requirements
-- Constraints
-- Success criteria
-
-### Technical Architecture
-- System design
-- Technology stack
-- Components
-- Integration
-
-### Implementation
-- Approach
-- Major steps
-- Dependencies
-- Resources
-
-### Timeline
-- Project phases
-- Key milestones
-- Dependencies
-- Estimates
-
-## Common Issues
-
-1. **Document Focus**
-   - Stay in scope
-   - Clear goals
-   - Specific plans
+   - Specific requirements
    - Actionable steps
+   - Measurable criteria
 
-2. **Content**
-   - Complete sections
-   - Clear writing
-   - Good structure
-   - Useful details
+3. Document Focus:
+   - Project-specific content
+   - Technical clarity
+   - Implementation details
+   - Timeline realism
 
-3. **Planning**
-   - Realistic goals
-   - Clear steps
-   - Good timeline
-   - Success metrics
+## Success Criteria
 
-## Best Practices
+1. Planning document exists and is valid
+2. All required sections are complete
+3. Goals and requirements are clear
+4. Technical decisions are documented
+5. Implementation steps are defined
+6. Timeline is realistic and detailed
 
-1. **Document Creation**
-   - Clear structure
-   - Complete sections
-   - Good details
-   - Useful examples
+## Error Handling
 
-2. **Updates**
-   - User feedback
-   - Better clarity
-   - More details
-   - Fixed issues
+1. Missing Document:
+   ```
+   Error: No planning document found
+   Solution: Creating new planning_document.md
+   ```
 
-3. **Organization**
-   - Logical flow
-   - Clear sections
-   - Good format
-   - Easy reading
+2. Invalid Format:
+   ```
+   Error: Invalid document structure
+   Solution: Restructuring document to match template
+   ```
 
-For more information, see:
-- [Memory System](../memory_system.md)
-- [Getting Started](../getting_started.md)
-- [Core Files](../core_files.md)
+3. Incomplete Sections:
+   ```
+   Error: Missing required sections
+   Solution: Adding template sections with guidance
+   ```
+
+## Next Steps
+
+After planning completion:
+1. Review planning document
+2. Begin implementation with `/aegis start`
+3. Create initial tasks
+4. Start development work
+
+## Related Documentation
+
+- [Project Planning](../framework/planning.md)
+- [Technical Architecture](../framework/architecture.md)
+- [Implementation Guide](../framework/implementation.md)
+- [Project Timeline](../framework/timeline.md)

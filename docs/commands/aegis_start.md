@@ -1,149 +1,124 @@
-# `/aegis start` Command
+# Start Command Documentation
 
-The `start` command begins a new development session, loading project context and preparing for development work.
-
-> **Important**: This command should be typed in your AI assistant's chat window, not in your terminal. The command helps guide your AI assistant in managing your development session.
-
-> **Related Documentation**
-> - [Memory System](../memory_system.md) - Understanding memory types
-> - [Core Framework Files](../core_files.md) - Essential framework files
-> - [Session Management](../sessions.md) - How sessions work
-> - [Task Management](../tasks.md) - Task organization
-> - [Current State](../core_files.md#2-current_statemd) - Working memory details
+The `/aegis start` command begins a new development session by validating the framework structure, loading the project context, and setting up the working environment.
 
 ## Usage
 
-Type in your AI assistant's chat window:
 ```bash
 /aegis start
 ```
 
 ## Workflow
 
-```mermaid
-graph TD
-    A[Command Start] --> B[Read Instructions]
-    B --> C[Load Context]
-    C --> D[Process Memory]
-    D --> E[Create Decisions]
-    E --> F[Show Summary]
-    F --> G[Ready State]
+1. Framework Validation:
+   - Verify `.context` directory structure exists
+   - Check all required files are present
+   - Validate file permissions
+   - Ensure memory types are consistent
+   - Check reference integrity
 
-    subgraph "Memory Processing"
-        D --> D1[Semantic]
-        D --> D2[Episodic]
-        D --> D3[Procedural]
-        D --> D4[Working]
-    end
+2. Context Loading:
+   - Read AI_INSTRUCTIONS.md
+   - Load current_state.md
+   - Process active tasks
+   - Check recent sessions
+   - Load relevant decisions
 
-    subgraph "Decision Creation"
-        E --> E1[Architecture]
-        E --> E2[Technology]
-        E --> E3[Framework]
-        E --> E4[Security]
-    end
+3. State Analysis:
+   - Identify active tasks
+   - Check project priorities
+   - Review recent changes
+   - Note pending decisions
+   - Validate memory consistency
+
+4. Session Setup:
+   - Set current focus
+   - Prepare working memory
+   - Initialize procedural tracking
+   - Link relevant context
+   - Enable command readiness
+
+## Required Files
+
+```
+.context/
+├── AI_INSTRUCTIONS.md     # Framework instructions
+├── current_state.md       # Working memory
+├── tasks/                # Task management
+│   ├── active/          # Current tasks
+│   ├── planned/         # Future tasks
+│   └── completed/       # Finished tasks
+├── sessions/            # Session records
+└── decisions/           # Decision records
 ```
 
-## Process Steps
+## Validation Rules
 
-1. **Read AI_INSTRUCTIONS.md**
-   - Load framework instructions
-   - Initialize session flow
-   - Set up memory processing
+1. Framework Structure:
+   - All required directories exist
+   - Required files present
+   - Correct file permissions
+   - Valid memory types
+   - Consistent references
 
-2. **Load and Process Context**
-   - Process all memory types:
-     - Semantic: Project knowledge
-     - Episodic: Development history
-     - Procedural: Tasks and processes
-     - Working: Current focus
+2. State Consistency:
+   - Valid current_state.md
+   - Active tasks present
+   - Recent sessions recorded
+   - Memory types aligned
+   - References resolved
 
-3. **Create/Update Decisions**
-   - Architecture decisions
-   - Technology choices
-   - Framework selections
-   - Infrastructure setup
-   - Security approaches
+3. Memory Integration:
+   - Semantic knowledge loaded
+   - Procedural steps ready
+   - Working memory initialized
+   - Episodic context linked
 
-4. **Present Summary**
-   - Project knowledge (semantic)
-   - Active tasks (procedural)
-   - Current focus (working)
-   - Recent history (episodic)
+## Success Criteria
 
-5. **Ready State**
-   - Indicate readiness
-   - Prepare for requests
-   - Maintain context
+1. Framework validated successfully
+2. Context loaded completely
+3. State consistency verified
+4. Working memory initialized
+5. Command system ready
 
-## Memory Types
+## Error Handling
 
-### Semantic Memory (Project Knowledge)
-- Technical documentation
-- Architecture decisions
-- System design
-- Best practices
-- Project standards
+1. Missing Framework:
+   ```
+   Error: Framework not found
+   Solution: Copy .context directory to project root
+   ```
 
-### Episodic Memory (Project History)
-- Development sessions
-- Problem solutions
-- Decision contexts
-- Learning outcomes
-- Past challenges
+2. Invalid Structure:
+   ```
+   Error: Invalid framework structure
+   Solution: Verify required directories and files
+   ```
 
-### Procedural Memory (Task Management)
-- Active tasks
-- Implementation steps
-- Testing procedures
-- Quality checks
-- Validation rules
+3. State Issues:
+   ```
+   Error: State consistency error
+   Solution: Check current_state.md format and content
+   ```
 
-### Working Memory (Current Focus)
-- Active development
-- Immediate goals
-- Current challenges
-- Recent changes
-- Open questions
+4. Memory Problems:
+   ```
+   Error: Memory type mismatch
+   Solution: Verify memory types in affected files
+   ```
 
-## Common Issues
+## Next Steps
 
-1. **Context Loading**
-   - Check `.context` structure
-   - Verify file permissions
-   - Ensure file integrity
+After successful start:
+1. Review active tasks
+2. Check project status
+3. Begin development work
+4. Use other commands as needed
 
-2. **Memory Processing**
-   - Check file formats
-   - Verify organization
-   - Review references
+## Related Documentation
 
-3. **State Management**
-   - Monitor logging
-   - Track changes
-   - Keep clean records
-
-## Best Practices
-
-1. **Starting Session**
-   - Review context summary
-   - Check active tasks
-   - Note recent changes
-   - Verify decisions
-
-2. **During Development**
-   - Keep context updated
-   - Document decisions
-   - Track progress
-   - Stay focused
-
-3. **Organization**
-   - Use clear descriptions
-   - Document decisions
-   - Update state
-   - Maintain history
-
-For more information, see:
-- [Memory System](../memory_system.md)
-- [Getting Started](../getting_started.md)
-- [Core Files](../core_files.md)
+- [Framework Structure](../framework/structure.md)
+- [Memory Types](../framework/memory.md)
+- [State Management](../framework/state.md)
+- [Error Recovery](../framework/errors.md)

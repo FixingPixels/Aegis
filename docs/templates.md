@@ -1,140 +1,280 @@
 # Template System
 
-Aegis uses a structured template system to maintain consistency and enable effective AI processing across different types of project information. Each template is designed to capture specific types of memory and context.
+The Aegis framework uses a structured template system to maintain consistency and enable effective processing across different types of memory. This document explains how templates are managed, validated, and integrated with the framework's operation patterns.
 
 ## Overview
 
-```mermaid
-graph TD
-    A[Templates] --> B[Decisions]
-    A --> C[Sessions]
-    A --> D[Tasks]
-    
-    B --> B1[Semantic Memory]
-    B --> B2[Episodic Memory]
-    
-    C --> C1[Episodic Memory]
-    C --> C2[Working Memory]
-    
-    D --> D1[Procedural Memory]
-    D --> D2[Working Memory]
-```
+Templates in Aegis provide consistent structure for different types of project information:
+
+1. **Template Types**
+   - Decision templates capture architectural and technical choices
+   - Session templates record development progress and insights
+   - Task templates track implementation work and progress
+   - Agent templates define AI roles and responsibilities
+
+2. **Common Structure**
+   - All templates use standard YAML frontmatter for metadata
+   - Each type has specific required and optional sections
+   - References connect related information
+   - Validation ensures completeness and correctness
+
+3. **Memory Integration**
+   - Decision templates work with semantic and episodic memory
+   - Session templates use episodic and working memory
+   - Task templates use procedural and working memory
+   - Agent templates use semantic and working memory
+
+4. **Validation System**
+   - Format rules ensure consistent structure
+   - Content rules verify required information
+   - Reference rules maintain connections
+   - State rules manage transitions
+
+This system helps you:
+- Maintain consistent documentation
+- Ensure complete information
+- Track relationships properly
+- Validate content automatically
+- Follow project standards
 
 ## Common Structure
 
-All templates share a common metadata structure using YAML frontmatter:
+All templates use a standard metadata structure:
 
 ```yaml
 ---
-id: [ID format based on type]     # Unique identifier for the document
-title: [Document title]           # Clear, descriptive title
-created: ${timestamp}             # Creation timestamp
-updated: ${timestamp}             # Last update timestamp
-memory_types: [type1, type2]      # Types of memory this document represents
-status: [status based on type]    # Current status (if applicable)
+id: [Type-specific format]        # Unique identifier based on type
+title: [Clear description]        # Descriptive title
+created: ${timestamp}             # Creation timestamp (ISO8601)
+updated: ${timestamp}             # Last update timestamp (ISO8601)
+memory_types: [type1, type2]      # Memory type classification
+status: [status based on type]    # Current status if applicable
 priority: [high|medium|low]       # Importance level
-references: []                    # Links to related documents
+references: []                    # Related document references
+validation:                       # Validation requirements
+  format: true                    # Format validation
+  references: true               # Reference validation
+  state: true                    # State validation
 ---
 ```
 
-### Memory Types
-These memory types are used to organize and process project information:
-- **semantic**: Project knowledge and patterns
-- **episodic**: Development history
-- **procedural**: Implementation steps
-- **working**: Current focus
+## Validation Rules
 
-### Status Values
-- **Tasks**: planned | active | completed | blocked
-- **Decisions**: proposed | accepted | deprecated | superseded
+### 1. Format Validation
+```yaml
+validation:
+  format:
+    decisions:
+      id: "DECISION-\\d{3}"
+      memory_types: ["semantic", "episodic"]
+      status: ["proposed", "accepted", "deprecated", "superseded"]
+    
+    sessions:
+      id: "\\d{8}_\\d{4}_session"
+      memory_types: ["episodic", "working"]
+    
+    tasks:
+      id: "\\d{6}_\\d{4}_[a-z_]+"
+      memory_types: ["procedural", "working"]
+      status: ["planned", "active", "completed", "hold"]
+    
+    agents:
+      id: "AGENT-[A-Z]+"
+      memory_types: ["semantic", "working"]
+      status: ["active", "standby", "inactive"]
+```
 
-### Priority Levels
-- **high**: Critical information needed frequently
-- **medium**: Important but not critical information
-- **low**: Background or reference information
+### 2. Content Validation
+```yaml
+content_validation:
+  decisions:
+    required: [context, decision, rationale, consequences]
+    optional: [implementation, status_history]
+  
+  sessions:
+    required: [context, progress, next_steps]
+    optional: [insights, notes]
+  
+  tasks:
+    required: [description, implementation, validation]
+    optional: [dependencies, notes]
+  
+  agents:
+    required: [role_definition, memory_access, task_types]
+    optional: [interaction_patterns, notes]
+```
 
-## Decision Template
+### 3. Reference Validation
+```yaml
+reference_validation:
+  types:
+    decisions: "DECISION-\\d{3}"
+    sessions: "\\d{8}_\\d{4}_session"
+    tasks: "\\d{6}_\\d{4}_[a-z_]+"
+    agents: "AGENT-[A-Z]+"
+  
+  rules:
+    - target_exists: true
+    - valid_format: true
+    - no_cycles: true
+```
 
-Location: `.context/decisions/TEMPLATE.md`
+## Error Handling
 
+### 1. Format Errors
+```yaml
+format_errors:
+  invalid_id:
+    msg: "Invalid ID format for template type"
+    action: show_format
+    help: "Check type-specific ID format"
+  
+  invalid_memory:
+    msg: "Invalid memory types"
+    action: show_valid_types
+    help: "Use correct memory types for template"
+  
+  invalid_status:
+    msg: "Invalid status value"
+    action: show_valid_states
+    help: "Use correct status values for type"
+```
+
+### 2. Content Errors
+```yaml
+content_errors:
+  missing_required:
+    msg: "Missing required sections"
+    action: show_missing
+    help: "Add required sections"
+  
+  invalid_content:
+    msg: "Invalid content format"
+    action: show_format
+    help: "Check content formatting rules"
+```
+
+### 3. Reference Errors
+```yaml
+reference_errors:
+  invalid_target:
+    msg: "Invalid reference target"
+    action: show_target
+    help: "Verify reference exists"
+  
+  invalid_format:
+    msg: "Invalid reference format"
+    action: show_format
+    help: "Use correct reference format"
+```
+
+## Operation Pattern Integration
+
+### 1. Framework Check Pattern
+```yaml
+framework_check:
+  templates:
+    validate:
+      - format: {check: true}
+      - content: {complete: true}
+      - references: {resolve: true}
+```
+
+### 2. Memory Processing Pattern
+```yaml
+memory_processing:
+  templates:
+    load:
+      - type: {validate: true}
+      - content: {process: true}
+      - refs: {resolve: true}
+```
+
+### 3. State Management Pattern
+```yaml
+state_management:
+  templates:
+    track:
+      - changes: {record: true}
+      - updates: {validate: true}
+      - history: {maintain: true}
+```
+
+## Template Types
+
+### 1. Decision Template
 ```markdown
 # [Decision Title]
 
 ---
-id: DEC-XXX
-title: [Decision Title]
+id: DECISION-XXX
+title: [Clear title]
 created: ${timestamp}
 updated: ${timestamp}
 memory_types: [semantic, episodic]
 status: [proposed | accepted | deprecated | superseded]
 priority: [high | medium | low]
 references: []
+validation:
+  format: true
+  references: true
+  state: true
 ---
 
 ## Context
-[What is the issue that we're seeing that is motivating this decision or change?]
+[Issue or situation motivating this decision]
 
 ## Decision
-[What is the change that we're proposing and/or doing?]
+[Proposed change or solution]
 
 ## Rationale
-- Key factors considered
-- Alternatives evaluated
-- Trade-offs made
-- Dependencies affected
+- Key factors
+- Alternatives
+- Trade-offs
+- Dependencies
 
 ## Consequences
-- Positive outcomes expected
-- Potential risks
+- Benefits
+- Challenges
 - Required changes
-- Impact on existing components
+- Impact areas
 
-## Implementation Notes
-- Technical considerations
-- Migration steps if needed
-- Validation requirements
-
-## Status History
-- [Date] - [Status Change] - [Reason]
+## Implementation
+- Technical details
+- Migration steps
+- Validation needs
 ```
 
-## Session Template
-
-Location: `.context/sessions/TEMPLATE.md`
-
+### 2. Session Template
 ```markdown
+# Session Summary
+
 ---
-title: Session Summary {{DATE}}
+id: ${YYYYMMDD}_${HHMM}_session
+title: Session Summary
+created: ${timestamp}
+updated: ${timestamp}
 memory_types: [episodic, working]
 references: []
-priority: medium
+validation:
+  format: true
+  references: true
+  state: true
 ---
 
 ## Context
-- Previous session: [link to previous session file]
-- Related tasks: []
-- Current focus: [Brief description of main focus]
+- Previous: [session reference]
+- Focus: [current focus]
+- Tasks: [task references]
 
 ## Progress
-### Changes Made
-- Code changes:
-  - [Component/Feature Name]
-  - Specific changes made
-  - Implementation details
-  - Test coverage added
-- Documentation updates:
-  - Created/updated files:
-    - `[filename]`: [brief description]
-    - `[filename]`: [brief description]
-- Decisions made:
-  - [Decision 1]
-  - Rationale
-  - Alternatives considered
-  - Impact on project
-  - References: []
+### Changes
+- Code updates
+- Documentation
+- Decisions made
 
-### Insights Gained
-- Technical insights
+### Insights
+- Technical findings
 - Pattern discoveries
 - Potential issues
 
@@ -142,294 +282,91 @@ priority: medium
 - Immediate tasks
 - Open questions
 - Follow-up items
-
-## Notes for AI
-- Key context to maintain
-- Important patterns
-- Special considerations
 ```
 
-## Task Template
-
-Location: `.context/tasks/TEMPLATE.md`
-
+### 3. Task Template
 ```markdown
 # [Task Title]
 
 ---
-id: TASK-XXX
-title: [Task Title]
+id: ${YYMMDD}_${HHMM}_task_name
+title: [Clear title]
 created: ${timestamp}
 updated: ${timestamp}
 memory_types: [procedural, working]
-status: [planned | active | completed | blocked]
+status: [planned | active | completed | hold]
 priority: [high | medium | low]
 references: []
+validation:
+  format: true
+  references: true
+  state: true
 ---
 
 ## Description
-[Detailed description of the task]
+[Clear task objective]
 
 ## Implementation
-- [ ] Step 1: [description]
-  - Technical approach
-  - Validation criteria
-- [ ] Step 2: [description]
-  - Technical approach
-  - Validation criteria
+- Technical approach
+- Step-by-step plan
+- Progress tracking
+- Validation steps
 
 ## Dependencies
-- List any blocking dependencies
-- Required resources or access
+- Required tasks
+- External resources
+- Blocking issues
 
 ## Validation
-- [ ] Test cases defined
-- [ ] Implementation verified
-- [ ] Documentation updated
-
-## Notes
-- Additional context
-- Implementation decisions
-- Lessons learned
+- Success metrics
+- Testing approach
+- Quality checks
+- Review process
 ```
 
-## Agent Template
-
-Location: `.context/plan/agents/TEMPLATE.md`
-
+### 4. Agent Template
 ```markdown
 # [Agent Role]
 
 ---
 id: AGENT-ROLE
+title: [Role Title]
 created: ${timestamp}
 updated: ${timestamp}
 memory_types: [semantic, working]
 status: [active | standby | inactive]
-priority: [high | medium | low]
 references: []
-memory_access: [semantic, working]
-task_types: [type1, type2]
+validation:
+  format: true
+  references: true
+  state: true
 ---
 
 ## Role Definition
-[Detailed description of the agent's role and responsibilities]
+[Agent's role and responsibilities]
 
 ## Memory Access
-### Read Access
-- Semantic memory: [full | partial | none]
-- Episodic memory: [full | partial | none]
-- Procedural memory: [full | partial | none]
-- Working memory: [full | partial | none]
-
-### Write Access
-- Semantic memory: [full | partial | none]
-- Episodic memory: [full | partial | none]
-- Procedural memory: [full | partial | none]
-- Working memory: [full | partial | none]
+- Read: [memory types]
+- Write: [memory types]
 
 ## Task Types
-- Primary tasks:
-  - [Task type 1]
-  - [Task type 2]
-- Support tasks:
-  - [Task type 3]
-  - [Task type 4]
+- Primary: [task types]
+- Support: [task types]
 
 ## Interaction Patterns
-### Direct Interactions
-- [AGENT-ROLE-1]: [interaction type]
-- [AGENT-ROLE-2]: [interaction type]
-
-### Workflow Integration
-- Entry points
-- Exit conditions
-- State transitions
-- Handoff protocols
+- Direct: [agent interactions]
+- Workflow: [integration points]
 
 ## State Management
-### Active State
-- Memory context required
-- Task prerequisites
-- Resource requirements
-
-### Standby State
-- Minimal context
-- Wake conditions
-- Resource cleanup
-
-### Inactive State
-- State preservation
-- Reactivation requirements
-- Context restoration
-
-## Notes for AI
-- Role boundaries
-- Decision authority
-- Escalation paths
-- Special considerations
+- Active: [requirements]
+- Standby: [conditions]
+- Inactive: [preservation]
 ```
 
-## Agent State Template
+## Related Documentation
 
-Location: `.context/plan/states/TEMPLATE.md`
-
-```markdown
-# [Agent State Record]
-
----
-id: STATE-${timestamp}
-agent_id: AGENT-ROLE
-memory_types: [working]
-status: [transition | active | complete]
-references: []
-memory_context: []
----
-
-## State Transition
-- From: [previous state]
-- To: [current state]
-- Trigger: [event/condition]
-
-## Memory Context
-### Active References
-- Semantic: [DEC-XXX, ...]
-- Episodic: [SESSION-XXX, ...]
-- Procedural: [TASK-XXX, ...]
-- Working: [current focus]
-
-### Access Patterns
-- Read operations
-- Write operations
-- Reference updates
-
-## Task Context
-- Active tasks
-- Completed tasks
-- Blocked tasks
-- Next tasks
-
-## Notes for AI
-- State implications
-- Context requirements
-- Cleanup needs
-- Transition rules
-```
-
-## Best Practices
-
-### 1. Template Usage
-- Use appropriate template for content type
-- Fill all relevant sections
-- Keep content focused
-- Update regularly
-
-### 2. Memory Types
-- Assign correct types
-- Consider multiple types
-- Update as needed
-- Maintain consistency
-
-### 3. References
-- Link related documents
-- Use correct IDs
-- Keep links current
-- Validate references
-
-### 4. Timestamps
-- Use consistent format
-- Update when changed
-- Track modifications
-- Maintain history
-
-### 5. AI Notes
-- Be specific
-- Include context
-- Note patterns
-- Guide implementation
-
-### 6. Agent Templates
-- Follow role patterns
-- Define clear boundaries
-- Specify memory access
-- Document interactions
-
-## Template Customization
-
-### 1. Adding Fields
-- Maintain YAML structure
-- Document new fields
-- Update AI guidance
-- Validate changes
-
-### 2. Modifying Sections
-- Keep core structure
-- Document changes
-- Update references
-- Maintain consistency
-
-### 3. Creating New Templates
-- Follow common structure
-- Include metadata
-- Document purpose
-- Add AI guidance
-
-### 4. Agent Templates
-- Follow role patterns
-- Define clear boundaries
-- Specify memory access
-- Document interactions
-
-## Integration Points
-
-### 1. Commands
-- `/aegis start`: Initializes templates
-- `/aegis save`: Updates states
-- `/aegis status`: Checks templates
-- `/aegis task`: Uses task templates
-- `/aegis plan`: Uses agent templates
-
-### 2. Memory System
-- Templates map to memory types
-- Structure aids processing
-- Metadata guides context
-- References maintain relationships
-
-### 3. Agent System
-- Role definitions
-- State tracking
-- Memory access
-- Task coordination
-- Interaction patterns
-
-### 4. Documentation
-- Templates support docs
-- Structure aids clarity
-- Format ensures consistency
-- Enables automation
-
-## Tips for Success
-
-1. **Consistency**
-   - Follow templates
-   - Use standard formats
-   - Maintain structure
-   - Update regularly
-
-2. **Completeness**
-   - Fill all sections
-   - Include metadata
-   - Add references
-   - Document changes
-
-3. **Context**
-   - Clear descriptions
-   - Complete information
-   - Relevant links
-   - AI guidance
-
-4. **Maintenance**
-   - Regular updates
-   - Valid references
-   - Current status
-   - Clean structure
+- [Memory Types](operations/memory_types.md)
+- [Operation Patterns](operations/patterns.md)
+- [Validation Rules](operations/validation.md)
+- [Error Handling](operations/error_handling.md)
+- [State Management](operations/state_management.md)

@@ -1,6 +1,6 @@
-# `/aegis save` Command
+# Save Command Documentation
 
-The `save` command preserves the current development session progress, creating a session log and updating task status.
+The `/aegis save` command preserves the current development session progress, creating a session log and updating task status.
 
 > **Important**: This command should be typed in your AI assistant's chat window, not in your terminal. The command helps guide your AI assistant in recording your progress.
 
@@ -152,3 +152,48 @@ For more information, see:
 - [Memory System](../memory_system.md)
 - [Getting Started](../getting_started.md)
 - [Core Files](../core_files.md)
+
+## Next Steps
+
+After save completes, the command will suggest appropriate next actions:
+
+```mermaid
+graph TD
+    A[Save Complete] --> B{Check Progress}
+    B -->|Tasks Done| C[Suggest Status Update]
+    B -->|In Progress| D[Show Next Steps]
+    C --> E[Plan Next Tasks]
+    D --> F[Continue Work]
+```
+
+### Tasks Completed
+- Suggests running `/aegis status` to review
+- Offers to plan next tasks
+- Shows milestone progress
+- Updates project state
+
+### Work In Progress
+- Shows next implementation steps
+- Suggests continuing current task
+- Offers relevant help
+- Shows related tasks
+
+## Validation Rules
+
+1. Command Completion:
+   - Verify session log created
+   - Check task updates applied
+   - Confirm state changes saved
+   - Validate file consistency
+
+2. State Transitions:
+   - Update task statuses
+   - Move completed tasks
+   - Record decisions
+   - Update project state
+
+3. Context Updates:
+   - Create session record
+   - Update current state
+   - Log progress
+   - Prepare next steps

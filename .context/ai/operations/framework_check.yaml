@@ -1,0 +1,92 @@
+# Framework Check Operation Pattern
+version: 1.0
+command: framework_check
+description: Verify framework structure and readiness
+
+# Operation Flow
+flow:
+  checks:
+    - context_dir: {verify: context_dir_exists, error: "Missing .context directory"}
+    - core_files: {verify: core_files_exist, error: "Missing required files"}
+    - structure: {verify: valid_structure, error: "Invalid framework structure"}
+  
+  steps:
+    1_verify_structure:
+      action: check_structure
+      required_dirs:
+        - tasks: {subdirs: [active, planned, hold, completed]}
+        - sessions
+        - decisions
+        - plan
+      required_files:
+        - AI_INSTRUCTIONS.md
+        - current_state.md
+        - roadmap.md
+    
+    2_verify_templates:
+      action: check_templates
+      templates:
+        - task: {path: "tasks/TEMPLATE.md"}
+        - session: {path: "sessions/TEMPLATE.md"}
+        - decision: {path: "decisions/TEMPLATE.md"}
+    
+    3_verify_state:
+      action: check_state
+      files:
+        - current_state: {validate: [exists, format, consistency]}
+        - roadmap: {validate: [exists, format]}
+
+# Validation Rules
+validation:
+  structure:
+    dirs: [tasks, sessions, decisions, plan]
+    files: [AI_INSTRUCTIONS.md, current_state.md, roadmap.md]
+    templates: [task, session, decision]
+  
+  state:
+    verify: [memory_types, references, timestamps]
+    resolve: [conflicts, missing_refs, invalid_states]
+
+# Error Handling
+errors:
+  no_context:
+    msg: "Framework not found"
+    action: show_setup_instructions
+    help: "Copy .context directory to your project"
+  
+  missing_structure:
+    msg: "Invalid framework structure"
+    action: list_missing
+    help: "Ensure all required directories exist"
+  
+  missing_files:
+    msg: "Required files missing"
+    action: list_missing
+    help: "Ensure all required files exist"
+  
+  state_invalid:
+    msg: "State consistency issues"
+    action: show_issues
+    help: "Fix state inconsistencies"
+
+# Framework Structure
+structure:
+  required_dirs:
+    - tasks:
+        subdirs: [active, planned, hold, completed]
+        templates: [TEMPLATE.md]
+    - sessions:
+        templates: [TEMPLATE.md]
+    - decisions:
+        templates: [TEMPLATE.md]
+    - plan
+  
+  required_files:
+    core:
+      - AI_INSTRUCTIONS.md
+      - current_state.md
+      - roadmap.md
+    templates:
+      - tasks/TEMPLATE.md
+      - sessions/TEMPLATE.md
+      - decisions/TEMPLATE.md 

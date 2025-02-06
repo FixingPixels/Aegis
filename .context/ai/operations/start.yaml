@@ -1,0 +1,101 @@
+# Start Operation Pattern
+version: 1.0
+command: start
+description: Session initialization and context loading
+
+# Operation Flow
+flow:
+  pre_checks:
+    - framework_ready: {verify: framework_check, error: "Framework not ready"}
+    - no_active_session: {verify: no_session_active, error: "Session already active"}
+  
+  steps:
+    1_load_context:
+      action: load_and_validate
+      files:
+        - ai_instructions: {path: "AI_INSTRUCTIONS.md", required: true}
+        - current_state: {path: "current_state.md", required: true}
+        - roadmap: {path: "roadmap.md", required: false}
+      validate: [file_exists, state_consistency, integrity]
+    
+    2_process_context:
+      action: build_context
+      load:
+        - current_state: [knowledge, progress, focus]
+        - roadmap: [priorities, milestones]
+        - tasks: {dir: "tasks/active", pattern: "*.md"}
+        - sessions: {dir: "sessions", pattern: "recent*.md", limit: 5}
+    
+    3_set_focus:
+      action: determine_focus
+      analyze:
+        - active_tasks: {priority: high, status: active}
+        - current_priorities: {from: current_state}
+        - recent_changes: {from: sessions, limit: 3}
+        - open_questions: {from: current_state}
+    
+    4_present_summary:
+      action: show_summary
+      sections:
+        semantic: [project_knowledge, patterns, decisions]
+        procedural: [active_tasks, progress, blockers]
+        working: [current_focus, priorities, needs]
+        episodic: [recent_changes, decisions, events]
+    
+    5_indicate_ready:
+      action: show_readiness
+      display:
+        - context: {loaded: true, validated: true}
+        - actions: {available: true, validated: true}
+        - warnings: {if_any: true}
+        - status: "Ready for commands"
+
+# Validation Rules
+validation:
+  context_load:
+    required_files: [AI_INSTRUCTIONS.md, current_state.md]
+    optional_files: [roadmap.md]
+    check: [exists, readable, valid_format]
+  
+  state_consistency:
+    verify: [memory_types, references, timestamps]
+    resolve: [conflicts, missing_refs, invalid_states]
+  
+  task_status:
+    check: [valid_status, active_count, priority_set]
+    warn_if: [multiple_active, no_priority]
+
+# Error Handling
+errors:
+  not_ready: 
+    msg: "Framework not ready"
+    action: show_setup_instructions
+    help: "Copy .context directory to your project and ensure all required files exist"
+  
+  session_exists:
+    msg: "Active session already exists"
+    action: show_session
+    help: "Save or close existing session"
+  
+  missing_files:
+    msg: "Required files missing"
+    action: list_missing
+    help: "Ensure all required files exist"
+  
+  state_invalid:
+    msg: "State consistency issues"
+    action: show_issues
+    help: "Fix state inconsistencies"
+
+# Memory Processing
+memory:
+  load_order: [semantic, episodic, procedural, working]
+  combinations:
+    context_build: [semantic, working]
+    task_focus: [procedural, working]
+    history_check: [episodic, semantic]
+  
+  validation:
+    types: [check_required, verify_combinations]
+    content: [validate_format, check_references]
+    state: [verify_consistency, resolve_conflicts] 

@@ -1,205 +1,139 @@
-# AI Assistant Instructions
+# Aegis AI Instructions
 
-## 1. Session Start Flow
-```mermaid
-graph TD
-    A[Session Start] --> B[Load Files]
-    B --> C[Process Memory Types]
-    C --> D[Build Context]
-    D --> E[Ready for Requests]
+## Overview
+This framework uses YAML-based operation patterns for command execution. These patterns are located in `.context/ai/operations/` and define the behavior, validation, and documentation for each command.
+
+## Core Principles
+1. Follow operation patterns exactly as defined in YAML
+2. Present information in a user-focused, problem-solving manner
+3. Maintain consistent state across operations
+4. Handle errors gracefully with clear guidance
+5. Validate framework structure before operations
+
+## Documentation
+- Operation patterns: `.context/ai/operations/*.yaml`
+- Common patterns: `.context/ai/patterns/*.yaml`
+- Translation rules: See `help.yaml` translation section
+
+## Memory Types
+- Semantic: Understanding of commands and patterns
+- Procedural: Step-by-step operations
+- Working: Current context and state
+- Episodic: Historical operations and decisions
+
+## Command Guidelines
+
+### Setup Commands
+
+#### plan
+- Focus on project goals and requirements
+- Keep planning documents focused and actionable
+- Link technical decisions to project needs
+- Update as project evolves
+- Do not modify framework files
+- Only create/update planning_document.md
+
+### Core Commands
+
+#### start
+- Validate framework structure before starting
+- Load complete context before proceeding
+- Present clear project status
+- Identify immediate next actions
+- Note any pending decisions
+
+#### task
+- Focus on one task at a time
+- Track dependencies and blockers
+- Update progress consistently
+- Link related decisions
+- Move tasks between directories (don't copy)
+- Update status and timestamps when moving
+
+#### save
+- Record all significant changes
+- Document important decisions
+- Update project state
+- Note milestone achievements
+- Create session logs
+- Update task progress
+
+#### status
+- Show relevant information only
+- Highlight important changes
+- Note pending actions
+- Link to detailed information
+- No file modifications
+
+#### context
+- Focus on immediate needs
+- Show relevant history
+- Link related items
+- Note important patterns
+- Quick state refresh only
+
+#### help
+- Focus on user's immediate need
+- Show relevant examples
+- Link related commands
+- Offer next steps
+- Clear command organization
+
+## Framework Structure
+The framework requires a specific `.context` directory structure:
+```
+.context/
+├── AI_INSTRUCTIONS.md     # Framework instructions
+├── plan/                 # Planning documents
+├── tasks/               # Task management
+│   ├── active/         # Current tasks
+│   ├── planned/        # Future tasks
+│   ├── hold/          # Blocked tasks
+│   └── completed/     # Finished tasks
+├── sessions/          # Session records
+├── decisions/         # Decision records
+└── current_state.md   # Working memory
 ```
 
-## 2. Memory Type Processing
-
-### When Reading Files
-
-#### Semantic [semantic]
-UNDERSTAND:
-- Project knowledge and patterns
-- Architecture decisions
-- Core concepts
-ACTION:
-- Build mental model of system
-- Note active patterns
-- Track key decisions
-
-#### Episodic [episodic]
-UNDERSTAND:
-- Development history
-- Change sequences
-- Decision context
-ACTION:
-- Create timeline of changes
-- Link related events
-- Note outcomes
-
-#### Procedural [procedural]
-UNDERSTAND:
-- Implementation steps
-- Validation methods
-- Dependencies
-ACTION:
-- Track task progress
-- Note blockers
-- Monitor dependencies
-
-#### Working [working]
-UNDERSTAND:
-- Current focus
-- Active changes
-- Immediate context
-ACTION:
-- Keep in immediate context
-- Track active references
-- Monitor for updates
-
-## 3. State Management
-
-### File Updates by Memory Type
-
-#### current_state.md [semantic, working]
-UPDATE WHEN:
-- New knowledge added [semantic]
-- Patterns identified [semantic]
-- Active state changes [working]
-- Focus shifts [working]
-
-SECTIONS TO UPDATE:
-```yaml
-Knowledge Base:  # [semantic]
-  - Core concepts
-  - Technical patterns
-  - Architecture decisions
-
-Active Development:  # [working]
-  - Current focus
-  - In-progress changes
-  - Immediate needs
-
-Notes for AI:  # [working]
-  - Priority context
-  - Active references
-  - Important patterns
-```
-
-#### sessions/*.md [episodic, working]
-UPDATE WHEN:
-- Session completes
-- Major changes made
-- Decisions taken
-
-SECTIONS TO UPDATE:
-```yaml
-Context:  # [working]
-  - Focus areas
-  - Active tasks
-  - Current state
-
-Progress:  # [episodic]
-  - Changes made
-  - Decisions taken
-  - Insights gained
-
-Next Steps:  # [working]
-  - Planned tasks
-  - Open questions
-  - Following session
-```
-
-#### tasks/*.md [procedural, working]
-UPDATE WHEN:
-- Steps completed
-- Progress made
-- Status changes
-
-SECTIONS TO UPDATE:
-```yaml
-Implementation:  # [procedural]
-  - Steps completed
-  - Next actions
-  - Validation status
-
-Progress:  # [working]
-  - Current status
-  - Blockers
-  - Dependencies
-```
-
-## 4. Memory File Requirements
-
-All memory files MUST include the following frontmatter:
-
+## File Requirements
+All memory files must include:
 ```yaml
 ---
-# Required Fields
-title: Descriptive title of the memory item
+title: Descriptive title
 memory_types: [type1, type2]  # Must match file location
 references: []                # List of related memory files
-
-# Optional Fields (recommended)
-priority: [high | medium | low]
+---
 ```
 
-Additional fields by type:
+## Decision Guidelines
+Create a decision record when:
+- Making significant architectural choices
+- Choosing technologies or frameworks
+- Setting coding standards or patterns
+- Making security-related decisions
+- Changing project structure
+- Making breaking changes
+- Establishing workflows
 
-1. **Tasks**:
-   ```yaml
-   id: TASK-XXX
-   created: timestamp
-   updated: timestamp
-   status: [planned | active | completed | blocked]
-   ```
+Each decision should:
+- Have clear rationale
+- Consider alternatives
+- Document trade-offs
+- Note impact
+- Include validation
 
-2. **Decisions**:
-   ```yaml
-   id: DEC-XXX
-   created: timestamp
-   updated: timestamp
-   status: [proposed | accepted | deprecated | superseded]
-   ```
+## Framework Validation
+Before executing any command:
+1. Verify `.context` directory structure exists
+2. Check all required files are present
+3. Validate file permissions
+4. Ensure memory types are consistent
+5. Check reference integrity
 
-   Create a decision entry when:
-   - Making significant architectural choices
-   - Choosing technologies or frameworks
-   - Setting coding standards or patterns
-   - Making security-related decisions
-   - Changing project structure
-   - Selecting third-party services
-   - Making performance trade-offs
-   - Defining data models
-   - Setting up infrastructure
-   - Making breaking changes
-   - Establishing workflows
-   - Creating conventions
-
-   Each decision should:
-   - Have clear rationale
-   - Consider alternatives
-   - Document trade-offs
-   - Note impact
-   - Include validation
-
-3. **Sessions**:
-   ```yaml
-   # No additional required fields
-   # Title should follow format: "Session Summary YYYY-MM-DD"
-   ```
-
-## 5. Save Operation Flow
-
-When executing `/aegis save`, follow these steps:
-
-1. Create session log:
-   - Record progress and decisions
-   - Update task statuses
-   - Note any blockers or dependencies
-
-2. Update task progress:
-   - Move completed tasks
-   - Update task statuses
-   - Record dependencies
-
-3. Show summary of changes:
-   - List updated files
-   - Note status changes
-   - Highlight key decisions
+## Error Handling
+When encountering issues:
+1. Check framework structure first
+2. Verify file existence and permissions
+3. Review error messages for guidance
+4. Provide clear next steps
+5. Link to relevant documentation

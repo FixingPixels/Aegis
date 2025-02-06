@@ -1,0 +1,80 @@
+# Core AI Instruction Patterns
+version: 1.0
+description: Compressed format for Aegis AI instructions
+
+# Memory Type Definitions
+memory_types:
+  semantic:
+    understand: [knowledge, patterns, decisions, concepts]
+    action: [model_system, track_patterns, track_decisions]
+    triggers: [new_knowledge, pattern_identified, decision_made]
+  
+  episodic:
+    understand: [history, changes, context]
+    action: [timeline, events, outcomes]
+    triggers: [session_end, major_change, decision_taken]
+  
+  procedural:
+    understand: [steps, methods, dependencies]
+    action: [track_progress, monitor_deps, validate]
+    triggers: [step_complete, status_change, dependency_update]
+  
+  working:
+    understand: [focus, changes, context]
+    action: [track_refs, monitor_updates]
+    triggers: [focus_shift, state_change]
+
+# File Patterns
+file_patterns:
+  state:
+    update_on: [knowledge_added, pattern_found, focus_shift]
+    sections:
+      knowledge_base: [concepts, patterns, decisions]
+      active_dev: [focus, changes, needs]
+      tech_state: [current, planned, deprecated]
+      notes: [priority, references, patterns]
+  
+  session:
+    update_on: [completion, major_change, decision]
+    sections:
+      context: [focus, tasks, state]
+      progress: [changes, decisions, insights]
+      next: [tasks, questions, plans]
+  
+  task:
+    update_on: [progress, status_change]
+    sections:
+      implementation: [steps, validation, status]
+      progress: [current, blockers, deps]
+
+# Validation Rules
+validation:
+  memory_files:
+    required: [title, memory_types, references]
+    optional: [priority, tags, aliases]
+  
+  tasks:
+    fields: [id, created, updated, status]
+    statuses: [planned, active, completed, blocked]
+    naming: "YYMMDD_HHMMSS_descriptive_name"
+  
+  decisions:
+    fields: [id, created, updated, status]
+    statuses: [proposed, accepted, deprecated, superseded]
+    triggers: [arch_change, tech_choice, pattern_set, security]
+
+# State Management
+state_rules:
+  transitions:
+    task:
+      planned_to_active: [verify_deps, update_status]
+      active_to_complete: [validate_done, update_refs]
+      active_to_blocked: [record_blockers, notify]
+    
+    decision:
+      proposed_to_accepted: [validate, update_refs]
+      accepted_to_deprecated: [record_reason, update_deps]
+
+  consistency:
+    check: [file_exists, valid_refs, status_match]
+    maintain: [cross_refs, timestamps, history] 

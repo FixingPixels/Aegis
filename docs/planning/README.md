@@ -1,169 +1,293 @@
-# AI Planning System
+# Planning System
 
-The Aegis framework implements a sophisticated multi-agent planning system orchestrated by an AI Conductor. This system facilitates collaborative problem-solving and project planning through specialized AI agents.
+The Aegis framework implements a sophisticated planning system that integrates with different types of memory to create, validate, and maintain project plans. This document explains how the planning system works and how it integrates with the framework's operation patterns.
 
-## Documentation Structure
+## Overview
 
-1. [Overview](overview.md)
-   - System architecture
-   - Key components
-   - Core concepts
+The planning system consists of several integrated components:
 
-2. [AI Conductor](conductor.md)
-   - Role and responsibilities
-   - Orchestration logic
+1. **Core Components**
+   - AI Conductor orchestrates the planning process
+   - Specialized agents provide domain expertise
+   - Workflow engine manages state transitions
+   - Feedback system enables iterative refinement
+
+2. **Memory Integration**
+   - Semantic Memory stores architectural decisions and patterns
+   - Procedural Memory tracks planning steps and workflows
+   - Working Memory maintains current planning focus
+   - Episodic Memory records planning sessions and feedback
+
+3. **Document Management**
+   - Planning documents capture project structure
+   - Decision records track architectural choices
+   - Workflow documents guide implementation
+   - Feedback records track improvements
+
+4. **Validation System**
+   - Format rules ensure consistent structure
+   - Content rules verify completeness
+   - Reference rules maintain connections
+   - State rules manage transitions
+
+## System Architecture
+
+```mermaid
+graph TD
+    A[AI Conductor] --> B[Agent System]
+    A --> C[Workflow Engine]
+    A --> D[Document Manager]
+    A --> E[Feedback System]
+    
+    B --> B1[Product Manager]
+    B --> B2[Tech Lead]
+    B --> B3[UX Designer]
+    B --> B4[QA Specialist]
+    B --> B5[DevOps Engineer]
+    
+    C --> C1[User Alignment]
+    C --> C2[Team Creation]
+    C --> C3[Problem Solving]
+    C --> C4[Refinement]
+    C --> C5[Finalization]
+    
+    D --> D1[Drafting]
+    D --> D2[Review]
+    D --> D3[Refinement]
+    D --> D4[Final Approval]
+    
+    E --> E1[User Feedback]
+    E --> E2[Agent Review]
+    E --> E3[Task Rework]
+    E --> E4[Plan Updates]
+```
+
+## Component Documentation
+
+### 1. AI Conductor
+```yaml
+conductor:
+  role: orchestration
+  responsibilities:
+    - Process management
+    - Agent coordination
+    - State tracking
+    - Quality control
+  
+  integration:
+    memory: [semantic, working]
+    agents: [all]
+    workflow: [full_control]
+```
+
+### 2. Agent System
+```yaml
+agent_system:
+  roles:
+    product_manager:
+      focus: requirements
+      memory: [semantic, working]
+    
+    tech_lead:
+      focus: architecture
+      memory: [semantic, procedural]
+    
+    ux_designer:
+      focus: user_experience
+      memory: [semantic, working]
+    
+    qa_specialist:
+      focus: quality
+      memory: [procedural, working]
+    
+    devops_engineer:
+      focus: infrastructure
+      memory: [procedural, working]
+```
+
+For detailed documentation on each component:
+
+1. [AI Conductor](conductor.md)
+   - Orchestration patterns
    - Process management
+   - State coordination
+   - Agent supervision
 
-3. [Specialized Agents](agents.md)
-   - Agent roles
-   - Responsibilities
-   - Interactions
+2. [Specialized Agents](agents.md)
+   - Role definitions
+   - Memory access
+   - Task types
+   - Interaction patterns
 
-4. [Workflow](workflow.md)
-   - Planning process
-   - State transitions
-   - Document lifecycle
-
-5. [Feedback System](feedback.md)
-   - Feedback handling
-   - Iteration process
-   - Refinement workflow
-
-## Quick Start
-
-1. Initiate planning with `/aegis plan`
-2. Follow the AI Conductor's guidance
-3. Provide feedback when requested
-4. Review and approve the final plan
-
-## Command Examples
-
-The `/aegis plan` command can be used with various types of context to guide the planning process. Here are some effective examples:
-
-### 1. Basic Planning
-```bash
-/aegis plan
-```
-Initiates the basic planning process with the AI Conductor.
-
-### 2. Planning with Initial Context
-```bash
-/aegis plan I want to build a web-based task management system with real-time collaboration features
-```
-Provides immediate project context to guide the planning process.
-
-### 3. Planning from a File
-```bash
-/aegis plan @idea.txt
-```
-Provides the AI Conductor with detailed context from any plain text or markdown file. This is useful when you want to:
-- Write out your ideas in detail first
-- Share planning input from team members
-- Include complex requirements or specifications
-- Reference existing documentation
-
-### 4. Planning with Requirements
-```bash
-/aegis plan
-Requirements:
-- Must support mobile and desktop
-- Need offline capabilities
-- User authentication required
-- Data must be encrypted
-```
-Starts planning with specific technical requirements.
-
-### 5. Planning with Business Goals
-```bash
-/aegis plan
-Business Goals:
-1. Target small teams of 5-10 people
-2. Monthly subscription model
-3. Launch MVP in 3 months
-4. Focus on ease of use
-```
-Initiates planning with business objectives.
-
-### 6. Planning with Technical Stack
-```bash
-/aegis plan
-Tech Stack:
-- Must use Python backend
-- React frontend
-- PostgreSQL database
-- AWS deployment
-```
-Starts planning with technical stack constraints.
-
-### 7. Planning with Timeline Focus
-```bash
-/aegis plan
-Timeline critical:
-- Beta launch in 6 weeks
-- Security audit in week 4
-- User testing in week 5
-```
-Emphasizes timeline and milestone requirements.
-
-### 8. Planning with Resource Constraints
-```bash
-/aegis plan
-Available Resources:
-- 2 frontend developers
-- 1 backend developer
-- Part-time DevOps
-- $5000 monthly budget
-```
-Starts planning with resource considerations.
-
-### 9. Planning with Integration Requirements
-```bash
-/aegis plan
-Must integrate with:
-- Slack
-- GitHub
-- Google Calendar
-- Existing SSO system
-```
-Focuses on integration requirements.
-
-Note: The AI Conductor and its specialized agents will use the provided context to generate a comprehensive `planning_document.md` in your project root. The more specific context you provide, the better tailored the planning document will be to your needs.
-
-## Key Features
-
-1. **Multi-Agent Collaboration**
-   - Specialized expert agents
-   - Coordinated problem-solving
-   - Comprehensive coverage
-
-2. **Structured Workflow**
-   - Clear process steps
+3. [Workflow Engine](workflow.md)
    - State management
-   - Progress tracking
+   - Transition rules
+   - Validation steps
+   - Process tracking
 
-3. **Feedback Integration**
-   - Iterative refinement
-   - User alignment
-   - Continuous improvement
+4. [Feedback System](feedback.md)
+   - Collection patterns
+   - Processing rules
+   - Integration points
+   - Improvement cycles
 
-4. **Document Management**
-   - State tracking
-   - Version control
-   - Final deliverables
+## Planning Process
+
+### 1. Initialization
+```yaml
+planning_init:
+  steps:
+    - validate_framework: {check: true}
+    - load_context: {if_exists: true}
+    - initialize_agents: {required: true}
+    - set_focus: {from: context}
+```
+
+### 2. Document Creation
+```yaml
+document_creation:
+  required:
+    - project_overview: {complete: true}
+    - goals: {defined: true}
+    - architecture: {validated: true}
+    - timeline: {realistic: true}
+  
+  validation:
+    - format: {check: true}
+    - content: {complete: true}
+    - references: {resolve: true}
+```
+
+### 3. State Management
+```yaml
+planning_states:
+  transitions:
+    init:
+      to: [active]
+      validate: [context, agents]
+    
+    active:
+      to: [review, hold]
+      validate: [progress, blockers]
+    
+    review:
+      to: [active, complete]
+      validate: [feedback, changes]
+    
+    complete:
+      final: true
+      validate: [deliverables]
+```
+
+### 4. Document Management
+```yaml
+document_states:
+  drafting:
+    status: initial
+    next: [review]
+  
+  review:
+    status: in_progress
+    next: [refinement, drafting]
+  
+  refinement:
+    status: updating
+    next: [review, approval]
+  
+  approval:
+    status: final
+    next: []
+```
+
+### 5. Feedback Flow
+```yaml
+feedback_flow:
+  sources:
+    - user_input: {priority: high}
+    - agent_review: {priority: medium}
+    - system_checks: {priority: low}
+  
+  processing:
+    - collect: {all: true}
+    - analyze: {impact: true}
+    - prioritize: {by: importance}
+    - integrate: {into: plan}
+```
+
+### 6. Error Handling
+```yaml
+planning_errors:
+  invalid_state:
+    msg: "Invalid planning state"
+    action: show_valid_states
+    help: "Check state transition rules"
+  
+  incomplete_plan:
+    msg: "Planning document incomplete"
+    action: show_missing
+    help: "Complete required sections"
+  
+  validation_failed:
+    msg: "Plan validation failed"
+    action: show_issues
+    help: "Address validation errors"
+```
+
+## Usage Examples
+
+1. **Basic Planning**
+   ```bash
+   /aegis plan
+   ```
+   Starts interactive planning process
+
+2. **Context-Based Planning**
+   ```bash
+   /aegis plan "Build a web-based task system"
+   ```
+   Plans with initial context
+
+3. **File-Based Planning**
+   ```bash
+   /aegis plan @requirements.md
+   ```
+   Plans using file content
+
+4. **Structured Planning**
+   ```bash
+   /aegis plan
+   Requirements:
+   - Mobile support
+   - Offline mode
+   - User auth
+   - Encryption
+   ```
+   Plans with specific requirements
 
 ## Integration Points
 
-1. **Commands**
-   - `/aegis plan`: Start planning process
-   - `/aegis save`: Save planning state
-   - `/aegis status`: Check planning progress
+1. **Operation Patterns**
+   - Framework validation
+   - Memory processing
+   - State management
+   - Error handling
 
-2. **Memory System**
-   - Procedural memory for workflows
-   - Semantic memory for decisions
-   - Working memory for active planning
+2. **Memory Types**
+   - Semantic: Architecture and patterns
+   - Procedural: Planning steps
+   - Working: Current focus
+   - Episodic: Planning history
 
-3. **Documentation**
-   - Planning documents
-   - Architecture decisions
-   - Implementation guides
+3. **Validation Rules**
+   - Document structure
+   - Content completeness
+   - Reference integrity
+   - State transitions
+
+## Related Documentation
+
+- [Memory Types](../operations/memory_types.md)
+- [Operation Patterns](../operations/patterns.md)
+- [Validation Rules](../operations/validation.md)
+- [Error Handling](../operations/error_handling.md)
+- [State Management](../operations/state_management.md)

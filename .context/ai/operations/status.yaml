@@ -1,0 +1,92 @@
+# Status Operation Pattern
+version: 1.0
+command: status
+description: Show current project state and progress
+
+# Operation Flow
+flow:
+  pre_checks:
+    - framework_ready: {verify: framework_check, error: "Framework not ready"}
+  
+  steps:
+    1_load_state:
+      action: load_state
+      files:
+        - current_state: {path: "current_state.md", required: true}
+        - active_tasks: {dir: "tasks/active", pattern: "*.md"}
+    
+    2_show_status:
+      action: show_status
+      sections:
+        - active: {tasks: true, focus: true}
+        - progress: {recent: true, pending: true}
+        - state: {current: true, next: true}
+
+# Display Rules
+display:
+  format: structured
+  sections:
+    working_memory:
+      title: "Current Working Memory"
+      order: 1
+      show_if: session_active
+    
+    task_status:
+      title: "Task Progress"
+      order: 2
+      show_if: tasks_exist
+    
+    project_state:
+      title: "Project State"
+      order: 3
+      always_show: true
+
+# Validation Rules
+validation:
+  state_files:
+    required: [current_state.md]
+    optional: [tasks/*, sessions/*]
+    check: [exists, readable]
+  
+  content:
+    verify: [valid_format, complete_sections]
+    memory_types: [semantic, working, episodic]
+
+# Error Handling
+errors:
+  not_ready: 
+    msg: "Framework not ready"
+    action: show_setup_instructions
+    help: "Copy .context directory to your project and ensure all required files exist"
+  
+  missing_state:
+    msg: "Current state file missing"
+    action: list_missing
+    help: "Ensure current_state.md exists"
+  
+  invalid_format:
+    msg: "Invalid file format"
+    action: show_format
+    help: "Check file formatting"
+
+# Memory Processing
+memory:
+  types:
+    read: [working, semantic, episodic]
+    no_write: true
+  
+  processing:
+    on_read: [load_context, check_consistency]
+    no_updates: true
+
+# Important Notes
+notes:
+  restrictions:
+    - read_only: "No file modifications"
+    - no_state_changes: "Status check only"
+    - memory_readonly: "No memory updates"
+  
+  focus:
+    - current_state: "Show active state"
+    - task_progress: "Show task status"
+    - recent_changes: "Show recent updates" 

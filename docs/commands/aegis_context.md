@@ -1,6 +1,6 @@
-# `/aegis context` Command
+# Context Command Documentation
 
-The `context` command performs a quick refresh of the current context, showing relevant information for current work.
+The `/aegis context` command performs a quick refresh of the current context, showing relevant information for current work.
 
 > **Important**: This command should be typed in your AI assistant's chat window, not in your terminal. The command helps guide your AI assistant in understanding context.
 

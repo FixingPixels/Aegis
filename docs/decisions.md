@@ -1,36 +1,49 @@
 # Architectural Decision Records (ADR)
 
-The Aegis framework uses a structured decision-recording system to maintain a clear history of architectural and technical decisions. This system helps maintain project knowledge and understand the context, rationale, and implications of important decisions.
+The Aegis framework uses a structured decision-recording system to maintain a clear history of architectural and technical decisions. This document explains how decisions are managed, validated, and integrated with the framework's operation patterns.
 
 ## Overview
 
-```mermaid
-graph TD
-    A[Decision] --> B[Metadata]
-    A --> C[Content]
-    
-    B --> B1[ID]
-    B --> B2[Title]
-    B --> B3[Timestamps]
-    B --> B4[Memory Types]
-    B --> B5[Status]
-    B --> B6[Priority]
-    B --> B7[References]
-    
-    C --> C1[Context]
-    C --> C2[Decision]
-    C --> C3[Rationale]
-    C --> C4[Impact]
-    C --> C5[Validation]
-    C --> C6[Notes]
-```
+Architectural decisions in Aegis are organized into several key aspects:
+
+1. **Core Components**
+   - Metadata tracks basic information like ID, timestamps, and status
+   - Content captures the actual decision details and rationale
+   - Validation ensures decisions are properly formatted and referenced
+   - Integration connects decisions with other framework components
+
+2. **Decision Lifecycle**
+   - Decisions start as 'proposed' when new changes are being considered
+   - Move to 'accepted' when approved and implemented
+   - Can be marked as 'deprecated' when no longer recommended
+   - Finally become 'superseded' when replaced by newer decisions
+
+3. **Memory Integration**
+   - Stored in semantic memory as project knowledge
+   - Referenced by tasks during implementation
+   - Tracked in sessions as they're made
+   - Maintained in current state for context
+
+4. **Documentation Flow**
+   - Clear context explains why the decision is needed
+   - Specific decision details what is being done
+   - Rationale documents why this approach was chosen
+   - Impact assessment shows effects and required changes
+   - Validation ensures proper implementation
+
+This structure helps:
+- Track important project decisions
+- Understand why changes were made
+- Follow the evolution of the system
+- Maintain consistent architecture
+- Guide future decisions
 
 ## Decision Record Structure
 
 ### Metadata Section
 ```yaml
 ---
-id: DEC-XXX
+id: DECISION-XXX
 title: [Decision Title]
 created: ${timestamp}
 updated: ${timestamp}
@@ -38,18 +51,12 @@ memory_types: [semantic, episodic]
 status: [proposed | accepted | deprecated | superseded]
 priority: [high | medium | low]
 references: []
+validation:
+  format: true
+  references: true
+  state: true
 ---
 ```
-
-#### Fields Explained
-- **id**: Unique identifier (format: DEC-XXX)
-- **title**: Clear, descriptive title
-- **created**: Initial creation timestamp
-- **updated**: Last modification timestamp
-- **memory_types**: How this decision should be processed (semantic and episodic)
-- **status**: Current state of the decision
-- **priority**: Importance level
-- **references**: Links to related decisions, tasks, or sessions
 
 ### Content Sections
 
@@ -57,150 +64,178 @@ references: []
    - Background information
    - Current situation
    - Problem statement
-   - Motivating factors
    - Requirements
    - Constraints
    - Dependencies
 
 2. **Decision**
-   - Clear statement of the decision
-   - Specific changes proposed
+   - Clear statement
+   - Specific changes
    - Implementation approach
    - Technical details
    - Design patterns
    - Architecture impacts
 
 3. **Rationale**
-   - Key factors considered
-   - Alternatives evaluated
-   - Trade-offs made
-   - Reasoning process
+   - Key factors
+   - Alternatives
+   - Trade-offs
    - Technical insights
    - Performance impacts
    - Security considerations
 
 4. **Impact**
-   - Benefits gained
-   - Challenges introduced
+   - Benefits
+   - Challenges
    - Areas affected
    - Risk assessment
    - Migration needs
-   - Timeline impacts
    - Resource requirements
 
 5. **Validation**
    - Success criteria
-   - Metrics to track
-   - Review timeline
    - Testing approach
-   - Performance benchmarks
+   - Performance metrics
    - Security validation
    - Quality checks
+   - Review process
 
-6. **Notes**
-   - Implementation details
-   - Technical patterns
-   - Future considerations
-   - Known limitations
-   - Open questions
-   - Related research
-   - Reference materials
+## Validation Rules
 
-## Decision States
+### 1. Format Validation
+```yaml
+validation:
+  format:
+    id: "DECISION-\\d{3}"
+    status: ["proposed", "accepted", "deprecated", "superseded"]
+    memory_types: ["semantic", "episodic"]
+    priority: ["high", "medium", "low"]
+  
+  content:
+    required: [context, decision, rationale, impact, validation]
+    optional: [notes, references]
+    validate: [completeness, clarity]
+  
+  references:
+    validate: true
+    circular: false
+    required: true
+```
 
-1. **Proposed**
-   - Initial state
-   - Under discussion
-   - Pending review
-   - Open for feedback
-   - Gathering input
-   - Collecting data
-   - Initial assessment
+### 2. State Validation
+```yaml
+state_validation:
+  transitions:
+    proposed:
+      to: [accepted, deprecated]
+      validate: [references, impacts]
+    
+    accepted:
+      to: [deprecated, superseded]
+      validate: [replacement, migration]
+    
+    deprecated:
+      to: [superseded]
+      validate: [replacement]
+    
+    superseded:
+      final: true
+      validate: [replacement_exists]
+```
 
-2. **Accepted**
-   - Approved for implementation
-   - Active decision
-   - Current approach
-   - In effect
-   - Ready for use
-   - Fully documented
-   - Implementation started
+### 3. Reference Validation
+```yaml
+reference_validation:
+  types:
+    decisions: "DECISION-\\d{3}"
+    tasks: "\\d{6}_\\d{4}_[a-z_]+"
+    sessions: "\\d{8}_\\d{4}_session"
+  
+  rules:
+    - target_exists: true
+    - valid_format: true
+    - no_cycles: true
+```
 
-3. **Deprecated**
-   - No longer recommended
-   - Being phased out
-   - Historical reference
-   - Should be avoided
-   - Migration needed
-   - Alternatives listed
-   - Timeline for removal
+## Error Handling
 
-4. **Superseded**
-   - Replaced by newer decision
-   - Historical reference
-   - Points to replacement
-   - Archived state
-   - Migration path
-   - Transition plan
-   - Legacy support
+### 1. Format Errors
+```yaml
+format_errors:
+  invalid_id:
+    msg: "Invalid decision ID format"
+    action: show_format
+    help: "Use DECISION-XXX format"
+  
+  invalid_status:
+    msg: "Invalid decision status"
+    action: show_valid_states
+    help: "Use valid status values"
+  
+  invalid_types:
+    msg: "Invalid memory types"
+    action: show_valid_types
+    help: "Use semantic and episodic"
+```
 
-## Memory Integration
+### 2. State Errors
+```yaml
+state_errors:
+  invalid_transition:
+    msg: "Invalid state transition"
+    action: show_valid_transitions
+    help: "Check state transition rules"
+  
+  missing_validation:
+    msg: "Missing state validation"
+    action: show_requirements
+    help: "Complete validation requirements"
+```
 
-### Semantic Memory
-- Long-term architectural knowledge
-- System design patterns
-- Technical constraints
-- Implementation guidelines
-- Best practices
-- Project standards
-- Design decisions
+### 3. Reference Errors
+```yaml
+reference_errors:
+  invalid_target:
+    msg: "Invalid reference target"
+    action: show_target
+    help: "Verify reference exists"
+  
+  circular_reference:
+    msg: "Circular reference detected"
+    action: show_cycle
+    help: "Break reference cycle"
+```
 
-### Episodic Memory
-- Decision-making context
-- Historical progression
-- Problem-solving approaches
-- Evolution of solutions
-- Learning outcomes
-- Past challenges
-- Success stories
+## Operation Pattern Integration
 
-## Best Practices
+### 1. Framework Check Pattern
+```yaml
+framework_check:
+  decisions:
+    validate:
+      - format: {check: true}
+      - status: {valid: true}
+      - references: {resolve: true}
+```
 
-### 1. Creating Decisions
-- Use clear, descriptive titles
-- Provide comprehensive context
-- Explain rationale thoroughly
-- Consider all impacts
-- Document thoroughly
-- Link related items
-- Include examples
+### 2. Memory Processing Pattern
+```yaml
+memory_processing:
+  decisions:
+    types: [semantic, episodic]
+    load: [content, references]
+    validate: [format, state]
+```
 
-### 2. Updating Decisions
-- Maintain accurate status
-- Update timestamps
-- Add new references
-- Document changes
-- Preserve history
-- Track dependencies
-- Note impacts
-
-### 3. Referencing Decisions
-- Link related decisions
-- Maintain hierarchy
-- Show relationships
-- Track dependencies
-- Update references
-- Cross-reference tasks
-- Connect sessions
-
-### 4. Documentation
-- Clear descriptions
-- Complete context
-- Technical details
-- Implementation notes
-- Migration paths
-- Testing plans
-- Review process
+### 3. State Management Pattern
+```yaml
+state_management:
+  decisions:
+    track:
+      - changes: {record: true}
+      - transitions: {validate: true}
+      - history: {maintain: true}
+```
 
 ## Example Decision
 
@@ -208,111 +243,97 @@ references: []
 # Use PostgreSQL for Primary Database
 
 ---
-id: DEC-001
+id: DECISION-001
 title: PostgreSQL as Primary Database
 created: 2025-01-20T19:48:53-05:00
 updated: 2025-01-20T19:48:53-05:00
 memory_types: [semantic, episodic]
 status: accepted
 priority: high
-references: [DEC-002, TASK-001, SESSION-20250120]
+references: [DECISION-002]
+validation:
+  format: true
+  references: true
+  state: true
 ---
 
 ## Context
-- Need a robust, scalable database solution
-- Must support complex queries and transactions
-- High reliability and data integrity required
-- Active community and support important
-- Cost considerations for scaling
+- Need robust, scalable database
+- Complex query support required
+- High reliability needed
+- Active community important
+- Cost considerations critical
 
 ## Decision
-We will use PostgreSQL as our primary database system:
-- Version: PostgreSQL 16.x
+Using PostgreSQL 16.x:
 - Deployment: AWS RDS
 - Replication: Multi-AZ
 - Backup: Daily snapshots
-- Monitoring: AWS CloudWatch
+- Monitoring: CloudWatch
 
 ## Rationale
 1. Technical Benefits:
    - ACID compliance
-   - Advanced features (JSON, Full-text search)
-   - Excellent performance
-   - Strong security
+   - Advanced features
+   - Strong performance
+   - Security features
 
-2. Alternatives Considered:
-   - MySQL: Less feature-rich
-   - MongoDB: ACID limitations
-   - DynamoDB: Cost concerns
-
-3. Key Factors:
-   - Performance benchmarks
-   - Feature comparison
-   - Community support
-   - Cost analysis
+2. Alternatives:
+   - MySQL: Less features
+   - MongoDB: ACID limits
+   - DynamoDB: Cost issues
 
 ## Impact
 1. Benefits:
-   - Robust data integrity
-   - Advanced querying
+   - Data integrity
+   - Query power
    - Easy maintenance
-   - Good scalability
+   - Good scaling
 
 2. Challenges:
-   - Team training needed
-   - Migration planning
+   - Team training
+   - Migration work
    - Performance tuning
    - Resource sizing
 
 ## Validation
-1. Success Criteria:
+1. Success Metrics:
    - Query performance
    - Data integrity
    - Backup/restore
    - High availability
 
-2. Testing Plan:
-   - Performance testing
-   - Failover testing
+2. Testing:
+   - Performance tests
+   - Failover checks
    - Backup validation
    - Load testing
-
-## Notes
-- Consider connection pooling
-- Monitor query performance
-- Regular maintenance
-- Backup verification
-- Security updates
 ```
 
-## Integration with Commands
+## Memory Type Integration
 
-### 1. `/aegis start`
-- Loads decision records
-- Processes semantic memory
-- Updates project context
-- Tracks decision states
+### 1. Semantic Memory
+- Architecture knowledge
+- Design patterns
+- Technical decisions
+- Implementation rules
+- Best practices
+- System constraints
+- Quality standards
 
-### 2. `/aegis save`
-- Records new decisions
-- Updates decision status
-- Maintains references
-- Archives old decisions
+### 2. Episodic Memory
+- Decision context
+- Historical progress
+- Problem solutions
+- Evolution path
+- Learning outcomes
+- Past challenges
+- Success patterns
 
-### 3. `/aegis status`
-- Shows active decisions
-- Lists recent changes
-- Displays impacts
-- Reports progress
+## Related Documentation
 
-### 4. `/aegis context`
-- Refreshes decision context
-- Shows relevant decisions
-- Lists dependencies
-- Updates status
-
-For more information, see:
-- [Memory System](./memory_system.md)
-- [Cross-Referencing](./cross_referencing.md)
-- [Task Management](./tasks.md)
-- [Session Management](./sessions.md)
+- [Memory Types](operations/memory_types.md)
+- [Operation Patterns](operations/patterns.md)
+- [Validation Rules](operations/validation.md)
+- [Error Handling](operations/error_handling.md)
+- [State Management](operations/state_management.md)

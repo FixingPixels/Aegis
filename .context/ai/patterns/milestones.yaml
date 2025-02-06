@@ -1,0 +1,115 @@
+# Milestone Pattern Definitions
+version: 1.0
+description: Defines milestone criteria and validation patterns
+
+# Milestone Categories
+categories:
+  core_framework:
+    title: "Core Framework Changes"
+    criteria:
+      - type: "new_command"
+        description: "New command implementation"
+        validation: ["functionality_complete", "docs_updated", "tests_added"]
+      
+      - type: "system_enhance"
+        description: "Major system enhancement"
+        validation: ["performance_improved", "compatibility_verified", "stability_tested"]
+      
+      - type: "workflow_mod"
+        description: "Core workflow modification"
+        validation: ["user_experience_improved", "backwards_compatible", "docs_updated"]
+      
+      - type: "architecture_change"
+        description: "Framework architecture change"
+        validation: ["design_documented", "impact_assessed", "migration_path"]
+
+  feature_completion:
+    title: "Significant Feature Completion"
+    criteria:
+      - type: "mvp_complete"
+        description: "MVP priority tasks completed"
+        validation: ["requirements_met", "user_tested", "docs_complete"]
+      
+      - type: "system_validation"
+        description: "System-wide validation added"
+        validation: ["error_handling", "edge_cases", "recovery_procedures"]
+      
+      - type: "memory_integration"
+        description: "New memory type integration"
+        validation: ["type_defined", "handlers_implemented", "patterns_documented"]
+      
+      - type: "cross_cutting"
+        description: "Cross-cutting functionality added"
+        validation: ["all_commands_updated", "consistency_verified", "docs_updated"]
+
+  documentation:
+    title: "Documentation Evolution"
+    criteria:
+      - type: "major_restructure"
+        description: "Major documentation restructure"
+        validation: ["organization_improved", "accessibility_enhanced", "completeness_verified"]
+      
+      - type: "new_system"
+        description: "New documentation system"
+        validation: ["generation_working", "formats_supported", "integration_complete"]
+      
+      - type: "guide_complete"
+        description: "Complete guide additions"
+        validation: ["all_scenarios", "examples_added", "user_tested"]
+      
+      - type: "system_docs"
+        description: "System-wide doc updates"
+        validation: ["consistency_verified", "links_valid", "formats_correct"]
+
+  process:
+    title: "Process Improvements"
+    criteria:
+      - type: "validation_rules"
+        description: "New validation requirements"
+        validation: ["rules_documented", "checks_implemented", "errors_handled"]
+      
+      - type: "error_handling"
+        description: "Enhanced error handling"
+        validation: ["coverage_complete", "messages_clear", "recovery_documented"]
+      
+      - type: "workflow_opt"
+        description: "Workflow optimizations"
+        validation: ["efficiency_improved", "usability_enhanced", "docs_updated"]
+      
+      - type: "standards"
+        description: "System-wide standards"
+        validation: ["consistency_enforced", "guidelines_clear", "examples_provided"]
+
+# Validation Rules
+validation:
+  requirements:
+    - "Must impact multiple parts of system"
+    - "Must change how framework operates"
+    - "Must improve user experience"
+    - "Must set new development direction"
+  
+  documentation:
+    - "Clear description of changes"
+    - "Impact assessment"
+    - "Migration guidance if needed"
+    - "Updated documentation"
+  
+  verification:
+    - "All validation criteria met"
+    - "Tests passing"
+    - "Documentation complete"
+    - "User experience verified"
+
+# State Changes
+state_updates:
+  on_milestone:
+    update:
+      - "current_state.md"
+      - "roadmap.md"
+    record:
+      - "Achievement in roadmap"
+      - "State changes"
+      - "Documentation updates"
+    notify:
+      - "Milestone completion"
+      - "Next steps" 

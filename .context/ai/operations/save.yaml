@@ -1,0 +1,86 @@
+# Save Operation Pattern
+version: 1.0
+command: save
+description: Save session progress and update state
+
+# Operation Flow
+flow:
+  pre_checks:
+    - framework_ready: {verify: framework_check, error: "Framework not ready"}
+  
+  steps:
+    1_create_session_log:
+      action: create_session
+      template: {path: "sessions/TEMPLATE.md", required: true}
+      content:
+        - changes: {from: current_state}
+        - decisions: {if: made}
+        - progress: {from: tasks}
+    
+    2_update_tasks:
+      action: update_tasks
+      files:
+        - active: {dir: "tasks/active", pattern: "*.md"}
+        - completed: {move_if: done}
+    
+    3_record_decisions:
+      action: record_decisions
+      if: decisions_made
+      template: {path: "decisions/TEMPLATE.md"}
+    
+    4_update_state:
+      action: update_state
+      files:
+        - current_state: {path: "current_state.md", required: true}
+        - roadmap: {path: "roadmap.md", if_changed: true}
+
+# Validation Rules
+validation:
+  session_log:
+    template: {required: true}
+    content: [changes, decisions, progress]
+    validate: [format, completeness]
+  
+  state_update:
+    files: [current_state.md, roadmap.md]
+    check: [exists, writable]
+
+# Error Handling
+errors:
+  not_ready:
+    msg: "Framework not ready"
+    action: show_setup_instructions
+    help: "Copy .context directory to your project and ensure all required files exist"
+  
+  missing_template:
+    msg: "Session template missing"
+    action: list_missing
+    help: "Ensure sessions/TEMPLATE.md exists"
+  
+  state_error:
+    msg: "State update failed"
+    action: show_error
+    help: "Check file permissions and format"
+
+# Session Management
+sessions:
+  naming: "YYYYMMDD_HHMMSS_session.md"
+  location: "sessions/"
+  required:
+    - changes_made
+    - decisions_recorded
+    - progress_updated
+
+# Important Notes
+notes:
+  usage:
+    - session_log: "Record changes"
+    - task_updates: "Update progress"
+    - state_changes: "Update state"
+
+# Milestone Criteria
+milestones:
+  core_changes: [new_command, system_enhance, workflow_mod]
+  features: [mvp_complete, system_validation, memory_integration]
+  documentation: [major_restructure, new_system, guide_complete]
+  process: [validation_rules, error_handling, workflow_opt] 

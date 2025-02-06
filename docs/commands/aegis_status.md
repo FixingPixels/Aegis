@@ -1,6 +1,6 @@
-# `/aegis status` Command
+# Status Command Documentation
 
-The `status` command shows the current working memory, including active tasks and recent changes.
+The `/aegis status` command shows the current working memory, including active tasks and recent changes.
 
 > **Important**: This command should be typed in your AI assistant's chat window, not in your terminal. The command helps guide your AI assistant in providing project status.
 

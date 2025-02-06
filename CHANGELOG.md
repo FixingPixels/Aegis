@@ -5,6 +5,68 @@ All notable changes to the Aegis Framework will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.3] - 2024-02-05
+
+### Added
+- New `/aegis help` command documentation:
+  - General and command-specific help
+  - Usage examples and parameters
+  - Memory type integration
+  - Response format standards
+  - Cross-platform verification commands
+  - Contextual help features
+
+### Changed
+- Enhanced setup instructions:
+  - Added crucial `.context` directory setup steps
+  - Improved directory structure visualization
+  - Clearer AI assistant configuration steps
+  - Better cross-referencing between docs
+  - Platform-specific setup guidance
+- Updated core documentation:
+  - Standardized command documentation format
+  - Improved getting started guide
+  - Enhanced README clarity
+  - Added detailed directory structure examples
+  - Streamlined installation process
+
+### Removed
+- References to `/aegis init` command
+- Outdated initialization steps
+- Redundant setup instructions
+
+## [1.0.2] - 2024-03-20
+
+### Added
+- Session validation system:
+  - Required fields validation
+  - Memory type combination rules
+  - Path validation requirements
+  - Datetime format standards
+- Validation rules in AI instructions:
+  - Frontmatter requirements
+  - Validation flow diagrams
+  - Memory type rules
+  - Path validation rules
+- Milestone definition system:
+  - Core framework changes
+  - Feature completion criteria
+  - Documentation evolution
+  - Process improvements
+
+### Changed
+- Updated all session files to meet validation rules:
+  - Standardized memory type combinations
+  - Fixed datetime formats
+  - Corrected link paths
+  - Added missing required fields
+
+### Fixed
+- Inconsistent memory type usage in sessions
+- Missing datetime formats in timestamps
+- Incorrect link path formats
+- Incomplete frontmatter fields
+
 ## [1.0.1] - 2025-01-27
 
 ### Changed

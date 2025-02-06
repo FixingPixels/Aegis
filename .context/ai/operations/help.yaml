@@ -1,0 +1,175 @@
+# Help Operation Pattern
+version: 1.0
+command: help
+description: Display command help and documentation
+
+# Translation Prompt
+translation:
+  purpose: "Convert YAML operation patterns into user-focused help responses"
+  context: "Determine user's likely need and tailor response accordingly"
+  
+  user_needs:
+    - new_user: "Learning basic command usage"
+    - syntax_check: "Quick command format reminder"
+    - troubleshooting: "Fixing errors or issues"
+    - workflow: "Understanding command context"
+    - advanced: "Exploring all capabilities"
+  
+  response_structure:
+    1_core: "One-line description of command purpose"
+    2_syntax: "Basic command format with parameters"
+    3_examples: "2-3 most common usage examples"
+    4_requirements: "Key requirements or limitations"
+    5_related: "Related commands or next steps"
+  
+  format_rules:
+    - "Use code blocks for command examples"
+    - "Keep explanations concise and direct"
+    - "Highlight important warnings"
+    - "Include only relevant details"
+    - "Link to full docs for advanced topics"
+  
+  exclude:
+    - "Implementation details from YAML"
+    - "Internal patterns or logic"
+    - "Exhaustive option lists"
+    - "Raw configuration data"
+    - "System-level details"
+  
+  principle: "Focus on solving user problems, not explaining system"
+
+# Operation Flow
+flow:
+  pre_checks:
+    - framework_ready: {verify: framework_check, error: "Framework not ready"}
+  
+  steps:
+    1_load_commands:
+      action: load_commands
+      commands:
+        - plan: {description: "Create/update planning document"}
+        - start: {description: "Begin development session"}
+        - save: {description: "Save session progress"}
+        - status: {description: "Show current state"}
+        - task: {description: "Manage tasks"}
+        - context: {description: "Quick context refresh"}
+        - help: {description: "Show command help"}
+    
+    2_process_help:
+      action: process_help
+      show:
+        - overview: {if: no_command}
+        - details: {if: specific_command}
+        - examples: {always: true}
+    
+    3_show_help:
+      action: display_help
+      format:
+        - command: {name: true, description: true}
+        - usage: {syntax: true, examples: true}
+        - notes: {if: has_notes}
+
+# Command Documentation
+commands:
+  plan:
+    description: "Create/update planning document"
+    usage: "/aegis plan"
+    examples: ["Create new plan", "Update existing plan"]
+  
+  start:
+    description: "Begin development session"
+    usage: "/aegis start"
+    examples: ["Start new session"]
+  
+  save:
+    description: "Save session progress"
+    usage: "/aegis save"
+    examples: ["Save current progress"]
+  
+  status:
+    description: "Show current state"
+    usage: "/aegis status"
+    examples: ["Check project status"]
+  
+  task:
+    description: "Manage tasks"
+    usage: "/aegis task [action]"
+    examples: ["Show active task", "Create new task", "List tasks"]
+  
+  context:
+    description: "Quick context refresh"
+    usage: "/aegis context"
+    examples: ["Update working context"]
+  
+  help:
+    description: "Show command help"
+    usage: "/aegis help [command]"
+    examples: ["Show all commands", "Get command details"]
+
+# Display Rules
+display:
+  format: structured
+  styles:
+    group:
+      title: bold
+      commands: indented
+    command:
+      name: highlighted
+      desc: normal
+    example:
+      code: monospace
+      explanation: italic
+
+# Command Groups
+groups:
+  setup:
+    title: "Setup Commands"
+    order: 1
+    commands: [init, plan]
+  regular:
+    title: "Regular Commands"
+    order: 2
+    commands: [start, task, save, status, context, help]
+
+# Command Details
+details:
+  format:
+    usage: "Command syntax and options"
+    description: "Detailed explanation"
+    examples: "Usage examples"
+    patterns: "Common usage patterns"
+    related: "Related commands"
+    notes: "Additional information"
+  
+  validation:
+    verify: [command_exists, docs_complete]
+    check: [examples_valid, links_valid]
+
+# Error Handling
+errors:
+  not_ready:
+    msg: "Framework not ready"
+    action: show_setup_instructions
+    help: "Copy .context directory to your project and ensure all required files exist"
+  
+  unknown_command:
+    msg: "Unknown command"
+    action: show_commands
+    help: "Check available commands"
+
+# Important Notes
+notes:
+  usage:
+    - setup: "Copy .context directory first"
+    - start: "Begin with plan or start"
+    - help: "Use help command anytime"
+  
+  display:
+    - clear_formatting: "Use clear formatting"
+    - consistent_style: "Maintain style"
+    - group_logically: "Group related items"
+  
+  content:
+    - complete_info: "Include all necessary details"
+    - practical_examples: "Show real examples"
+    - related_commands: "Link related commands" 
