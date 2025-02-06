@@ -7,6 +7,7 @@ The `/aegis save` command preserves the current development session progress, cr
 ## Usage
 
 Type in your AI assistant's chat window:
+
 ```bash
 /aegis save
 ```
@@ -43,115 +44,110 @@ graph TD
 ## Process Steps
 
 1. **Create Session Log**
-   - Record progress made
-   - Document changes
-   - Note important context
-   - Link related items
-
+   * Record progress made
+   * Document changes
+   * Note important context
+   * Link related items
 2. **Create Decision Records**
-   - Architecture changes
-   - Technology choices
-   - Pattern implementations
-   - Security decisions
-   - Breaking changes
-   - Convention creation
-
+   * Architecture changes
+   * Technology choices
+   * Pattern implementations
+   * Security decisions
+   * Breaking changes
+   * Convention creation
 3. **Update Task Progress**
-   - Update status
-   - Move completed tasks
-   - Update references
-   - Note blockers
-
+   * Update status
+   * Move completed tasks
+   * Update references
+   * Note blockers
 4. **Show Summary**
-   - Updated files
-   - Status changes
-   - Key decisions
-   - Next steps
+   * Updated files
+   * Status changes
+   * Key decisions
+   * Next steps
 
 ## File Updates
 
 ### Session Log
-- Progress made
-- Changes implemented
-- Decisions taken
-- Context preserved
+
+* Progress made
+* Changes implemented
+* Decisions taken
+* Context preserved
 
 ### Decision Records
-- New decisions
-- Status updates
-- References
-- Impact notes
+
+* New decisions
+* Status updates
+* References
+* Impact notes
 
 ### Task Updates
-- Progress status
-- Completion state
-- Dependencies
-- Blockers
+
+* Progress status
+* Completion state
+* Dependencies
+* Blockers
 
 ## Common Issues
 
 1. **File System**
-   - Check permissions
-   - Verify access
-   - Ensure space
-   - Handle locks
-
+   * Check permissions
+   * Verify access
+   * Ensure space
+   * Handle locks
 2. **Content**
-   - Check references
-   - Verify links
-   - Update status
-   - Maintain order
-
+   * Check references
+   * Verify links
+   * Update status
+   * Maintain order
 3. **State**
-   - Complete updates
-   - Check references
-   - Verify links
-   - Ensure consistency
+   * Complete updates
+   * Check references
+   * Verify links
+   * Ensure consistency
 
 ## Best Practices
 
 1. **Regular Saves**
-   - After changes
-   - Before breaks
-   - Task completion
-   - Session end
-
+   * After changes
+   * Before breaks
+   * Task completion
+   * Session end
 2. **Clean Updates**
-   - Verify changes
-   - Check links
-   - Update status
-   - Review summary
-
+   * Verify changes
+   * Check links
+   * Update status
+   * Review summary
 3. **Organization**
-   - Link items
-   - Clear references
-   - Good descriptions
-   - Clean structure
+   * Link items
+   * Clear references
+   * Good descriptions
+   * Clean structure
 
 ## Next Steps After Save
 
 1. **Review Changes**
-   - Check updated files
-   - Verify task status
-   - Review decisions
-   - Confirm links
-
+   * Check updated files
+   * Verify task status
+   * Review decisions
+   * Confirm links
 2. **Plan Ahead**
-   - Note next tasks
-   - Review dependencies
-   - Check blockers
-   - Plan next session
-
+   * Note next tasks
+   * Review dependencies
+   * Check blockers
+   * Plan next session
 3. **Maintenance**
-   - Clean up old files
-   - Archive if needed
-   - Update references
-   - Organize tasks
+   * Clean up old files
+   * Archive if needed
+   * Update references
+   * Organize tasks
 
 For more information, see:
-- [Memory System](../memory_system.md)
-- [Getting Started](../getting_started.md)
-- [Core Files](../core_files.md)
+
+* [Memory System](../memory_system.md)
+* [Getting Started](../)
+* [Core Files](../core_files.md)
 
 ## Next Steps
 
@@ -167,33 +163,33 @@ graph TD
 ```
 
 ### Tasks Completed
-- Suggests running `/aegis status` to review
-- Offers to plan next tasks
-- Shows milestone progress
-- Updates project state
+
+* Suggests running `/aegis status` to review
+* Offers to plan next tasks
+* Shows milestone progress
+* Updates project state
 
 ### Work In Progress
-- Shows next implementation steps
-- Suggests continuing current task
-- Offers relevant help
-- Shows related tasks
+
+* Shows next implementation steps
+* Suggests continuing current task
+* Offers relevant help
+* Shows related tasks
 
 ## Validation Rules
 
 1. Command Completion:
-   - Verify session log created
-   - Check task updates applied
-   - Confirm state changes saved
-   - Validate file consistency
-
+   * Verify session log created
+   * Check task updates applied
+   * Confirm state changes saved
+   * Validate file consistency
 2. State Transitions:
-   - Update task statuses
-   - Move completed tasks
-   - Record decisions
-   - Update project state
-
+   * Update task statuses
+   * Move completed tasks
+   * Record decisions
+   * Update project state
 3. Context Updates:
-   - Create session record
-   - Update current state
-   - Log progress
-   - Prepare next steps
+   * Create session record
+   * Update current state
+   * Log progress
+   * Prepare next steps

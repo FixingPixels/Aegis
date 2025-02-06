@@ -27,236 +27,239 @@ memory:
 
 ## Memory Types
 
-1. **Semantic Memory**
-   - Project knowledge
-   - Design patterns
-   - Framework rules
-   - Technical decisions
-   - System architecture
+1.  **Semantic Memory**
 
-   ```yaml
-   semantic:
-     sources:
-       - AI_INSTRUCTIONS.md
-       - roadmap.md
-       - decisions/*.md
-     
-     content:
-       - knowledge: {type: project}
-       - patterns: {type: design}
-       - rules: {type: framework}
-   ```
+    * Project knowledge
+    * Design patterns
+    * Framework rules
+    * Technical decisions
+    * System architecture
 
-2. **Procedural Memory**
-   - Task workflows
-   - Implementation steps
-   - Validation rules
-   - Process guides
-   - Operation sequences
+    ```yaml
+    semantic:
+      sources:
+        - AI_INSTRUCTIONS.md
+        - roadmap.md
+        - decisions/*.md
+      
+      content:
+        - knowledge: {type: project}
+        - patterns: {type: design}
+        - rules: {type: framework}
+    ```
+2.  **Procedural Memory**
 
-   ```yaml
-   procedural:
-     sources:
-       - tasks/*.md
-       - operations/*.yaml
-     
-     content:
-       - tasks: {type: implementation}
-       - workflows: {type: process}
-       - validation: {type: rules}
-   ```
+    * Task workflows
+    * Implementation steps
+    * Validation rules
+    * Process guides
+    * Operation sequences
 
-3. **Working Memory**
-   - Current focus
-   - Active changes
-   - Immediate needs
-   - Open questions
-   - Current state
+    ```yaml
+    procedural:
+      sources:
+        - tasks/*.md
+        - operations/*.yaml
+      
+      content:
+        - tasks: {type: implementation}
+        - workflows: {type: process}
+        - validation: {type: rules}
+    ```
+3.  **Working Memory**
 
-   ```yaml
-   working:
-     sources:
-       - current_state.md
-       - tasks/active/*.md
-     
-     content:
-       - focus: {type: current}
-       - changes: {type: active}
-       - needs: {type: immediate}
-   ```
+    * Current focus
+    * Active changes
+    * Immediate needs
+    * Open questions
+    * Current state
 
-4. **Episodic Memory**
-   - Session history
-   - Key decisions
-   - Important events
-   - Progress markers
-   - Change records
+    ```yaml
+    working:
+      sources:
+        - current_state.md
+        - tasks/active/*.md
+      
+      content:
+        - focus: {type: current}
+        - changes: {type: active}
+        - needs: {type: immediate}
+    ```
+4.  **Episodic Memory**
 
-   ```yaml
-   episodic:
-     sources:
-       - sessions/*.md
-       - decisions/*.md
-     
-     content:
-       - history: {type: session}
-       - decisions: {type: key}
-       - events: {type: important}
-   ```
+    * Session history
+    * Key decisions
+    * Important events
+    * Progress markers
+    * Change records
+
+    ```yaml
+    episodic:
+      sources:
+        - sessions/*.md
+        - decisions/*.md
+      
+      content:
+        - history: {type: session}
+        - decisions: {type: key}
+        - events: {type: important}
+    ```
 
 ## Memory Processing
 
-1. **Loading**
-   ```yaml
-   processing:
-     on_load:
-       - validate_types: {all: true}
-       - check_consistency: {refs: true}
-       - resolve_conflicts: {if: found}
-   ```
+1.  **Loading**
 
-2. **Validation**
-   ```yaml
-   validation:
-     types:
-       - exists: {required: true}
-       - format: {valid: true}
-       - refs: {resolved: true}
-   ```
+    ```yaml
+    processing:
+      on_load:
+        - validate_types: {all: true}
+        - check_consistency: {refs: true}
+        - resolve_conflicts: {if: found}
+    ```
+2.  **Validation**
 
-3. **Integration**
-   ```yaml
-   integration:
-     combine:
-       - semantic_working: {for: context}
-       - procedural_working: {for: tasks}
-       - episodic_semantic: {for: decisions}
-   ```
+    ```yaml
+    validation:
+      types:
+        - exists: {required: true}
+        - format: {valid: true}
+        - refs: {resolved: true}
+    ```
+3.  **Integration**
+
+    ```yaml
+    integration:
+      combine:
+        - semantic_working: {for: context}
+        - procedural_working: {for: tasks}
+        - episodic_semantic: {for: decisions}
+    ```
 
 ## Memory Access
 
-1. **Read Operations**
-   ```yaml
-   read:
-     types: [semantic, episodic]
-     filters:
-       - relevant: {to: current}
-       - recent: {limit: 5}
-   ```
+1.  **Read Operations**
 
-2. **Write Operations**
-   ```yaml
-   write:
-     types: [working, procedural]
-     validate:
-       - consistency: {check: true}
-       - conflicts: {resolve: true}
-   ```
+    ```yaml
+    read:
+      types: [semantic, episodic]
+      filters:
+        - relevant: {to: current}
+        - recent: {limit: 5}
+    ```
+2.  **Write Operations**
 
-3. **Update Operations**
-   ```yaml
-   update:
-     types: [working]
-     rules:
-       - atomic: {transaction: true}
-       - consistent: {check: true}
-   ```
+    ```yaml
+    write:
+      types: [working, procedural]
+      validate:
+        - consistency: {check: true}
+        - conflicts: {resolve: true}
+    ```
+3.  **Update Operations**
+
+    ```yaml
+    update:
+      types: [working]
+      rules:
+        - atomic: {transaction: true}
+        - consistent: {check: true}
+    ```
 
 ## Memory Combinations
 
-1. **Context Building**
-   ```yaml
-   context:
-     combine:
-       - semantic: {knowledge: true}
-       - working: {focus: true}
-     
-     result:
-       - understanding: {current: true}
-   ```
+1.  **Context Building**
 
-2. **Task Processing**
-   ```yaml
-   tasks:
-     combine:
-       - procedural: {steps: true}
-       - working: {state: true}
-     
-     result:
-       - execution: {guided: true}
-   ```
+    ```yaml
+    context:
+      combine:
+        - semantic: {knowledge: true}
+        - working: {focus: true}
+      
+      result:
+        - understanding: {current: true}
+    ```
+2.  **Task Processing**
 
-3. **Decision Making**
-   ```yaml
-   decisions:
-     combine:
-       - semantic: {patterns: true}
-       - episodic: {history: true}
-     
-     result:
-       - choices: {informed: true}
-   ```
+    ```yaml
+    tasks:
+      combine:
+        - procedural: {steps: true}
+        - working: {state: true}
+      
+      result:
+        - execution: {guided: true}
+    ```
+3.  **Decision Making**
+
+    ```yaml
+    decisions:
+      combine:
+        - semantic: {patterns: true}
+        - episodic: {history: true}
+      
+      result:
+        - choices: {informed: true}
+    ```
 
 ## Best Practices
 
-1. **Type Specification**
-   ```yaml
-   memory:
-     types:
-       read: [type1, type2]    # Clear read access
-       write: [type3]          # Limited write access
-   ```
+1.  **Type Specification**
 
+    ```yaml
+    memory:
+      types:
+        read: [type1, type2]    # Clear read access
+        write: [type3]          # Limited write access
+    ```
 2. **Access Control**
-   - Minimize write access
-   - Use read-only when possible
-   - Validate before writing
-   - Handle conflicts
-
+   * Minimize write access
+   * Use read-only when possible
+   * Validate before writing
+   * Handle conflicts
 3. **Integration**
-   - Combine related types
-   - Maintain consistency
-   - Check references
-   - Update atomically
-
+   * Combine related types
+   * Maintain consistency
+   * Check references
+   * Update atomically
 4. **Validation**
-   - Check type existence
-   - Verify format
-   - Resolve references
-   - Handle conflicts
+   * Check type existence
+   * Verify format
+   * Resolve references
+   * Handle conflicts
 
 ## Common Issues
 
-1. **Type Conflicts**
-   ```yaml
-   errors:
-     type_conflict:
-       msg: "Memory type conflict"
-       action: resolve_conflict
-       help: "Check type consistency"
-   ```
+1.  **Type Conflicts**
 
-2. **Missing Types**
-   ```yaml
-   errors:
-     missing_type:
-       msg: "Required type missing"
-       action: show_required
-       help: "Ensure type exists"
-   ```
+    ```yaml
+    errors:
+      type_conflict:
+        msg: "Memory type conflict"
+        action: resolve_conflict
+        help: "Check type consistency"
+    ```
+2.  **Missing Types**
 
-3. **Invalid Access**
-   ```yaml
-   errors:
-     invalid_access:
-       msg: "Invalid memory access"
-       action: show_permissions
-       help: "Check access rules"
-   ```
+    ```yaml
+    errors:
+      missing_type:
+        msg: "Required type missing"
+        action: show_required
+        help: "Ensure type exists"
+    ```
+3.  **Invalid Access**
+
+    ```yaml
+    errors:
+      invalid_access:
+        msg: "Invalid memory access"
+        action: show_permissions
+        help: "Check access rules"
+    ```
 
 ## Related Documentation
 
-- [Pattern System](patterns.md)
-- [Framework Structure](../framework/structure.md)
-- [Memory Management](../framework/memory.md)
-- [Error Handling](../framework/errors.md) 
+* [Pattern System](patterns.md)
+* [Framework Structure](../structure.md)
+* [Memory Management](../framework/memory.md)
+* [Error Handling](../framework/errors.md)

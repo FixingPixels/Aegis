@@ -61,59 +61,54 @@ errors:
 ## Pattern Usage
 
 1. **Validation**
-   - Framework structure
-   - File requirements
-   - State consistency
-   - Memory types
-   - Reference integrity
-
+   * Framework structure
+   * File requirements
+   * State consistency
+   * Memory types
+   * Reference integrity
 2. **Workflow**
-   - Command steps
-   - Required actions
-   - State transitions
-   - Error handling
-   - Success criteria
-
+   * Command steps
+   * Required actions
+   * State transitions
+   * Error handling
+   * Success criteria
 3. **Error Handling**
-   - Error detection
-   - Clear messages
-   - Recovery steps
-   - User guidance
-   - State preservation
-
+   * Error detection
+   * Clear messages
+   * Recovery steps
+   * User guidance
+   * State preservation
 4. **Memory Management**
-   - Memory types
-   - State updates
-   - Context loading
-   - Reference tracking
-   - Consistency checks
+   * Memory types
+   * State updates
+   * Context loading
+   * Reference tracking
+   * Consistency checks
 
 ## Best Practices
 
 1. **Pattern Development**
-   - Clear documentation
-   - Consistent structure
-   - Thorough validation
-   - Helpful error messages
-   - Complete workflows
-
+   * Clear documentation
+   * Consistent structure
+   * Thorough validation
+   * Helpful error messages
+   * Complete workflows
 2. **Pattern Updates**
-   - Version control
-   - Backward compatibility
-   - Migration paths
-   - Clear changelog
-   - Update documentation
-
+   * Version control
+   * Backward compatibility
+   * Migration paths
+   * Clear changelog
+   * Update documentation
 3. **Integration**
-   - AI instruction alignment
-   - Command documentation
-   - Framework validation
-   - Error handling
-   - User guidance
+   * AI instruction alignment
+   * Command documentation
+   * Framework validation
+   * Error handling
+   * User guidance
 
 ## Related Documentation
 
-- [Framework Structure](../framework/structure.md)
-- [Memory Types](../framework/memory.md)
-- [Command Documentation](../commands/README.md)
-- [AI Instructions](../framework/ai_instructions.md) 
+* [Framework Structure](../structure.md)
+* [Memory Types](../framework/memory.md)
+* [Command Documentation](../commands/)
+* [AI Instructions](../framework/ai_instructions.md)
