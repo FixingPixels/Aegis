@@ -1,4 +1,4 @@
- # Framework Structure
+# Framework Structure
 
 The Aegis framework uses a structured directory layout and core files to maintain system state and guide project development. This document explains the framework's organization and core components.
 
@@ -30,29 +30,32 @@ The Aegis framework uses a structured directory layout and core files to maintai
 
 ## Core Files
 
-### 1. AI_INSTRUCTIONS.md
+### 1. AI\_INSTRUCTIONS.md
 
 This file provides operational instructions for the framework.
 
 #### Purpose
-- Guides AI behavior
-- Defines processing flows
-- Establishes memory management
-- Sets operational standards
+
+* Guides AI behavior
+* Defines processing flows
+* Establishes memory management
+* Sets operational standards
 
 #### Key Components
-- Command processing rules
-- Memory type definitions
-- State management rules
-- Operation patterns
-- Validation requirements
-- Error handling guidelines
 
-### 2. current_state.md
+* Command processing rules
+* Memory type definitions
+* State management rules
+* Operation patterns
+* Validation requirements
+* Error handling guidelines
+
+### 2. current\_state.md
 
 This file maintains the current project state and working memory.
 
 #### Structure
+
 ```yaml
 ---
 updated: timestamp
@@ -87,22 +90,25 @@ status: in_progress
 This file tracks project direction and achievements.
 
 #### Purpose
-- Sets project direction
-- Tracks major progress
-- Plans future features
-- Records achievements
+
+* Sets project direction
+* Tracks major progress
+* Plans future features
+* Records achievements
 
 #### Key Sections
-- Current focus areas
-- Future direction
-- Achievement log
-- Strategic goals
 
-### 4. planning_document.md
+* Current focus areas
+* Future direction
+* Achievement log
+* Strategic goals
+
+### 4. planning\_document.md
 
 This file contains project planning details.
 
 #### Structure
+
 ```yaml
 ---
 updated: timestamp
@@ -138,6 +144,7 @@ status: active
 ## Template Files
 
 ### 1. tasks/TEMPLATE.md
+
 ```yaml
 ---
 id: TASK-XXX
@@ -167,6 +174,7 @@ Task description
 ```
 
 ### 2. sessions/TEMPLATE.md
+
 ```yaml
 ---
 date: timestamp
@@ -192,6 +200,7 @@ references: []
 ```
 
 ### 3. decisions/TEMPLATE.md
+
 ```yaml
 ---
 id: DECISION-XXX
@@ -224,25 +233,22 @@ Validation criteria
 The framework uses different memory types to organize and process information:
 
 1. **Semantic Memory** (Project Knowledge)
-   - AI_INSTRUCTIONS.md
-   - roadmap.md
-   - decisions/*.md
-
+   * AI\_INSTRUCTIONS.md
+   * roadmap.md
+   * decisions/\*.md
 2. **Procedural Memory** (Task Execution)
-   - tasks/*.md
-   - operations/*.yaml
-
+   * tasks/\*.md
+   * operations/\*.yaml
 3. **Working Memory** (Current State)
-   - current_state.md
-   - tasks/active/*.md
-
+   * current\_state.md
+   * tasks/active/\*.md
 4. **Episodic Memory** (History)
-   - sessions/*.md
-   - decisions/*.md
+   * sessions/\*.md
+   * decisions/\*.md
 
 ## Related Documentation
 
-- [Memory Types](../operations/memory_types.md)
-- [Operation Patterns](../operations/patterns.md)
-- [Error Handling](../operations/error_handling.md)
-- [State Management](../operations/state_management.md)
+* [Memory Types](operations/memory_types.md)
+* [Operation Patterns](operations/patterns.md)
+* [Error Handling](operations/error_handling.md)
+* [State Management](operations/state_management.md)
