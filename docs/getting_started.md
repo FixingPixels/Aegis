@@ -212,16 +212,16 @@ Requirements:
 
 ## Next Steps
 
-1. Review the [Memory System Guide](./memory_system.md)
-2. Learn about [Task Management](./tasks.md)
-3. Understand [Decision Records](./decisions.md)
-4. Explore [Session Logs](./sessions.md)
+1. Review the [Memory System](operations/memory_types.md)
+2. Learn about [Task Management](tasks.md)
+3. Understand [Decision Records](decisions.md)
+4. Explore [Operations](operations/README.md)
 
 ## Additional Resources
 
-- [Command Reference](./commands/README.md)
-- [Framework Structure](./framework/structure.md)
-- [Best Practices Guide](./best_practices.md)
+- [Command Reference](commands/README.md)
+- [Framework Structure](framework/structure.md)
+- [Operation Patterns](operations/patterns.md)
 - [Contributing Guide](../CONTRIBUTING.md)
 
 ---

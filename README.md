@@ -172,11 +172,11 @@ All commands are typed in your AI assistant's chat window:
 ## 📚 Documentation
 
 - [Getting Started Guide](./docs/getting_started.md)
-- [Memory System Details](./docs/memory_system.md)
+- [Memory System](./docs/operations/memory_types.md)
 - [Command Reference](./docs/commands/README.md)
-- [Best Practices](./docs/best_practices.md)
+- [Operation Patterns](./docs/operations/patterns.md)
 - [Task Management](./docs/tasks.md)
-- [Session Logging](./docs/sessions.md)
+- [Framework Structure](./docs/framework/structure.md)
 
 ## 🤝 Contributing
 
