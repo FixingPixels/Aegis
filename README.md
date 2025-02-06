@@ -2,6 +2,8 @@
 
 **Welcome to Aegis!** 🚀
 
+**Current Version**: 0.1.0-beta (February 5, 2024)
+
 Aegis transforms AI-assisted development by providing a structured memory system inspired by human cognition. Just as our brains organize information into distinct memory types, Aegis helps your AI assistant maintain and process project information more effectively.
 
 ## Key Features

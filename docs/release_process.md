@@ -176,11 +176,24 @@ To ensure your download is correct and hasn't been corrupted:
    ```
 
 3. Prepare release notes:
-   - Version number
-   - Major changes
-   - Breaking changes (if any)
-   - Installation instructions
-   - Upgrade notes
+   ```markdown
+   # Aegis vX.Y.Z
+
+   ## Changes
+   - Major change 1
+   - Major change 2
+
+   ## Breaking Changes
+   - None
+
+   ## Installation
+   1. Download aegis-vX.Y.Z.tar.gz
+   2. Extract to your project
+   3. Copy .context directory
+
+   ## Upgrade Notes
+   - Update steps if any
+   ```
 
 4. Distribution options:
    - Private file storage (e.g., company server)
@@ -188,11 +201,63 @@ To ensure your download is correct and hasn't been corrupted:
    - Direct distribution to team
    - Version control system without public access
 
-#### Option B: GitHub Release (Optional)
-If you choose to use GitHub:
-- Create new release tag
-- Upload archive and checksums
-- Publish release notes
+#### Option B: GitHub Release (Using GitHub CLI)
+If using GitHub, you can use the GitHub CLI (`gh`) for easier release management:
+
+1. Install GitHub CLI if needed:
+   ```bash
+   # Mac (Homebrew)
+   brew install gh
+   
+   # Windows (Scoop)
+   scoop install gh
+   
+   # Login to GitHub CLI
+   gh auth login
+   ```
+
+2. Create a new release:
+   ```bash
+   # Create a new tag
+   git tag vX.Y.Z
+   git push origin vX.Y.Z
+
+   # Create release with files
+   gh release create vX.Y.Z \
+     --title "Aegis vX.Y.Z" \
+     --notes-file release_notes.md \
+     aegis-vX.Y.Z.tar.gz \
+     aegis-vX.Y.Z.sha256
+   ```
+
+3. For private repositories:
+   ```bash
+   # Create private release
+   gh release create vX.Y.Z \
+     --title "Aegis vX.Y.Z" \
+     --notes-file release_notes.md \
+     --repo your-org/your-private-repo \
+     aegis-vX.Y.Z.tar.gz \
+     aegis-vX.Y.Z.sha256
+   ```
+
+4. Verify release:
+   ```bash
+   # List releases
+   gh release list
+
+   # View specific release
+   gh release view vX.Y.Z
+   ```
+
+5. Managing releases:
+   ```bash
+   # Delete a release if needed
+   gh release delete vX.Y.Z
+
+   # Download release assets
+   gh release download vX.Y.Z
+   ```
 
 #### Option C: Custom Distribution
 You can also:
@@ -307,4 +372,95 @@ The key requirements for any distribution method are:
    - Provide checksums
    - Document changes
    - Track versions
+
+### Release Notes Management
+
+Release notes should be maintained in multiple locations to serve different purposes:
+
+1. **CHANGELOG.md** (Primary Source)
+   ```markdown
+   # Changelog
+
+   All notable changes to Aegis are documented here.
+   Format based on [Keep a Changelog](https://keepachangelog.com/).
+
+   ## [X.Y.Z] - YYYY-MM-DD
+   ### Added
+   - New features
+   
+   ### Changed
+   - Updates to existing functionality
+   
+   ### Deprecated
+   - Soon-to-be removed features
+   
+   ### Removed
+   - Removed features
+   
+   ### Fixed
+   - Bug fixes
+   
+   ### Security
+   - Vulnerability fixes
+   ```
+
+2. **README.md Updates**
+   - Add latest version number
+   - Update any changed features
+   - Update installation instructions if needed
+   - Link to full changelog
+   Example:
+   ```markdown
+   ## Latest Release
+   
+   **Current Version**: vX.Y.Z
+   See [CHANGELOG.md](./CHANGELOG.md) for detailed release notes.
+   
+   ### Recent Updates
+   - Major feature 1
+   - Important change 2
+   ```
+
+3. **Release Notes File** (for distribution)
+   - Create `release_notes.md` for each release
+   - Include installation-specific details
+   - Focus on changes relevant to users
+   - Store in `docs/releases/vX.Y.Z.md`
+
+4. **GitHub Release** (if using GitHub)
+   - Copy relevant sections from CHANGELOG.md
+   - Add download and verification instructions
+   - Include upgrade notes
+   - Link to full documentation
+
+### Release Notes Workflow
+
+1. **During Development**:
+   - Update CHANGELOG.md with each significant change
+   - Keep an "Unreleased" section at the top
+   - Document breaking changes immediately
+
+2. **Pre-Release**:
+   - Move "Unreleased" changes to new version
+   - Update version numbers
+   - Create release_notes.md
+   - Update README.md
+
+3. **Post-Release**:
+   - Verify all documentation is synchronized
+   - Create new "Unreleased" section in CHANGELOG.md
+   - Archive release notes
+
+### Release Notes Structure
+
+```markdown
+# Release Notes Directory Structure
+
+releases/
+├── latest.md              # Symlink to latest release
+├── v1.0.0.md             # First major release
+├── v1.0.1.md             # Patch release
+├── v1.1.0.md             # Feature release
+└── archive/              # Older releases
+    └── pre-v1.0.0/      # Pre-release versions
 ``` 

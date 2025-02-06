@@ -5,7 +5,48 @@ All notable changes to the Aegis Framework will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.3] - 2024-02-05
+## [0.1.0-beta] - 2024-02-05
+
+### Added
+- Core framework structure with `.context` directory
+- Memory type system:
+  - Semantic Memory (project knowledge)
+  - Episodic Memory (development history)
+  - Procedural Memory (tasks)
+  - Working Memory (current focus)
+- Command interface:
+  - `/aegis plan`: Project planning
+  - `/aegis start`: Session management
+  - `/aegis save`: Progress tracking
+  - `/aegis status`: State checking
+  - `/aegis task`: Task management
+  - `/aegis context`: Context refresh
+  - `/aegis help`: Command assistance
+- Template system:
+  - Decision templates
+  - Session templates
+  - Task templates
+- Cross-referencing system
+- Project state management
+- Documentation:
+  - Getting Started guide
+  - Command reference
+  - Memory system guide
+  - Operation patterns
+  - Framework structure
+
+### Known Issues
+- Limited error handling
+- Documentation gaps
+- Experimental features may change
+- API not finalized
+
+### Notes
+- This is a beta release
+- Breaking changes may occur before v1.0.0
+- Feedback and testing needed
+
+## [0.0.4] - 2024-02-05
 
 ### Added
 - New `/aegis help` command documentation:
@@ -35,7 +76,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Outdated initialization steps
 - Redundant setup instructions
 
-## [1.0.2] - 2024-03-20
+## [0.0.3] - 2025-01-28
 
 ### Added
 - Session validation system:
@@ -67,7 +108,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Incorrect link path formats
 - Incomplete frontmatter fields
 
-## [1.0.1] - 2025-01-27
+## [0.0.2] - 2025-01-27
 
 ### Changed
 - Updated all command documentation to match command rules:
@@ -78,7 +119,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added file operation restrictions
   - Improved clarity and consistency
 
-## [1.0.0] - 2025-01-20
+## [0.0.1] - 2025-01-20
 
 ### Added
 - Core framework structure with `.context` directory
