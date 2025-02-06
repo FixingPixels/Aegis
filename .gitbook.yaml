@@ -1,2 +1,3 @@
-root: ./docs/
-readme: ./docs/getting_started.md
+root: docs
+structure:
+  summary: docs/SUMMARY.md
