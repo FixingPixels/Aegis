@@ -47,7 +47,6 @@
 * [Feedback System](planning/feedback.md)
 
 ## Release Information
-* [Release Process](release_process.md)
 * **Releases**
   * [v0.1.1-beta](releases/v0.1.1.md)
   * [v0.1.0-beta](releases/v0.1.0.md)
