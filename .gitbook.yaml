@@ -2,4 +2,3 @@ root: docs
 structure:
   summary: SUMMARY.md
   readme: README.md
-  page: docs/{path}.md
