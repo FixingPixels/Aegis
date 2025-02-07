@@ -6,10 +6,10 @@
 * [Framework Structure](framework/structure.md)
 
 ## Core Concepts
-* [Cross-Referencing System](core/cross_referencing.md)
-* [Decision Making](core/decisions.md)
-* [Templates](core/templates.md)
-* [Task Management](core/tasks.md)
+* [Cross-Referencing System](cross_referencing.md)
+* [Decision Making](decisions.md)
+* [Templates](templates.md)
+* [Task Management](tasks.md)
 
 ## Commands
 * [Command Overview](commands/README.md)
@@ -61,11 +61,6 @@
 * **Framework Usage Patterns** *(Coming Soon)*
 * **Memory System Optimization** *(Coming Soon)*
 * **Task Management Strategies** *(Coming Soon)*
-
-## API Reference
-* **Memory System APIs** *(Coming Soon)*
-* **Command Interfaces** *(Coming Soon)*
-* **Extension Points** *(Coming Soon)*
 
 ## Examples and Tutorials
 * **Common Workflows** *(Coming Soon)*
