@@ -1,5 +1,5 @@
 root: docs
 structure:
-  summary: docs/SUMMARY.md
-  readme: docs/README.md
+  summary: SUMMARY.md
+  readme: README.md
   page: docs/{path}.md
