@@ -1,76 +1,188 @@
 # Context Operation Pattern
 version: 1.0
-command: context
-description: Quick context refresh and memory update
+command: /aegis context
+description: "Quick context refresh with front matter validation"
 
 # Operation Flow
 flow:
   pre_checks:
-    - framework_ready: {verify: framework_check, error: "Framework not ready"}
+    - framework_ready
+    - front_matter_valid
   
   steps:
-    1_load_context:
-      action: load_context
-      files:
-        - current_state: {path: "current_state.md", required: true}
-        - active_tasks: {dir: "tasks/active", pattern: "*.md"}
-        - recent_sessions: {dir: "sessions", pattern: "*.md", limit: 3}
-    
-    2_process_memory:
-      action: process_memory
-      types:
-        - working: {from: current_state}
-        - procedural: {from: active_tasks}
-        - episodic: {from: recent_sessions}
-    
-    3_show_context:
-      action: show_context
-      display:
-        - current: {focus: true, tasks: true}
-        - recent: {changes: true, decisions: true}
-        - next: {actions: true, priorities: true}
+    1_validate_front_matter:
+      - check_existence: true
+      - validate_format: yaml
+      - verify_required_fields:
+          common:
+            - id
+            - title
+            - created
+            - updated
+            - memory_types
+            - references
+          context_specific:
+            - focus
+            - active_task
+            - status
+
+    2_load_context:
+      - memory_files:
+          current_state:
+            - location: .context/current_state.md
+            - validate_front_matter: true
+          active_tasks:
+            - location: .context/tasks/active
+            - validate_front_matter: true
+          recent_sessions:
+            - location: .context/sessions
+            - limit: 3
+            - validate_front_matter: true
+      - validate:
+          front_matter:
+            - existence
+            - format
+            - fields
+          memory_types:
+            - compatibility
+            - required_types
+          references:
+            - format
+            - existence
+
+    3_process_memory:
+      - types:
+          working:
+            - current_state
+            - active_focus
+          procedural:
+            - active_tasks
+            - task_progress
+          episodic:
+            - recent_sessions
+            - recent_changes
+      - validate:
+          memory_types:
+            - compatibility
+            - required_presence
+          references:
+            - cross_references
+            - dependencies
+
+    4_show_context:
+      - display:
+          current:
+            - focus
+            - active_tasks
+            - recent_changes
+          validation:
+            - front_matter_status
+            - memory_type_issues
+            - reference_warnings
 
 # Validation Rules
 validation:
-  context_files:
-    required: [current_state.md]
-    optional: [tasks/*, sessions/*]
-    check: [exists, readable]
-  
-  memory:
-    types: [working, procedural, episodic]
-    verify: [consistency, references]
+  front_matter:
+    existence:
+      check: true
+      error: "Front matter section is required"
+      severity: error
+    
+    format:
+      check: yaml
+      error: "Invalid YAML format in front matter"
+      severity: error
+    
+    required_fields:
+      check: complete
+      error: "Missing required fields: {fields}"
+      severity: error
+    
+    memory_types:
+      check:
+        - required_type
+        - compatibility
+        - count_range
+      error: "Invalid memory type configuration"
+      severity: error
+    
+    references:
+      check:
+        - format
+        - existence
+        - validity
+      error: "Invalid references detected"
+      severity: warning
+
+  context_refresh:
+    state_loading:
+      check: true
+      error: "Failed to load current state"
+    
+    memory_processing:
+      check:
+        - type_validation
+        - reference_resolution
+      error: "Memory processing failed"
 
 # Error Handling
 errors:
-  not_ready:
-    msg: "Framework not ready"
-    action: show_setup_instructions
-    help: "Copy .context directory to your project and ensure all required files exist"
-  
   missing_state:
-    msg: "Current state file missing"
-    action: list_missing
-    help: "Ensure current_state.md exists"
+    severity: error
+    message: "Current state file missing"
+    action: block_refresh
   
-  invalid_state:
-    msg: "Invalid state format"
-    action: show_format
-    help: "Check state file format"
+  invalid_front_matter:
+    severity: error
+    message: "Front matter validation failed"
+    action: block_refresh
+  
+  invalid_memory_types:
+    severity: error
+    message: "Invalid memory type combination"
+    action: block_refresh
+  
+  invalid_references:
+    severity: warning
+    message: "Invalid references detected"
+    action: warn_user
 
 # Memory Processing
 memory:
   types:
-    read: [working, procedural, episodic]
-    no_write: true
+    read_only: true
+    validate:
+      - front_matter
+      - memory_types
+      - references
   
   processing:
-    on_load: [validate, cross_reference]
-    on_display: [summarize, prioritize]
+    on_load:
+      - validate_front_matter
+      - check_memory_types
+      - verify_references
+    on_display:
+      - summarize_state
+      - highlight_issues
+      - show_validation
 
 # Important Notes
 notes:
-  usage:
-    - quick_refresh: "Fast context update"
-    - read_only: "No state changes"
-    - memory_types: "All memory systems" 
+  - "All memory files must have valid front matter"
+  - "Memory types must be compatible"
+  - "References must be valid"
+  - "Context refresh is read-only"
+  - "Validation issues are displayed"
+
+milestones:
+  success:
+    - "Front matter validated"
+    - "Context loaded"
+    - "Memory processed"
+    - "Status displayed"
+  
+  failure:
+    - "Invalid front matter"
+    - "Context load failed"
+    - "Memory processing failed"
+    - "Display failed" 

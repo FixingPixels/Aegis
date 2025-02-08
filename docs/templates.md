@@ -37,6 +37,222 @@ This system helps you:
 - Validate content automatically
 - Follow project standards
 
+## Front Matter Requirements
+
+### Common Structure
+All templates MUST include front matter with the following required fields:
+
+```yaml
+---
+id: [TYPE]-[IDENTIFIER]        # Unique identifier (format varies by type)
+title: "Descriptive Title"     # Clear, descriptive title
+created: YYYY-MM-DDTHH:mm:ssZ # Creation timestamp (ISO 8601)
+updated: YYYY-MM-DDTHH:mm:ssZ # Last update timestamp (ISO 8601)
+memory_types: []              # Valid memory type combination
+references: []                # Related file references
+---
+```
+
+### Type-Specific Requirements
+
+1. Task Template:
+```yaml
+---
+# Common fields (required)
+id: TASK-NNN                  # e.g., TASK-001
+title: "Task Title"
+created: YYYY-MM-DDTHH:mm:ssZ
+updated: YYYY-MM-DDTHH:mm:ssZ
+memory_types: [procedural]    # Must include procedural
+references: []
+
+# Task-specific fields (required)
+status: [planned|active|completed|blocked]
+priority: [high|medium|low]
+phase: "Implementation Phase"
+
+# Optional fields
+due_date: YYYY-MM-DD
+assignee: "Owner Name"
+dependencies: []
+tags: []
+---
+```
+
+2. Session Template:
+```yaml
+---
+# Common fields (required)
+id: SESSION-YYYYMMDDHHMMSS    # Timestamp-based ID
+title: "Session Summary"
+created: YYYY-MM-DDTHH:mm:ssZ
+updated: YYYY-MM-DDTHH:mm:ssZ
+memory_types: [episodic]      # Must include episodic
+references: []
+
+# Session-specific fields (required)
+focus: "Session Focus"
+participants: []
+objectives: []
+
+# Optional fields
+duration: "HH:MM"
+next_session: YYYY-MM-DD
+tags: []
+---
+```
+
+3. Decision Template:
+```yaml
+---
+# Common fields (required)
+id: DECISION-NNN             # e.g., DECISION-001
+title: "Decision Title"
+created: YYYY-MM-DDTHH:mm:ssZ
+updated: YYYY-MM-DDTHH:mm:ssZ
+memory_types: [semantic]     # Must include semantic
+references: []
+
+# Decision-specific fields (required)
+status: [proposed|accepted|deprecated|superseded]
+impact: "Impact Description"
+alternatives_considered: []
+
+# Optional fields
+implementation_date: YYYY-MM-DD
+stakeholders: []
+tags: []
+---
+```
+
+### Memory Type Rules
+
+#### Valid Combinations
+1. Tasks:
+   - Required: `procedural`
+   - Optional: `working`, `semantic`
+   - Max: 3 types
+
+2. Sessions:
+   - Required: `episodic`
+   - Optional: `working`, `semantic`
+   - Max: 3 types
+
+3. Decisions:
+   - Required: `semantic`
+   - Optional: `episodic`, `working`
+   - Max: 3 types
+
+#### Compatibility Matrix
+```yaml
+memory_compatibility:
+  procedural:
+    - semantic
+    - working
+  
+  episodic:
+    - semantic
+    - working
+  
+  semantic:
+    - procedural
+    - working
+    - episodic
+  
+  working:
+    - procedural
+    - semantic
+    - episodic
+```
+
+### Validation Rules
+
+#### Pre-Creation Validation
+```yaml
+validation:
+  pre_create:
+    front_matter:
+      - exists: true
+      - format: yaml
+      - required_fields: complete
+    
+    memory_types:
+      - required_type: present
+      - compatibility: valid
+      - count: [1,3]
+    
+    references:
+      - format: valid
+      - targets: exist
+
+    timestamps:
+      - format: iso8601
+      - created: valid
+      - updated: matches_created
+```
+
+#### Content Validation
+```yaml
+content_validation:
+  tasks:
+    required_sections:
+      - Description
+      - Implementation
+      - Validation
+    optional_sections:
+      - Dependencies
+      - Notes
+  
+  sessions:
+    required_sections:
+      - Progress Summary
+      - Changes Made
+      - Next Steps
+    optional_sections:
+      - Decisions
+      - Notes
+  
+  decisions:
+    required_sections:
+      - Context
+      - Decision
+      - Consequences
+    optional_sections:
+      - Implementation
+      - Validation
+```
+
+### Error Handling
+
+#### Front Matter Errors
+```yaml
+front_matter_errors:
+  missing:
+    severity: error
+    message: "Front matter section required"
+    action: block_creation
+  
+  invalid_format:
+    severity: error
+    message: "Invalid YAML format"
+    action: block_creation
+  
+  missing_required:
+    severity: error
+    message: "Missing required fields: {fields}"
+    action: block_creation
+  
+  invalid_memory_types:
+    severity: error
+    message: "Invalid memory type combination"
+    action: block_creation
+  
+  invalid_references:
+    severity: warning
+    message: "Invalid references detected"
+    action: warn_user
+```
+
 ## Common Structure
 
 All templates use a standard metadata structure:
@@ -181,192 +397,4 @@ framework_check:
 ```
 
 ### 2. Memory Processing Pattern
-```yaml
-memory_processing:
-  templates:
-    load:
-      - type: {validate: true}
-      - content: {process: true}
-      - refs: {resolve: true}
 ```
-
-### 3. State Management Pattern
-```yaml
-state_management:
-  templates:
-    track:
-      - changes: {record: true}
-      - updates: {validate: true}
-      - history: {maintain: true}
-```
-
-## Template Types
-
-### 1. Decision Template
-```markdown
-# [Decision Title]
-
----
-id: DECISION-XXX
-title: [Clear title]
-created: ${timestamp}
-updated: ${timestamp}
-memory_types: [semantic, episodic]
-status: [proposed | accepted | deprecated | superseded]
-priority: [high | medium | low]
-references: []
-validation:
-  format: true
-  references: true
-  state: true
----
-
-## Context
-[Issue or situation motivating this decision]
-
-## Decision
-[Proposed change or solution]
-
-## Rationale
-- Key factors
-- Alternatives
-- Trade-offs
-- Dependencies
-
-## Consequences
-- Benefits
-- Challenges
-- Required changes
-- Impact areas
-
-## Implementation
-- Technical details
-- Migration steps
-- Validation needs
-```
-
-### 2. Session Template
-```markdown
-# Session Summary
-
----
-id: ${YYYYMMDD}_${HHMM}_session
-title: Session Summary
-created: ${timestamp}
-updated: ${timestamp}
-memory_types: [episodic, working]
-references: []
-validation:
-  format: true
-  references: true
-  state: true
----
-
-## Context
-- Previous: [session reference]
-- Focus: [current focus]
-- Tasks: [task references]
-
-## Progress
-### Changes
-- Code updates
-- Documentation
-- Decisions made
-
-### Insights
-- Technical findings
-- Pattern discoveries
-- Potential issues
-
-## Next Steps
-- Immediate tasks
-- Open questions
-- Follow-up items
-```
-
-### 3. Task Template
-```markdown
-# [Task Title]
-
----
-id: ${YYMMDD}_${HHMM}_task_name
-title: [Clear title]
-created: ${timestamp}
-updated: ${timestamp}
-memory_types: [procedural, working]
-status: [planned | active | completed | hold]
-priority: [high | medium | low]
-references: []
-validation:
-  format: true
-  references: true
-  state: true
----
-
-## Description
-[Clear task objective]
-
-## Implementation
-- Technical approach
-- Step-by-step plan
-- Progress tracking
-- Validation steps
-
-## Dependencies
-- Required tasks
-- External resources
-- Blocking issues
-
-## Validation
-- Success metrics
-- Testing approach
-- Quality checks
-- Review process
-```
-
-### 4. Agent Template
-```markdown
-# [Agent Role]
-
----
-id: AGENT-ROLE
-title: [Role Title]
-created: ${timestamp}
-updated: ${timestamp}
-memory_types: [semantic, working]
-status: [active | standby | inactive]
-references: []
-validation:
-  format: true
-  references: true
-  state: true
----
-
-## Role Definition
-[Agent's role and responsibilities]
-
-## Memory Access
-- Read: [memory types]
-- Write: [memory types]
-
-## Task Types
-- Primary: [task types]
-- Support: [task types]
-
-## Interaction Patterns
-- Direct: [agent interactions]
-- Workflow: [integration points]
-
-## State Management
-- Active: [requirements]
-- Standby: [conditions]
-- Inactive: [preservation]
-```
-
-## Related Documentation
-
-- [Memory Types](operations/memory_types.md)
-- [Operation Patterns](operations/patterns.md)
-- [Validation Rules](operations/validation.md)
-- [Error Handling](operations/error_handling.md)
-- [State Management](operations/state_management.md)

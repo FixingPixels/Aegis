@@ -2,6 +2,285 @@
 
 The Aegis framework uses a structured decision-recording system to maintain a clear history of architectural and technical decisions. This document explains how decisions are managed, validated, and integrated with the framework's operation patterns.
 
+## Front Matter Requirements
+
+Every decision record must include a properly formatted front matter section:
+
+```yaml
+---
+id: DECISION-001              # Unique decision identifier
+title: "Architecture Choice"  # Clear, descriptive title
+created: 2024-02-06T10:00:00Z # Creation timestamp (ISO 8601)
+updated: 2024-02-06T10:00:00Z # Last update timestamp (ISO 8601)
+memory_types: [semantic]      # Must include semantic
+status: proposed             # Decision status
+impact: high                 # Impact level
+alternatives_considered: []   # Alternative options
+references: []               # Related file references
+---
+```
+
+### Required Fields
+1. **Common Fields** (Required for all files):
+   - `id`: Unique decision identifier (format: `DECISION-NNN`)
+   - `title`: Clear, descriptive title
+   - `created`: Creation timestamp (ISO 8601)
+   - `updated`: Last update timestamp (ISO 8601)
+   - `memory_types`: At least one valid memory type
+   - `references`: List of related files (can be empty)
+
+2. **Decision-Specific Fields** (Required for decisions):
+   - `status`: Current decision state (`proposed`, `accepted`, `deprecated`, `superseded`)
+   - `impact`: Impact level (`high`, `medium`, `low`)
+   - `alternatives_considered`: List of alternative options considered
+
+### Memory Type Requirements
+
+1. **Required Type**:
+   - `semantic`: All decisions must include this type
+   
+2. **Optional Types**:
+   - `episodic`: For tracking decision history
+   - `working`: For active decisions
+
+3. **Valid Combinations**:
+   - `[semantic]`
+   - `[semantic, episodic]`
+   - `[semantic, working]`
+   - `[semantic, episodic, working]`
+
+4. **Invalid Combinations**:
+   - `[episodic]` (missing required semantic)
+   - `[semantic, procedural]` (incompatible types)
+   - More than 3 types
+
+### Validation Rules
+
+```yaml
+validation:
+  front_matter:
+    existence:
+      check: true
+      error: "Front matter section is required"
+      severity: error
+    
+    format:
+      check: yaml
+      error: "Invalid YAML format in front matter"
+      severity: error
+    
+    required_fields:
+      common:
+        - id
+        - title
+        - created
+        - updated
+        - memory_types
+        - references
+      decision_specific:
+        - status
+        - impact
+        - alternatives_considered
+    
+    memory_types:
+      primary: semantic
+      optional: [episodic, working]
+      max_count: 3
+      compatibility:
+        semantic: [episodic, working]
+    
+    timestamps:
+      format: ISO8601
+      created_before_updated: true
+    
+    references:
+      format_valid: true
+      targets_exist: true
+      no_circles: true
+
+  status:
+    values: [proposed, accepted, deprecated, superseded]
+    transitions:
+      proposed:
+        to: [accepted, deprecated]
+        validate: [impact_assessed]
+      accepted:
+        to: [deprecated, superseded]
+        validate: [replacement]
+      deprecated:
+        to: [superseded]
+        validate: [replacement]
+      superseded:
+        final: true
+        validate: [new_decision]
+
+  impact:
+    values: [high, medium, low]
+    required: true
+```
+
+### Error Handling
+
+```yaml
+errors:
+  critical:  # Block Operation
+    - missing_front_matter:
+        message: "Front matter section is required"
+        action: block_save
+    
+    - invalid_format:
+        message: "Invalid YAML format in front matter"
+        action: block_save
+    
+    - missing_required:
+        message: "Missing required fields: {fields}"
+        action: block_save
+    
+    - invalid_memory_types:
+        message: "Invalid memory type combination"
+        action: block_save
+    
+    - invalid_status:
+        message: "Invalid status value"
+        action: block_save
+  
+  warnings:  # Allow with Notice
+    - invalid_references:
+        message: "Invalid references detected"
+        action: warn_user
+    
+    - missing_optional:
+        message: "Optional fields missing"
+        action: warn_user
+```
+
+## Decision States
+
+### State Transitions
+Each state transition triggers front matter validation:
+
+1. **Proposed → Accepted**:
+   ```yaml
+   ---
+   status: accepted
+   updated: ${new_timestamp}
+   references: ["SESSION-XXX"]  # Add acceptance session
+   ---
+   ```
+
+2. **Accepted → Deprecated**:
+   ```yaml
+   ---
+   status: deprecated
+   updated: ${new_timestamp}
+   references: ["DECISION-XXX"]  # Add deprecation reason
+   ---
+   ```
+
+3. **Deprecated → Superseded**:
+   ```yaml
+   ---
+   status: superseded
+   updated: ${new_timestamp}
+   references: ["DECISION-XXX"]  # Add new decision
+   ---
+   ```
+
+### State Validation
+```yaml
+state_validation:
+  pre_transition:
+    - front_matter_valid
+    - memory_types_compatible
+    - references_exist
+  
+  post_transition:
+    - status_updated
+    - timestamp_updated
+    - references_updated
+```
+
+## Examples
+
+### 1. Valid Decision Front Matter
+```yaml
+---
+id: DECISION-001
+title: "Use PostgreSQL for Database"
+created: 2024-02-06T10:00:00Z
+updated: 2024-02-06T10:00:00Z
+memory_types: [semantic, episodic]
+status: proposed
+impact: high
+alternatives_considered: ["MySQL", "MongoDB"]
+references: ["TASK-001"]
+---
+```
+
+### 2. Invalid Front Matter (With Fixes)
+```yaml
+# Error: Missing required fields
+---
+title: "Database Choice"
+memory_types: [semantic]
+---
+
+# Fix: Add all required fields
+---
+id: DECISION-002
+title: "Database Choice"
+created: 2024-02-06T10:00:00Z
+updated: 2024-02-06T10:00:00Z
+memory_types: [semantic]
+status: proposed
+impact: medium
+alternatives_considered: ["Option A", "Option B"]
+references: []
+---
+
+# Error: Invalid memory types
+memory_types: [episodic, working]
+
+# Fix: Include required semantic type
+memory_types: [semantic, episodic, working]
+
+# Error: Invalid status
+status: implemented
+
+# Fix: Use valid status value
+status: accepted
+```
+
+## Best Practices
+
+1. **Front Matter Management**:
+   - Always use templates for new decisions
+   - Keep titles clear and descriptive
+   - Update timestamps when editing
+   - Use appropriate memory types
+   - Maintain accurate references
+
+2. **Memory Types**:
+   - Always include `semantic`
+   - Add `episodic` for historical tracking
+   - Add `working` for active decisions
+   - Don't exceed 3 types
+   - Follow compatibility rules
+
+3. **Status Updates**:
+   - Keep status current
+   - Update timestamps
+   - Document transitions
+   - Add relevant references
+   - Follow transition rules
+
+4. **References**:
+   - Link related tasks
+   - Reference impacted decisions
+   - Update when superseded
+   - Maintain bidirectional links
+   - Validate before saving
+
 ## Overview
 
 Architectural decisions in Aegis are organized into several key aspects:

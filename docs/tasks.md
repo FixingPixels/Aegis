@@ -1,6 +1,287 @@
 # Task Management
 
-The Aegis framework uses a structured task management system to track development activities and implementation details. Tasks can be created manually or automatically generated from planning documents. This document explains how tasks are managed, validated, and integrated with the framework's operation patterns.
+The Aegis framework uses a structured task management system to track and organize development work. This document explains how tasks are created, validated, and managed throughout their lifecycle.
+
+## Front Matter Requirements
+
+Every task must include a properly formatted front matter section:
+
+```yaml
+---
+id: TASK-001                 # Unique task identifier
+title: "Implement Feature"   # Clear, descriptive title
+created: 2024-02-06T10:00:00Z # Creation timestamp (ISO 8601)
+updated: 2024-02-06T10:00:00Z # Last update timestamp (ISO 8601)
+memory_types: [procedural]   # Must include procedural
+status: planned             # Task status
+priority: high              # Priority level
+dependencies: []            # Task dependencies
+references: []              # Related file references
+---
+```
+
+### Required Fields
+1. **Common Fields** (Required for all files):
+   - `id`: Unique task identifier (format: `TASK-NNN`)
+   - `title`: Clear, descriptive title
+   - `created`: Creation timestamp (ISO 8601)
+   - `updated`: Last update timestamp (ISO 8601)
+   - `memory_types`: At least one valid memory type
+   - `references`: List of related files (can be empty)
+
+2. **Task-Specific Fields** (Required for tasks):
+   - `status`: Current task state (`planned`, `active`, `hold`, `completed`)
+   - `priority`: Priority level (`high`, `medium`, `low`)
+   - `dependencies`: List of task dependencies (can be empty)
+
+### Memory Type Requirements
+
+1. **Required Type**:
+   - `procedural`: All tasks must include this type
+   
+2. **Optional Types**:
+   - `working`: For active tasks
+   - `episodic`: For tracking task history
+
+3. **Valid Combinations**:
+   - `[procedural]`
+   - `[procedural, working]`
+   - `[procedural, episodic]`
+   - `[procedural, working, episodic]`
+
+4. **Invalid Combinations**:
+   - `[working]` (missing required procedural)
+   - `[procedural, semantic]` (incompatible types)
+   - More than 3 types
+
+### Validation Rules
+
+```yaml
+validation:
+  front_matter:
+    existence:
+      check: true
+      error: "Front matter section is required"
+      severity: error
+    
+    format:
+      check: yaml
+      error: "Invalid YAML format in front matter"
+      severity: error
+    
+    required_fields:
+      common:
+        - id
+        - title
+        - created
+        - updated
+        - memory_types
+        - references
+      task_specific:
+        - status
+        - priority
+        - dependencies
+    
+    memory_types:
+      primary: procedural
+      optional: [working, episodic]
+      max_count: 3
+      compatibility:
+        procedural: [working, episodic]
+    
+    timestamps:
+      format: ISO8601
+      created_before_updated: true
+    
+    references:
+      format_valid: true
+      targets_exist: true
+      no_circles: true
+
+  status:
+    values: [planned, active, hold, completed]
+    transitions:
+      planned:
+        to: [active]
+        validate: [dependencies_met]
+      active:
+        to: [hold, completed]
+        validate: [progress_documented]
+      hold:
+        to: [active]
+        validate: [blockers_resolved]
+      completed:
+        final: true
+        validate: [deliverables_met]
+
+  priority:
+    values: [high, medium, low]
+    required: true
+```
+
+### Error Handling
+
+```yaml
+errors:
+  critical:  # Block Operation
+    - missing_front_matter:
+        message: "Front matter section is required"
+        action: block_save
+    
+    - invalid_format:
+        message: "Invalid YAML format in front matter"
+        action: block_save
+    
+    - missing_required:
+        message: "Missing required fields: {fields}"
+        action: block_save
+    
+    - invalid_memory_types:
+        message: "Invalid memory type combination"
+        action: block_save
+    
+    - invalid_status:
+        message: "Invalid status value"
+        action: block_save
+  
+  warnings:  # Allow with Notice
+    - invalid_references:
+        message: "Invalid references detected"
+        action: warn_user
+    
+    - missing_optional:
+        message: "Optional fields missing"
+        action: warn_user
+```
+
+## Task States
+
+### State Transitions
+Each state transition triggers front matter validation:
+
+1. **Planned → Active**:
+   ```yaml
+   ---
+   status: active
+   updated: ${new_timestamp}
+   memory_types: [procedural, working]  # Add working memory
+   references: ["SESSION-XXX"]  # Add start session
+   ---
+   ```
+
+2. **Active → Hold**:
+   ```yaml
+   ---
+   status: hold
+   updated: ${new_timestamp}
+   references: ["DECISION-XXX"]  # Add blocker reason
+   ---
+   ```
+
+3. **Active → Completed**:
+   ```yaml
+   ---
+   status: completed
+   updated: ${new_timestamp}
+   memory_types: [procedural, episodic]  # Switch to episodic
+   references: ["SESSION-XXX"]  # Add completion session
+   ---
+   ```
+
+### State Validation
+```yaml
+state_validation:
+  pre_transition:
+    - front_matter_valid
+    - memory_types_compatible
+    - references_exist
+  
+  post_transition:
+    - status_updated
+    - timestamp_updated
+    - references_updated
+```
+
+## Examples
+
+### 1. Valid Task Front Matter
+```yaml
+---
+id: TASK-001
+title: "Implement User Authentication"
+created: 2024-02-06T10:00:00Z
+updated: 2024-02-06T10:00:00Z
+memory_types: [procedural, working]
+status: active
+priority: high
+dependencies: []
+references: ["SESSION-001"]
+---
+```
+
+### 2. Invalid Front Matter (With Fixes)
+```yaml
+# Error: Missing required fields
+---
+title: "Add Feature"
+memory_types: [procedural]
+---
+
+# Fix: Add all required fields
+---
+id: TASK-002
+title: "Add Feature"
+created: 2024-02-06T10:00:00Z
+updated: 2024-02-06T10:00:00Z
+memory_types: [procedural]
+status: planned
+priority: medium
+dependencies: []
+references: []
+---
+
+# Error: Invalid memory types
+memory_types: [working, episodic]
+
+# Fix: Include required procedural type
+memory_types: [procedural, working, episodic]
+
+# Error: Invalid status
+status: in_progress
+
+# Fix: Use valid status value
+status: active
+```
+
+## Best Practices
+
+1. **Front Matter Management**:
+   - Always use templates for new tasks
+   - Keep titles clear and descriptive
+   - Update timestamps when editing
+   - Use appropriate memory types
+   - Maintain accurate references
+
+2. **Memory Types**:
+   - Always include `procedural`
+   - Add `working` for active tasks
+   - Add `episodic` for completed tasks
+   - Don't exceed 3 types
+   - Follow compatibility rules
+
+3. **Status Updates**:
+   - Keep status current
+   - Update timestamps
+   - Document transitions
+   - Add relevant references
+   - Follow transition rules
+
+4. **References**:
+   - Link related decisions
+   - Reference dependencies
+   - Update when blocked
+   - Maintain bidirectional links
+   - Validate before saving
 
 ## Overview
 

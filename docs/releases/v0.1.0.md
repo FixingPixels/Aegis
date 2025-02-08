@@ -1,8 +1,53 @@
-# Aegis Framework v0.1.0-beta
+# Aegis Framework Release Notes
+
+## v0.1.1-beta
+
+This release enhances the framework's documentation and task management capabilities, focusing on improved user guidance and automated task creation workflows.
+
+### New Features
+
+- **Enhanced Plan Command**
+  - Automatic task creation from planning phases
+  - Improved phase-to-task conversion workflow
+  - Enhanced validation and error handling
+
+- **Documentation Improvements**
+  - Comprehensive task creation documentation
+  - Updated getting started guide
+  - Enhanced troubleshooting guidance
+  - Improved framework structure documentation
+  - New examples and use cases
+
+### Improvements
+
+- **Task Management**
+  - Streamlined task creation process
+  - Better integration with memory system
+  - Enhanced task validation
+  - Clearer task state transitions
+
+- **Framework Structure**
+  - Better separation of concerns in operation patterns
+  - Improved cross-referencing
+  - Enhanced documentation organization
+
+### Installation
+
+Same as v0.1.0-beta. Extract the framework to your project:
+```bash
+tar -xzf aegis-v0.1.1-beta.tar.gz
+cd your-project
+cp -r aegis-v0.1.1-beta/.context .
+```
+
+### Upgrade Notes
+This release is backwards compatible with v0.1.0-beta. No special upgrade steps required.
+
+## v0.1.0-beta
 
 This is the first beta release of the Aegis Framework, introducing the core functionality for AI-assisted development.
 
-## Core Features
+### Core Features
 
 - **Memory System**
   - Semantic Memory (project knowledge)
@@ -25,7 +70,7 @@ This is the first beta release of the Aegis Framework, introducing the core func
   - Cross-referencing system
   - State management
 
-## Installation
+### Installation
 
 1. Download the release package:
    - `aegis-v0.1.0-beta.tar.gz`
@@ -43,20 +88,20 @@ This is the first beta release of the Aegis Framework, introducing the core func
    cp -r aegis-v0.1.0-beta/.context .
    ```
 
-## Documentation
+### Documentation
 
 - [Getting Started Guide](../getting_started.md)
 - [Command Reference](../commands/README.md)
 - [Memory System](../operations/memory_types.md)
 
-## Known Limitations
+### Known Limitations
 
 - Beta release: Workflow and commands may change
 - Limited error handling
 - Documentation may be incomplete
 - Some features are experimental
 
-## Feedback
+### Feedback
 
 We welcome your feedback and contributions:
 - Report issues

@@ -5,6 +5,70 @@ All notable changes to the Aegis Framework will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.2-beta] - 2024-02-06
+
+### Added
+- User interaction patterns for workflow control
+- Required user review step in plan command
+- Explicit confirmation for task generation
+- Blocking actions for critical decisions
+- Comprehensive front matter validation rules
+- Enhanced memory type compatibility checks
+- Improved validation error handling system
+
+### Changed
+- Plan command now requires user review before task generation
+- Enhanced front matter validation across all operations
+- Stricter memory type compatibility enforcement
+- Improved task template usage
+- Better state management controls
+- Enhanced workflow validation
+
+### Fixed
+- Task generation front matter consistency
+- Memory type validation in templates
+- Error prevention in workflows
+- State transition validation
+
+### Documentation
+- Added user interaction documentation
+- Enhanced front matter validation rules
+- Updated task generation workflow
+- Added validation best practices
+- Expanded error handling documentation
+
+## [0.1.1-beta] - 2024-02-06
+
+### Added
+- Automatic task creation in `/aegis plan` command:
+  - Extracts tasks from planning document phases
+  - Creates task files in planned directory
+  - Sets up task dependencies automatically
+  - Maintains phase-based ordering
+- Enhanced documentation for task creation:
+  - Added phase-to-task conversion examples
+  - Updated getting started guide with task workflow
+  - Added troubleshooting guidance for task creation
+  - Enhanced best practices for task management
+
+### Changed
+- Updated plan command documentation:
+  - Added task creation workflow details
+  - Enhanced implementation approach section
+  - Added phase structure examples
+  - Improved validation rules
+- Enhanced framework documentation:
+  - Updated memory type integration
+  - Improved operation pattern clarity
+  - Added task creation best practices
+  - Enhanced troubleshooting coverage
+
+### Fixed
+- Documentation gaps in task creation workflow
+- Missing examples in getting started guide
+- Unclear phase-to-task conversion process
+- Incomplete troubleshooting guidance
+
 ## [0.1.0-beta] - 2024-02-05
 
 ### Added
@@ -155,35 +219,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `/aegis task`: Task management
   - `/aegis context`: Context refresh
   - `/aegis plan`: AI-guided planning
-
-## [0.1.1-beta] - 2024-02-06
-
-### Added
-- Automatic task creation in `/aegis plan` command:
-  - Extracts tasks from planning document phases
-  - Creates task files in planned directory
-  - Sets up task dependencies automatically
-  - Maintains phase-based ordering
-- Enhanced documentation for task creation:
-  - Added phase-to-task conversion examples
-  - Updated getting started guide with task workflow
-  - Added troubleshooting guidance for task creation
-  - Enhanced best practices for task management
-
-### Changed
-- Updated plan command documentation:
-  - Added task creation workflow details
-  - Enhanced implementation approach section
-  - Added phase structure examples
-  - Improved validation rules
-- Enhanced framework documentation:
-  - Updated memory type integration
-  - Improved operation pattern clarity
-  - Added task creation best practices
-  - Enhanced troubleshooting coverage
-
-### Fixed
-- Documentation gaps in task creation workflow
-- Missing examples in getting started guide
-- Unclear phase-to-task conversion process
-- Incomplete troubleshooting guidance

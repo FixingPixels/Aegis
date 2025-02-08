@@ -1,86 +1,204 @@
 # Save Operation Pattern
 version: 1.0
-command: save
-description: Save session progress and update state
+command: /aegis save
+description: "Save current session state and update project memory"
 
 # Operation Flow
 flow:
   pre_checks:
-    - framework_ready: {verify: framework_check, error: "Framework not ready"}
+    - framework_ready
+    - session_active
+    - front_matter_valid
   
   steps:
-    1_create_session_log:
-      action: create_session
-      template: {path: "sessions/TEMPLATE.md", required: true}
-      content:
-        - changes: {from: current_state}
-        - decisions: {if: made}
-        - progress: {from: tasks}
+    1_validate_front_matter:
+      - check_existence: true
+      - validate_format: yaml
+      - verify_required_fields:
+          common:
+            - id
+            - title
+            - created
+            - updated
+            - memory_types
+            - references
+          session_specific:
+            - focus
+            - participants
+            - objectives
     
-    2_update_tasks:
-      action: update_tasks
-      files:
-        - active: {dir: "tasks/active", pattern: "*.md"}
-        - completed: {move_if: done}
+    2_create_session_log:
+      - template: session
+      - location: .context/sessions
+      - naming: ISO8601
+      - required_sections:
+          - Progress Summary
+          - Changes Made
+          - Next Steps
+      - front_matter:
+          memory_types: [episodic]
+          references: [active_tasks]
     
-    3_record_decisions:
-      action: record_decisions
-      if: decisions_made
-      template: {path: "decisions/TEMPLATE.md"}
+    3_update_tasks:
+      - location: .context/tasks
+      - states: [active, completed, hold]
+      - front_matter:
+          validate:
+            - memory_types
+            - status
+            - updated
+      - content:
+          validate:
+            - progress
+            - next_steps
     
-    4_update_state:
-      action: update_state
-      files:
-        - current_state: {path: "current_state.md", required: true}
-        - roadmap: {path: "roadmap.md", if_changed: true}
+    4_record_decisions:
+      - location: .context/decisions
+      - template: decision
+      - front_matter:
+          memory_types: [semantic]
+          status: [proposed, accepted]
+      - content:
+          required:
+            - Context
+            - Decision
+            - Consequences
+    
+    5_update_state:
+      - memory_validation:
+          types: [episodic, semantic, working]
+          compatibility: check
+          references: verify
+      - timestamps:
+          update: all_modified
+          format: ISO8601
+      - references:
+          validate: true
+          update: true
 
 # Validation Rules
 validation:
+  front_matter:
+    existence:
+      check: true
+      error: "Front matter section is required"
+      severity: error
+    
+    format:
+      check: yaml
+      error: "Invalid YAML format in front matter"
+      severity: error
+    
+    required_fields:
+      check: complete
+      error: "Missing required fields: {fields}"
+      severity: error
+    
+    memory_types:
+      check:
+        - required_type
+        - compatibility
+        - count_range
+      error: "Invalid memory type configuration"
+      severity: error
+    
+    references:
+      check:
+        - format
+        - existence
+        - validity
+      error: "Invalid references detected"
+      severity: warning
+
   session_log:
-    template: {required: true}
-    content: [changes, decisions, progress]
-    validate: [format, completeness]
-  
-  state_update:
-    files: [current_state.md, roadmap.md]
-    check: [exists, writable]
+    template:
+      check: true
+      error: "Invalid session template"
+    
+    sections:
+      check: required
+      error: "Missing required sections"
+    
+    content:
+      check: non_empty
+      error: "Empty required sections"
+
+  state_updates:
+    tasks:
+      check:
+        - status_valid
+        - progress_recorded
+      error: "Invalid task updates"
+    
+    decisions:
+      check:
+        - status_valid
+        - context_complete
+      error: "Invalid decision updates"
 
 # Error Handling
 errors:
-  not_ready:
-    msg: "Framework not ready"
-    action: show_setup_instructions
-    help: "Copy .context directory to your project and ensure all required files exist"
-  
   missing_template:
-    msg: "Session template missing"
-    action: list_missing
-    help: "Ensure sessions/TEMPLATE.md exists"
+    severity: error
+    message: "Required template not found"
+    action: block_save
   
-  state_error:
-    msg: "State update failed"
-    action: show_error
-    help: "Check file permissions and format"
+  invalid_front_matter:
+    severity: error
+    message: "Front matter validation failed"
+    action: block_save
+  
+  invalid_memory_types:
+    severity: error
+    message: "Invalid memory type combination"
+    action: block_save
+  
+  invalid_references:
+    severity: warning
+    message: "Invalid references detected"
+    action: warn_user
+  
+  state_update_failure:
+    severity: error
+    message: "Failed to update state"
+    action: block_save
 
 # Session Management
 sessions:
-  naming: "YYYYMMDD_HHMMSS_session.md"
-  location: "sessions/"
+  naming:
+    pattern: "YYYYMMDDHHMMSS_session"
+    unique: true
+  
   required:
+    - progress_summary
     - changes_made
-    - decisions_recorded
-    - progress_updated
+    - next_steps
+  
+  optional:
+    - decisions_made
+    - insights
+    - notes
 
 # Important Notes
 notes:
-  usage:
-    - session_log: "Record changes"
-    - task_updates: "Update progress"
-    - state_changes: "Update state"
+  - "All memory files must have valid front matter"
+  - "Memory types must be compatible"
+  - "References must be valid"
+  - "Timestamps must be in ISO8601 format"
+  - "Session logs require complete sections"
 
 # Milestone Criteria
 milestones:
-  core_changes: [new_command, system_enhance, workflow_mod]
-  features: [mvp_complete, system_validation, memory_integration]
-  documentation: [major_restructure, new_system, guide_complete]
-  process: [validation_rules, error_handling, workflow_opt] 
+  success:
+    - "Front matter validated"
+    - "Session log created"
+    - "Tasks updated"
+    - "Decisions recorded"
+    - "State updated"
+  
+  failure:
+    - "Invalid front matter"
+    - "Missing required sections"
+    - "Invalid memory types"
+    - "Reference validation failed"
+    - "State update failed" 

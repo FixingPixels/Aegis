@@ -337,3 +337,163 @@ state_management:
 - [Error Handling](../operations/error_handling.md)
 - [State Management](../operations/state_management.md)
 - [Task Management](../tasks.md)
+
+## Memory System
+
+### Front Matter Validation
+The framework enforces strict front matter validation across all memory files. This validation is integral to maintaining system consistency and enabling proper memory processing.
+
+#### Validation Architecture
+```yaml
+validation:
+  pre_save:
+    - check: front_matter_exists
+      action: validate_front_matter
+    - check: required_fields
+      action: validate_fields
+    - check: memory_types
+      action: validate_memory_types
+  
+  post_save:
+    - check: references_valid
+      action: validate_references
+    - check: status_consistency
+      action: validate_status
+```
+
+#### Memory Type System
+The framework uses four distinct memory types, each with specific roles and compatibility rules:
+
+1. `semantic`: Understanding and knowledge
+   - Commands and patterns
+   - Technical decisions
+   - System architecture
+   - Compatible with: procedural, working
+
+2. `procedural`: Operations and steps
+   - Task implementation
+   - Process workflows
+   - State transitions
+   - Compatible with: semantic, working
+
+3. `working`: Current context
+   - Active development
+   - Current focus
+   - State management
+   - Compatible with: semantic, procedural, episodic
+
+4. `episodic`: Historical records
+   - Session logs
+   - Change history
+   - Event records
+   - Compatible with: semantic, working
+
+#### Validation Hooks
+The framework implements validation hooks at key points:
+
+```yaml
+hooks:
+  file_creation:
+    - validate_template
+    - check_front_matter
+    - verify_memory_types
+  
+  state_transition:
+    - validate_status_change
+    - update_timestamps
+    - check_references
+  
+  content_update:
+    - verify_front_matter
+    - validate_changes
+    - update_metadata
+```
+
+### Front Matter Requirements
+
+#### Common Structure
+All memory files must include:
+```yaml
+---
+id: [TYPE]-[IDENTIFIER]     # Unique file identifier
+title: "Descriptive Title"  # Clear description
+created: [ISO8601]         # Creation timestamp
+updated: [ISO8601]         # Last update
+memory_types: []           # Valid memory types
+references: []             # Related files
+---
+```
+
+#### Type-Specific Requirements
+
+1. Tasks:
+```yaml
+---
+# ... common fields ...
+status: [planned|active|completed|blocked]
+priority: [high|medium|low]
+phase: "Implementation Phase"
+---
+```
+
+2. Sessions:
+```yaml
+---
+# ... common fields ...
+focus: "Session Focus"
+participants: []
+objectives: []
+---
+```
+
+3. Decisions:
+```yaml
+---
+# ... common fields ...
+status: [proposed|accepted|deprecated|superseded]
+impact: "Impact Description"
+alternatives: []
+---
+```
+
+4. Current State:
+```yaml
+---
+# ... common fields ...
+focus: "Current Focus"
+active_task: "TASK-ID"
+status: "Status Description"
+---
+```
+
+### Error Handling
+
+#### Validation Errors
+The framework handles validation errors with specific responses:
+
+```yaml
+errors:
+  critical:
+    - missing_front_matter:
+        action: block_save
+        message: "Front matter required"
+    - invalid_memory_types:
+        action: block_save
+        message: "Invalid memory type combination"
+  
+  warning:
+    - missing_optional_fields:
+        action: warn
+        message: "Optional fields missing"
+    - invalid_references:
+        action: warn
+        message: "Invalid reference detected"
+```
+
+#### Recovery Actions
+When validation fails, the framework provides:
+1. Clear error messages
+2. Suggested fixes
+3. Template references
+4. Validation requirements
+5. Example corrections

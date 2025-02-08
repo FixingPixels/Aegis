@@ -1,40 +1,93 @@
 # Start Operation Pattern
 version: 1.0
-command: start
-description: Session initialization and context loading
+command: /aegis start
+description: "Initialize development session with front matter validation"
 
 # Operation Flow
 flow:
   pre_checks:
     - framework_ready: {verify: framework_check, error: "Framework not ready"}
     - no_active_session: {verify: no_session_active, error: "Session already active"}
+    - front_matter_valid: {verify: front_matter_valid, error: "Front matter validation failed"}
   
   steps:
-    1_load_context:
-      action: load_and_validate
-      files:
-        - ai_instructions: {path: "AI_INSTRUCTIONS.md", required: true}
-        - current_state: {path: "current_state.md", required: true}
-        - roadmap: {path: "roadmap.md", required: false}
-      validate: [file_exists, state_consistency, integrity]
+    1_validate_front_matter:
+      - check_existence: true
+      - validate_format: yaml
+      - verify_required_fields:
+          common:
+            - id
+            - title
+            - created
+            - updated
+            - memory_types
+            - references
+          session_specific:
+            - focus
+            - participants
+            - objectives
     
-    2_process_context:
-      action: build_context
-      load:
-        - current_state: [knowledge, progress, focus]
-        - roadmap: [priorities, milestones]
-        - tasks: {dir: "tasks/active", pattern: "*.md"}
-        - sessions: {dir: "sessions", pattern: "recent*.md", limit: 5}
+    2_load_context:
+      - memory_files:
+          tasks:
+            - location: .context/tasks
+            - validate_front_matter: true
+          decisions:
+            - location: .context/decisions
+            - validate_front_matter: true
+          sessions:
+            - location: .context/sessions
+            - validate_front_matter: true
+      - validate:
+          front_matter:
+            - existence
+            - format
+            - fields
+          memory_types:
+            - compatibility
+            - required_types
+          references:
+            - format
+            - existence
     
-    3_set_focus:
-      action: determine_focus
-      analyze:
-        - active_tasks: {priority: high, status: active}
-        - current_priorities: {from: current_state}
-        - recent_changes: {from: sessions, limit: 3}
-        - open_questions: {from: current_state}
+    3_process_memory:
+      - types:
+          procedural:
+            - active_tasks
+            - implementation_steps
+          semantic:
+            - decisions
+            - architecture
+          episodic:
+            - recent_sessions
+            - key_events
+          working:
+            - current_focus
+            - open_items
+      - validate:
+          memory_types:
+            - compatibility
+            - required_presence
+          references:
+            - cross_references
+            - dependencies
     
-    4_present_summary:
+    4_set_focus:
+      - active_task:
+          validate:
+            - front_matter
+            - status
+            - progress
+      - session_context:
+          validate:
+            - memory_types
+            - references
+      - current_state:
+          validate:
+            - completeness
+            - consistency
+    
+    5_present_summary:
       action: show_summary
       sections:
         semantic: [project_knowledge, patterns, decisions]
@@ -42,7 +95,7 @@ flow:
         working: [current_focus, priorities, needs]
         episodic: [recent_changes, decisions, events]
     
-    5_indicate_ready:
+    6_indicate_ready:
       action: show_readiness
       display:
         - context: {loaded: true, validated: true}
@@ -52,18 +105,54 @@ flow:
 
 # Validation Rules
 validation:
-  context_load:
-    required_files: [AI_INSTRUCTIONS.md, current_state.md]
-    optional_files: [roadmap.md]
-    check: [exists, readable, valid_format]
-  
-  state_consistency:
-    verify: [memory_types, references, timestamps]
-    resolve: [conflicts, missing_refs, invalid_states]
-  
-  task_status:
-    check: [valid_status, active_count, priority_set]
-    warn_if: [multiple_active, no_priority]
+  front_matter:
+    existence:
+      check: true
+      error: "Front matter section is required"
+      severity: error
+    
+    format:
+      check: yaml
+      error: "Invalid YAML format in front matter"
+      severity: error
+    
+    required_fields:
+      check: complete
+      error: "Missing required fields: {fields}"
+      severity: error
+    
+    memory_types:
+      check:
+        - required_type
+        - compatibility
+        - count_range
+      error: "Invalid memory type configuration"
+      severity: error
+    
+    references:
+      check:
+        - format
+        - existence
+        - validity
+      error: "Invalid references detected"
+      severity: warning
+
+  session_initialization:
+    context_loading:
+      check: true
+      error: "Failed to load context"
+    
+    memory_processing:
+      check:
+        - type_validation
+        - reference_resolution
+      error: "Memory processing failed"
+    
+    focus_setting:
+      check:
+        - task_valid
+        - context_valid
+      error: "Failed to set session focus"
 
 # Error Handling
 errors:
@@ -98,4 +187,47 @@ memory:
   validation:
     types: [check_required, verify_combinations]
     content: [validate_format, check_references]
-    state: [verify_consistency, resolve_conflicts] 
+    state: [verify_consistency, resolve_conflicts]
+
+session_management:
+  initialization:
+    validate:
+      - front_matter
+      - memory_types
+      - references
+    create:
+      - session_log
+      - focus_record
+    update:
+      - timestamps
+      - state
+
+  context:
+    required:
+      - active_tasks
+      - recent_decisions
+      - current_focus
+    optional:
+      - roadmap
+      - milestones
+      - notes
+
+important_notes:
+  - "All memory files must have valid front matter"
+  - "Memory types must be compatible"
+  - "References must be valid"
+  - "Context must be complete"
+  - "Focus must be clear"
+
+milestones:
+  success:
+    - "Front matter validated"
+    - "Context loaded"
+    - "Memory processed"
+    - "Focus set"
+  
+  failure:
+    - "Invalid front matter"
+    - "Context load failed"
+    - "Memory processing failed"
+    - "Focus setting failed" 

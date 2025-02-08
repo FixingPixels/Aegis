@@ -323,3 +323,143 @@ missing_ref:
 - [Validation Rules](operations/validation.md)
 - [Error Handling](operations/error_handling.md)
 - [State Management](operations/state_management.md)
+
+# Cross-Referencing and Memory Types
+
+The Aegis framework uses a robust system of memory types and cross-references to maintain relationships between different types of project information. This document explains how memory types are validated, how references are managed, and how they integrate with the framework's operation patterns.
+
+## Memory Types
+
+### Core Memory Types
+
+1. **Semantic Memory**
+   - **Purpose**: Long-term project knowledge and architecture
+   - **Front Matter Required**:
+     ```yaml
+     memory_types: [semantic]  # Can be combined with others
+     references: []           # Related architectural decisions
+     ```
+   - **Valid Combinations**:
+     - `[semantic]`
+     - `[semantic, procedural]`
+     - `[semantic, working]`
+     - `[semantic, episodic]`
+   - **Common Uses**:
+     - Architectural decisions
+     - Technical requirements
+     - Design patterns
+     - Project structure
+
+2. **Procedural Memory**
+   - **Purpose**: Implementation details and workflows
+   - **Front Matter Required**:
+     ```yaml
+     memory_types: [procedural]  # Required for tasks
+     status: string             # Current state
+     priority: string           # Task priority
+     ```
+   - **Valid Combinations**:
+     - `[procedural]`
+     - `[procedural, semantic]`
+     - `[procedural, working]`
+   - **Common Uses**:
+     - Tasks
+     - Implementation steps
+     - Operation patterns
+     - Workflows
+
+3. **Working Memory**
+   - **Purpose**: Current context and active state
+   - **Front Matter Required**:
+     ```yaml
+     memory_types: [working]    # Required for current state
+     focus: string             # Active focus area
+     active_task: string       # Current task reference
+     ```
+   - **Valid Combinations**:
+     - `[working]`
+     - `[working, semantic]`
+     - `[working, procedural]`
+     - `[working, episodic]`
+   - **Common Uses**:
+     - Current state
+     - Active tasks
+     - Session context
+     - Temporary notes
+
+4. **Episodic Memory**
+   - **Purpose**: Historical records and sessions
+   - **Front Matter Required**:
+     ```yaml
+     memory_types: [episodic]   # Required for sessions
+     participants: []          # Session participants
+     objectives: []            # Session goals
+     ```
+   - **Valid Combinations**:
+     - `[episodic]`
+     - `[episodic, semantic]`
+     - `[episodic, working]`
+   - **Common Uses**:
+     - Session logs
+     - Change records
+     - Progress updates
+     - Decision history
+
+### Front Matter Validation
+
+#### Common Requirements
+```yaml
+---
+id: string                    # Unique identifier
+title: string                 # Clear description
+created: ISO8601              # Creation timestamp
+updated: ISO8601              # Last update timestamp
+memory_types: []              # At least one type
+references: []                # Related files
+---
+```
+
+#### Validation Rules
+```yaml
+validation:
+  front_matter:
+    required_fields:
+      - id
+      - title
+      - created
+      - updated
+      - memory_types
+    
+    memory_types:
+      max_types: 3
+      combinations:
+        semantic: [procedural, working, episodic]
+        procedural: [semantic, working]
+        working: [semantic, procedural, episodic]
+        episodic: [semantic, working]
+    
+    timestamps:
+      format: ISO8601
+      created_before_updated: true
+    
+    references:
+      format_valid: true
+      targets_exist: true
+      no_circles: true
+```
+
+#### Error Handling
+```yaml
+errors:
+  critical:  # Block Operation
+    - missing_front_matter
+    - invalid_yaml_format
+    - missing_required_fields
+    - invalid_memory_types
+    - invalid_timestamps
+  
+  warnings:  # Allow with Notice
+    - invalid_references
+    - missing_optional_fields
+    - suboptimal_combinations
+```

@@ -1,0 +1,127 @@
+# User Interaction Patterns
+version: 1.0
+description: Defines patterns for user interaction and confirmation flows
+
+# Action Definitions
+actions:
+  prompt_user_review:
+    type: blocking_interaction
+    requires_response: true
+    prevent_auto_continue: true
+    display:
+      - show_content: true
+      - format: markdown
+      - highlight_changes: true
+    
+    options:
+      format: numbered_list
+      require_selection: true
+      prevent_default: true
+      choices:
+        - edit: 
+            description: "Make changes to the plan"
+            action: return_to_editing
+            preserve_state: true
+        - proceed:
+            description: "Generate tasks from current plan"
+            action: continue_flow
+            requires_confirmation: true
+        - cancel:
+            description: "Cancel task generation"
+            action: stop_operation
+            confirm_cancel: true
+    
+    validation:
+      - response_required: true
+      - valid_choice: true
+      - confirmation_required: true
+    
+    state_management:
+      - preserve_context: true
+      - track_decision: true
+      - prevent_auto_advance: true
+    
+    error_handling:
+      no_response:
+        action: wait_for_input
+        prevent_timeout: true
+      
+      invalid_choice:
+        action: show_options
+        prevent_continue: true
+      
+      auto_advance_attempt:
+        action: block_operation
+        message: "User confirmation required"
+
+# Integration Rules
+integration:
+  commands:
+    plan:
+      review_required: true
+      block_task_generation: true
+      wait_for_confirmation: true
+    
+    task:
+      review_required: true
+      block_state_change: true
+      wait_for_confirmation: true
+    
+    decision:
+      review_required: true
+      block_acceptance: true
+      wait_for_confirmation: true
+
+# Workflow Patterns
+workflows:
+  review_and_confirm:
+    steps:
+      1_display:
+        - show_content
+        - format_output
+        - highlight_changes
+      
+      2_prompt:
+        - show_options
+        - wait_for_input
+        - validate_response
+      
+      3_handle_response:
+        - process_choice
+        - update_state
+        - continue_or_return
+
+# Display Patterns
+display:
+  content:
+    format: markdown
+    sections:
+      - title: bold
+      - changes: highlighted
+      - options: numbered
+    
+  options:
+    format: numbered_list
+    style:
+      - clear
+      - consistent
+      - user_friendly
+
+# State Management
+state:
+  tracking:
+    - user_choice
+    - confirmation
+    - context
+  
+  preservation:
+    - prevent_loss
+    - maintain_context
+    - track_changes
+
+# Error Prevention
+prevention:
+  auto_continue: false
+  default_choice: false
+  timeout: false
+  skip_confirmation: false 

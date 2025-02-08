@@ -32,6 +32,13 @@ This framework uses YAML-based operation patterns for command execution. These p
 - Update as project evolves
 - Do not modify framework files
 - Only create/update planning_document.md
+- MUST show planning document for user review
+- MUST wait for user confirmation before generating tasks
+- MUST provide options to:
+  1. Edit the plan
+  2. Proceed with task generation
+  3. Cancel the operation
+- NEVER generate tasks without user review and confirmation
 
 ### Core Commands
 
@@ -96,14 +103,113 @@ The framework requires a specific `.context` directory structure:
 ```
 
 ## File Requirements
-All memory files must include:
+
+### Front Matter Requirements
+All memory files MUST include front matter with specific required fields. Front matter must be:
+- Enclosed in triple-dashes (`---`)
+- Valid YAML format
+- Located at the start of the file
+- Include all required fields for the file type
+
+#### Common Required Fields
 ```yaml
 ---
-title: Descriptive title
-memory_types: [type1, type2]  # Must match file location
-references: []                # List of related memory files
+id: [FILE_TYPE]-[NUMBER/TIMESTAMP]  # Unique identifier
+title: Descriptive title            # Clear, descriptive title
+created: YYYY-MM-DDTHH:mm:ssZ      # Creation timestamp (ISO 8601)
+updated: YYYY-MM-DDTHH:mm:ssZ      # Last update timestamp (ISO 8601)
+memory_types: [type1, type2]       # Must follow memory type rules
+references: []                      # List of related memory files
 ---
 ```
+
+#### Type-Specific Requirements
+
+Tasks:
+```yaml
+---
+# ... common fields ...
+status: [planned|active|completed|blocked]
+priority: [high|medium|low]
+---
+```
+
+Sessions:
+```yaml
+---
+# ... common fields ...
+focus: Current development focus
+participants: [list of participants]
+objectives: [list of objectives]
+---
+```
+
+Decisions:
+```yaml
+---
+# ... common fields ...
+status: [proposed|accepted|deprecated|superseded]
+impact: Description of impact
+alternatives_considered: [list of alternatives]
+---
+```
+
+### Memory Type Rules
+
+#### Valid Memory Types
+- `semantic`: Understanding of commands and patterns
+- `procedural`: Step-by-step operations
+- `working`: Current context and state
+- `episodic`: Historical operations and decisions
+
+#### Memory Type Compatibility
+Memory types must follow these compatibility rules:
+1. Each file must have 1-3 memory types
+2. Allowed combinations:
+   - `semantic` + [`procedural`, `working`]
+   - `episodic` + [`semantic`, `working`]
+   - `procedural` + [`semantic`, `working`]
+   - `working` + [`semantic`, `procedural`, `episodic`]
+
+#### Type-Specific Requirements
+- Tasks: Must include `procedural`
+- Sessions: Must include `episodic`
+- Decisions: Must include `semantic`
+- Current State: Must include `working`
+
+### Validation Rules
+
+#### Pre-Save Validation
+Before saving any memory file:
+1. Verify front matter exists and is properly formatted
+2. Validate all required fields are present
+3. Check memory type compatibility
+4. Validate references exist
+5. Ensure timestamps are in correct format
+
+#### Error Handling
+When front matter validation fails:
+1. Provide specific error message indicating the issue
+2. Reference the correct format/template
+3. Suggest fixes for common issues
+4. Block save if critical fields are missing/invalid
+5. Warn but allow save for non-critical issues
+
+Common validation errors:
+- Missing front matter: Add front matter section
+- Invalid memory types: Check compatibility rules
+- Missing required fields: Add all required fields
+- Invalid references: Update or remove invalid references
+- Invalid timestamps: Use ISO 8601 format
+
+### Front Matter Best Practices
+1. Always use templates when creating new files
+2. Keep titles clear and descriptive
+3. Update timestamps when modifying content
+4. Use appropriate memory types for file purpose
+5. Maintain accurate reference lists
+6. Follow type-specific field requirements
+7. Use consistent formatting
 
 ## Decision Guidelines
 Create a decision record when:

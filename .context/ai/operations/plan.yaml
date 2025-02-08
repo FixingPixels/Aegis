@@ -35,9 +35,38 @@ flow:
         - technical_approach: {prompt: true, required: true}
         - implementation: {prompt: true, required: true}
         - timeline: {prompt: true, required: true}
+      output:
+        - create_or_update: planning_document.md
+        - display: true
+        - stop_for_review: true
     
-    5_create_tasks:
+    5_request_review:
+      action: prompt_user_review
+      message: "Please review the planning document. Would you like to:"
+      options:
+        - edit: "Make changes to the plan"
+        - proceed: "Generate tasks from current plan"
+        - cancel: "Cancel task generation"
+      wait_for: user_confirmation
+      validate:
+        - response_valid
+        - plan_complete
+      block_until_confirmed: true
+      on_response:
+        edit:
+          - return_to: guide_planning
+          - preserve_content: true
+        proceed:
+          - continue_to: create_tasks
+          - set_confirmation: true
+        cancel:
+          - stop_operation: true
+          - display_message: "Task generation cancelled"
+    
+    6_create_tasks:
       action: create_initial_tasks
+      requires: user_confirmation
+      block_without_confirmation: true
       source: planning_document.md
       target: tasks/planned
       template: tasks/TEMPLATE.md
@@ -69,6 +98,8 @@ validation:
     required_fields: [id, title, status, priority, description]
     validate: [format, dependencies]
     status: planned
+    requires: user_confirmation
+    block_without_confirmation: true
 
 # Error Handling
 errors:
@@ -86,6 +117,12 @@ errors:
     msg: "Failed to create tasks"
     action: show_task_errors
     help: "Check task template and planning document structure"
+  
+  no_confirmation:
+    msg: "User confirmation required"
+    action: prompt_review
+    help: "Please review and confirm the planning document"
+    block_operation: true
 
 # Templates
 templates:
@@ -102,12 +139,14 @@ templates:
     content:
       - copy_template
       - replace_variables:
+        - id: "TASK-${number}"
         - title: phase_name
-        - description: phase_content
-        - status: "planned"
         - created: current_date
         - updated: current_date
-        - id: "TASK-${number}"
+        - memory_types: [procedural, working]
+        - status: "planned"
+        - priority: from_timeline_position
+        - references: []
 
 # Important Notes
 notes:
@@ -115,10 +154,11 @@ notes:
     - entry_point: "Can be used as first command"
     - prerequisites: "Only needs .context structure"
     - state: "Will create initial state if needed"
-    - tasks: "Creates initial planned tasks"
+    - tasks: "Creates initial planned tasks after review"
   
   task_creation:
     - uses_template: "Based on TEMPLATE.md"
     - text_only: "No programming required"
     - sequential: "Creates tasks in phase order"
-    - maintains_refs: "Updates task references" 
+    - maintains_refs: "Updates task references"
+    - requires_review: "User must confirm plan first" 

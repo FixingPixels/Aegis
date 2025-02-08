@@ -6,8 +6,8 @@ title: [Task Title]
 created: ${timestamp}
 updated: ${timestamp}
 memory_types: [procedural, working]
-status: [planned | active | completed | blocked]
-priority: [high | medium | low]
+status: planned
+priority: high
 references: []
 ---
 

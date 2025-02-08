@@ -59,8 +59,29 @@ file_patterns:
 # Validation Rules
 validation:
   memory_files:
-    required: [title, memory_types, references]
+    required: [title, memory_types, references, created, updated]
     optional: [priority, tags, aliases]
+    front_matter:
+      required: true
+      format: yaml
+      delimiter: "---"
+      validation:
+        - check: exists
+          error: "Front matter missing"
+        - check: format
+          error: "Invalid YAML format"
+        - check: required_fields
+          error: "Missing required fields"
+    memory_types:
+      validate:
+        - allowed_types: [semantic, episodic, procedural, working]
+        - min_types: 1
+        - max_types: 3
+        - compatibility: 
+            semantic: [procedural, working]
+            episodic: [semantic, working]
+            procedural: [semantic, working]
+            working: [semantic, procedural, episodic]
   
   tasks:
     fields: [id, created, updated, status, phase]
@@ -69,11 +90,61 @@ validation:
     creation:
       from_plan: [extract_phase, set_status, link_deps]
       validate: [unique_id, valid_phase, memory_types]
+    front_matter:
+      additional_required: [priority, id]
+      id_format: "TASK-NNN"
+      priority_values: [high, medium, low]
   
   decisions:
     fields: [id, created, updated, status]
     statuses: [proposed, accepted, deprecated, superseded]
     triggers: [arch_change, tech_choice, pattern_set, security]
+    front_matter:
+      additional_required: [impact, alternatives_considered]
+  
+  sessions:
+    fields: [id, date, duration, focus]
+    front_matter:
+      additional_required: [participants, objectives]
+
+# Validation Hooks
+validation_hooks:
+  pre_save:
+    - check: front_matter_exists
+      action: validate_front_matter
+    - check: required_fields
+      action: validate_fields
+    - check: memory_types
+      action: validate_memory_types
+  
+  post_save:
+    - check: references_valid
+      action: validate_references
+    - check: status_consistency
+      action: validate_status
+
+# Error Handling
+error_handling:
+  validation_errors:
+    front_matter_missing:
+      severity: error
+      message: "Front matter is required and must be enclosed in '---'"
+      action: block_save
+    
+    invalid_memory_types:
+      severity: error
+      message: "Invalid memory types specified"
+      action: block_save
+    
+    missing_required_fields:
+      severity: error
+      message: "Missing required fields in front matter"
+      action: block_save
+    
+    invalid_references:
+      severity: warning
+      message: "Invalid references detected"
+      action: warn_user
 
 # State Management
 state_rules:

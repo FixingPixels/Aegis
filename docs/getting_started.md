@@ -38,17 +38,60 @@ Next, set up your AI assistant to understand Aegis commands:
 3. Copy the contents of [COMMANDS.md](../COMMANDS.md)
 4. Paste into the rules section
 
-#### **Codeium**
-1. Open Codeium's settings
-2. Go to "Global AI Rules"
-3. Copy the contents of [COMMANDS.md](../COMMANDS.md)
-4. Paste into the rules section
-
 #### **Other AI Tools**
 - Add [COMMANDS.md](../COMMANDS.md) content to your tool's rule configuration
 - Refer to your tool's documentation for specific setup steps
 
-### 3. Start Your Project
+### 3. Understanding Front Matter
+
+Every file in Aegis requires front matter - a YAML section at the start of the file that contains metadata:
+
+```yaml
+---
+id: TASK-001                  # Unique identifier
+title: "My First Task"        # Clear description
+created: 2024-02-06T10:00:00Z # Creation time (ISO 8601)
+updated: 2024-02-06T10:00:00Z # Last update (ISO 8601)
+memory_types: [procedural]    # Memory type(s)
+references: []                # Related files
+---
+```
+
+#### Required Fields
+Every file must have these fields:
+- `id`: Unique identifier (format varies by type)
+- `title`: Clear description
+- `created`: Creation timestamp (ISO 8601)
+- `updated`: Last update timestamp (ISO 8601)
+- `memory_types`: At least one valid memory type
+- `references`: List of related files (can be empty)
+
+#### Memory Types
+Aegis uses four memory types to organize information:
+
+1. **Semantic** (Project Knowledge)
+   - Used for: Decisions, architecture, planning
+   - Example: `memory_types: [semantic]`
+   - Common in: Decision records, planning docs
+
+2. **Procedural** (Implementation Steps)
+   - Used for: Tasks, workflows, processes
+   - Example: `memory_types: [procedural]`
+   - Required in: Task files
+
+3. **Working** (Current Context)
+   - Used for: Active state, current focus
+   - Example: `memory_types: [working]`
+   - Common in: Current state file
+
+4. **Episodic** (History)
+   - Used for: Sessions, progress records
+   - Example: `memory_types: [episodic]`
+   - Required in: Session logs
+
+Don't worry! The framework will help you use these correctly.
+
+### 4. Start Your Project
 
 Begin development by typing in your AI assistant's chat window:
 
@@ -64,38 +107,69 @@ Begin development by typing in your AI assistant's chat window:
 ## Core Concepts
 
 ### Memory System
-Aegis organizes information like human memory:
+Aegis organizes information using different memory types:
 
 1. **Semantic Memory** (Project Knowledge)
-   - Location: `.context/decisions/`, `.context/docs/`
-   - Stores: Architecture decisions, technical specs
-   - Example: Design patterns, implementation guidelines
+   - **Location**: `.context/decisions/`, `.context/docs/`
+   - **Purpose**: Long-term project knowledge
+   - **Examples**: 
+     ```yaml
+     ---
+     memory_types: [semantic]
+     ---
+     # Architecture Decision
+     We will use React for the frontend...
+     ```
 
-2. **Episodic Memory** (Development History)
-   - Location: `.context/sessions/`
-   - Stores: Development sessions, problem solutions
-   - Example: Implementation history, progress tracking
+2. **Procedural Memory** (Tasks)
+   - **Location**: `.context/tasks/`
+   - **Purpose**: Implementation steps
+   - **Examples**:
+     ```yaml
+     ---
+     memory_types: [procedural]
+     status: active
+     priority: high
+     ---
+     # Task: Implement Login
+     ## Steps
+     1. Create login form...
+     ```
 
-3. **Procedural Memory** (Implementation Steps)
-   - Location: `.context/tasks/`
-   - Stores: Active tasks, implementation procedures
-   - Example: Testing processes, validation rules
+3. **Working Memory** (Current State)
+   - **Location**: `.context/current_state.md`
+   - **Purpose**: Active development
+   - **Examples**:
+     ```yaml
+     ---
+     memory_types: [working]
+     focus: "Login Implementation"
+     active_task: "TASK-001"
+     ---
+     ## Current Focus
+     Implementing user authentication...
+     ```
 
-4. **Working Memory** (Current Focus)
-   - Location: `.context/current_state.md`
-   - Stores: Active development, immediate goals
-   - Example: Recent changes, open questions
+4. **Episodic Memory** (History)
+   - **Location**: `.context/sessions/`
+   - **Purpose**: Development history
+   - **Examples**:
+     ```yaml
+     ---
+     memory_types: [episodic]
+     participants: ["Developer"]
+     objectives: ["Complete login"]
+     ---
+     ## Progress
+     Completed basic form validation...
+     ```
 
 ### Project Structure
 ```
 .context/
 ├── AI_INSTRUCTIONS.md     # Framework guidelines
 ├── ai/                   # AI operation patterns
-│   ├── core.yaml        # Core patterns
-│   ├── patterns/       # Memory patterns
-│   └── operations/    # Command operations
 ├── current_state.md     # Working memory
-├── plan/               # Planning documents
 ├── tasks/             # Task management
 │   ├── active/       # Current tasks
 │   ├── planned/      # Future tasks
@@ -107,110 +181,33 @@ Aegis organizes information like human memory:
 
 ## Essential Commands
 
-All commands are typed in your AI assistant's chat window (not terminal):
+All commands are typed in your AI assistant's chat window:
 
 ### Planning Phase
 ```bash
-# Create project plan and tasks
-/aegis plan
-
-# The plan command will:
-# 1. Create/update planning_document.md
-# 2. Guide you through project planning
-# 3. Extract implementation phases
-# 4. Create initial task files
-# 5. Set up task dependencies
-
-# Example with requirements:
-/aegis plan
-Requirements:
-- Mobile support needed
-- Offline capabilities
-- User authentication
-
-# This will create:
-# 1. A planning document with phases
-# 2. Task files in tasks/planned/
-# 3. Dependencies between tasks
-
-# Planning document structure:
-## Implementation Approach
-### Phase 1: Initial Setup
-1. Configure environment
-2. Set up structure
-
-### Phase 2: Core Features
-1. Implement feature A
-2. Implement feature B
-
-# This creates tasks:
-tasks/planned/
-├── 01_initial_setup.md
-└── 02_core_features.md
-```
-
-### Development Phase
-```bash
-# Start development session
-/aegis start
-
-# Check project status
-/aegis status
-
-# Focus on current task
-/aegis task
-
-# Save progress
-/aegis save
-
-# Quick context refresh
-/aegis context
-
-# Get help
-/aegis help
-```
-
-## Common Workflows
-
-### 1. Starting a New Project
-```bash
-/aegis plan              # Create initial plan
+/aegis plan              # Create project plan
 /aegis start            # Begin development
-/aegis task             # View first task
-```
-
-### 2. Daily Development
-```bash
-/aegis start            # Begin session
-/aegis task             # Focus on task
+/aegis task             # View/manage tasks
 /aegis save             # Save progress
-```
-
-### 3. Quick Updates
-```bash
-/aegis status           # Check state
-/aegis context          # Refresh context
-```
-
-### 4. Getting Help
-```bash
-/aegis help             # General help
-/aegis help <command>   # Command help
+/aegis context          # Quick refresh
+/aegis help             # Get help
 ```
 
 ## Best Practices
 
-### 1. Memory Management
-- Keep files focused and concise
-- Use cross-references between files
-- Update state regularly
-- Document decisions with context
-
-### 2. AI Collaboration
-- Provide clear context in commands
-- Follow memory type guidelines
-- Save progress frequently
+### 1. Front Matter
+- Always use templates for new files
+- Keep titles clear and descriptive
+- Update timestamps when editing
 - Use appropriate memory types
+- Maintain accurate references
+
+### 2. Memory Types
+- Use `semantic` for project decisions
+- Use `procedural` for implementation tasks
+- Use `working` for current state
+- Use `episodic` for session logs
+- Combine types when appropriate (max 3)
 
 ### 3. Project Organization
 - Structure planning phases clearly
@@ -220,49 +217,55 @@ tasks/planned/
 - Follow task naming conventions
 - Update task status properly
 
-### 4. Planning Best Practices
-- Define clear implementation phases
-- Break phases into concrete steps
-- Order phases by dependency
-- Set realistic priorities
-- Document phase relationships
-- Consider task granularity
-
 ## Troubleshooting
 
 ### Common Issues
-1. **Command Not Recognized**
-   - Verify AI assistant configuration
-   - Check COMMANDS.md content
-   - Ensure correct command syntax
 
-2. **Context Issues**
-   - Verify `.context` structure
-   - Check file permissions
-   - Update current state
+1. **Front Matter Issues**
+   ```yaml
+   # Error: Missing required fields
+   ---
+   title: "My Task"
+   # Missing: id, created, updated, memory_types
+   ---
 
-3. **Task Management**
-   - Use correct task transitions
-   - Follow naming conventions
-   - Update task status properly
+   # Solution: Include all required fields
+   ---
+   id: TASK-001
+   title: "My Task"
+   created: 2024-02-06T10:00:00Z
+   updated: 2024-02-06T10:00:00Z
+   memory_types: [procedural]
+   references: []
+   ---
+   ```
 
-4. **Task Creation Issues**
-   - Check phase structure in planning doc
-   - Verify phase naming format
-   - Review task template
-   - Check dependency order
+2. **Memory Type Issues**
+   ```yaml
+   # Error: Invalid combination
+   memory_types: [semantic, episodic, procedural, working]
 
-### Getting Help
-- Use `/aegis help` for command guidance
-- Check documentation for detailed info
-- Review error messages carefully
+   # Solution: Use max 3 compatible types
+   memory_types: [semantic, procedural, working]
+   ```
+
+3. **Reference Issues**
+   ```yaml
+   # Error: Invalid reference
+   references: ["task-1"]
+
+   # Solution: Use correct format
+   references: ["TASK-001"]
+   ```
 
 ## Next Steps
 
-1. Review the [Memory System](operations/memory_types.md)
-2. Learn about [Task Management](tasks.md)
-3. Understand [Decision Records](decisions.md)
-4. Explore [Operations](operations/README.md)
+1. Read the [Memory Types Guide](cross_referencing.md) for detailed information
+2. Check [Templates](templates.md) for file creation guides
+3. Review [Command Documentation](commands/) for detailed usage
+4. Start with `/aegis plan` to begin your project
+
+Remember: The framework will guide you through proper usage of front matter and memory types. When in doubt, use `/aegis help`!
 
 ## Additional Resources
 

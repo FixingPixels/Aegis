@@ -1,7 +1,7 @@
 # Help Operation Pattern
 version: 1.0
-command: help
-description: Display command help and documentation
+command: /aegis help
+description: "Show command help and front matter validation guidelines"
 
 # Translation Prompt
 translation:
@@ -41,33 +41,170 @@ translation:
 # Operation Flow
 flow:
   pre_checks:
-    - framework_ready: {verify: framework_check, error: "Framework not ready"}
-  
+    - framework_ready
+
   steps:
-    1_load_commands:
-      action: load_commands
-      commands:
-        - plan: {description: "Create/update planning document"}
-        - start: {description: "Begin development session"}
-        - save: {description: "Save session progress"}
-        - status: {description: "Show current state"}
-        - task: {description: "Manage tasks"}
-        - context: {description: "Quick context refresh"}
-        - help: {description: "Show command help"}
+    1_process_help:
+      - command_help:
+          plan:
+            description: "Create/update planning document"
+            front_matter:
+              required: true
+              memory_types: [semantic]
+            validation:
+              - document_structure
+              - front_matter
+              - references
+          
+          start:
+            description: "Begin development session"
+            front_matter:
+              required: true
+              memory_types: [episodic, working]
+            validation:
+              - context_loading
+              - front_matter
+              - memory_types
+          
+          save:
+            description: "Save session progress"
+            front_matter:
+              required: true
+              memory_types: [episodic]
+            validation:
+              - session_log
+              - front_matter
+              - state_updates
+          
+          task:
+            description: "Manage tasks"
+            front_matter:
+              required: true
+              memory_types: [procedural]
+            validation:
+              - task_state
+              - front_matter
+              - references
+          
+          context:
+            description: "Quick context refresh"
+            front_matter:
+              required: true
+              memory_types: [working]
+            validation:
+              - state_loading
+              - front_matter
+              - memory_types
+
+    2_show_validation:
+      - front_matter:
+          common_fields:
+            - id: "Unique identifier"
+            - title: "Clear description"
+            - created: "Creation timestamp (ISO8601)"
+            - updated: "Last update timestamp (ISO8601)"
+            - memory_types: "Valid memory type combination"
+            - references: "Related file references"
+          
+          memory_types:
+            semantic:
+              - description: "Understanding and knowledge"
+              - compatible: [procedural, working]
+            procedural:
+              - description: "Task implementation"
+              - compatible: [semantic, working]
+            episodic:
+              - description: "Historical records"
+              - compatible: [semantic, working]
+            working:
+              - description: "Current context"
+              - compatible: [semantic, procedural, episodic]
+
+    3_display_help:
+      - format:
+          sections:
+            - command_overview
+            - validation_rules
+            - examples
+          highlights:
+            - front_matter
+            - memory_types
+            - validation
+
+validation_rules:
+  help_content:
+    completeness:
+      check: true
+      error: "Incomplete help content"
+      severity: error
     
-    2_process_help:
-      action: process_help
-      show:
-        - overview: {if: no_command}
-        - details: {if: specific_command}
-        - examples: {always: true}
+    accuracy:
+      check: true
+      error: "Inaccurate help information"
+      severity: error
     
-    3_show_help:
-      action: display_help
-      format:
-        - command: {name: true, description: true}
-        - usage: {syntax: true, examples: true}
-        - notes: {if: has_notes}
+    clarity:
+      check: true
+      error: "Unclear help content"
+      severity: error
+
+error_handling:
+  missing_command:
+    severity: warning
+    message: "Unknown command, showing general help"
+    action: show_commands
+  
+  invalid_content:
+    severity: error
+    message: "Help content validation failed"
+    action: show_error
+  
+  display_failure:
+    severity: error
+    message: "Failed to display help"
+    action: show_text
+
+help_management:
+  commands:
+    setup:
+      - plan: "Create/update planning document"
+    
+    regular:
+      - start: "Begin development session"
+      - save: "Preserve progress"
+      - status: "Show current state"
+      - task: "Manage tasks"
+      - context: "Quick refresh"
+      - help: "Show help"
+
+  sections:
+    validation:
+      - front_matter: "Metadata validation"
+      - memory_types: "Memory type rules"
+      - references: "Reference validation"
+    
+    examples:
+      - task_creation: "Creating new tasks"
+      - state_changes: "Changing task states"
+      - session_logs: "Recording sessions"
+
+important_notes:
+  - "All memory files require front matter"
+  - "Memory types must be compatible"
+  - "References must be valid"
+  - "Commands validate appropriate fields"
+  - "Help shows validation rules"
+
+milestones:
+  success:
+    - "Help content loaded"
+    - "Validation rules shown"
+    - "Examples displayed"
+  
+  failure:
+    - "Content load failed"
+    - "Display failed"
+    - "Examples missing"
 
 # Command Documentation
 commands:

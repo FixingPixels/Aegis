@@ -1,190 +1,192 @@
-# Task Command Documentation
+# Task Command
 
-The `/aegis task` command focuses on procedural memory, providing detailed information about active tasks, their implementation progress, and any blockers or dependencies. It helps manage and track the actual development work being done.
-
-> **Important**: This command should be typed in your AI assistant's chat window, not in your terminal. The command helps guide your AI assistant in managing tasks.
+The `aegis task` command manages task lifecycle and ensures proper front matter validation across all task operations.
 
 ## Usage
-
-Type in your AI assistant's chat window:
 ```bash
-/aegis task
+/aegis task [action]
 ```
 
-## Workflow
+Actions:
+- `create`: Create a new task
+- `list`: List tasks by state
+- `show`: Show task details
+- `move`: Change task state
+- `update`: Update task content
 
-```mermaid
-graph TD
-    A[Command Start] --> B[Focus on Tasks]
-    B --> C[Show Details]
-    C --> D[Show Progress]
-    D --> E[Show Blockers]
+## Front Matter Requirements
 
-    subgraph "Task Focus"
-        B --> B1[Active Tasks]
-        B --> B2[Current State]
-        B --> B3[Dependencies]
-    end
-
-    subgraph "Task Details"
-        C --> C1[Description]
-        C --> C2[Requirements]
-        C --> C3[Resources]
-    end
-
-    subgraph "Progress"
-        D --> D1[Status]
-        D --> D2[Steps]
-        D --> D3[Validation]
-    end
+### Required Fields
+```yaml
+---
+id: TASK-NNN                  # Unique task identifier (e.g., TASK-001)
+title: "Task Title"           # Clear, descriptive title
+created: YYYY-MM-DDTHH:mm:ssZ # Creation timestamp (ISO 8601)
+updated: YYYY-MM-DDTHH:mm:ssZ # Last update timestamp (ISO 8601)
+memory_types: [procedural]    # Must include procedural
+status: [state]              # Current task state
+priority: [level]            # Task priority
+references: []               # Related file references
+---
 ```
 
-## Process Steps
+### Memory Type Rules
+- **Required**: `procedural`
+- **Optional**: `semantic`, `working`
+- **Maximum**: 3 memory types
+- **Valid Combinations**:
+  - `[procedural]`
+  - `[procedural, semantic]`
+  - `[procedural, working]`
+  - `[procedural, semantic, working]`
 
-1. **Focus on Tasks**
-   - Load active tasks
-   - Check current state
-   - Review dependencies
-   - Gather resources
+### Status Values
+- `planned`: Initial task state
+- `active`: Currently being worked on
+- `completed`: Work finished
+- `hold`: Temporarily blocked
 
-2. **Show Task Details**
-   - Task description
-   - Requirements
-   - Resources needed
-   - Dependencies
+### Priority Levels
+- `high`: Critical or blocking tasks
+- `medium`: Standard priority
+- `low`: Nice-to-have tasks
 
-3. **Present Progress**
-   - Implementation status
-   - Completed steps
-   - Validation state
-   - Quality checks
+## Validation Rules
 
-4. **List Blockers**
-   - Dependencies
-   - Resources
-   - Technical issues
-   - External factors
+### Pre-Operation Validation
+The command validates:
+1. Front matter existence and format
+2. Required fields presence
+3. Memory type compatibility
+4. Reference validity
+5. Status transitions
 
-## Task Creation
+### Error Handling
+```yaml
+# Critical Errors (Block Operation)
+- Missing front matter
+- Invalid front matter format
+- Missing required fields
+- Invalid memory type combination
+- Invalid status transition
 
-When creating a new task, follow these guidelines:
-
-1. **File Naming**
-   Use the timestamp-based format:
-   ```
-   YYMMDD_HHMMSS_description.md
-   ```
-   Example: `240320_193500_implement-feature.md`
-
-   Where:
-   - YY: Year (e.g., 24)
-   - MM: Month (01-12)
-   - DD: Day (01-31)
-   - HH: Hour (00-23)
-   - MM: Minute (00-59)
-   - SS: Second (00-59)
-   - description: Kebab-case description
-
-2. **Naming Guidelines**
-   - Use current timestamp for YYMMDD_HHMMSS
-   - Use kebab-case for description (lowercase with hyphens)
-   - Keep description concise but clear
-   - Use only alphanumeric characters and hyphens
-   - Avoid special characters
-
-3. **Location**
-   - New tasks are created in `.context/tasks/planned/`
-   - Use task template from `.context/tasks/TEMPLATE.md`
-   - Follow directory structure for task states
-
-4. **Benefits**
-   - Unique task identifiers
-   - Natural chronological sorting
-   - Clear creation timeline
-   - Easy task reference
-   - No naming conflicts
-   - Works across all file systems
-
-See [Task Documentation](../tasks.md) for complete details on task management.
-
-## Task Organization
-
-### Directory Structure
-```
-tasks/
-├── TEMPLATE.md     # Task template
-├── active/        # Current tasks
-├── completed/    # Finished tasks
-├── planned/     # Future tasks
-└── hold/       # Blocked tasks
+# Warnings (Allow with Notice)
+- Invalid references
+- Missing optional fields
+- Suboptimal memory type combination
 ```
 
-### Task States
-1. **Active**
-   - In development
-   - Under review
-   - Testing
-   - Validation
+## Examples
 
-2. **Planned**
-   - Ready
-   - Dependencies met
-   - Resources ready
-   - Prioritized
+### Creating a New Task
+```bash
+/aegis task create
+```
+Creates a new task with validated front matter:
+```yaml
+---
+id: TASK-001
+title: "Implement Feature X"
+created: 2024-02-06T10:00:00Z
+updated: 2024-02-06T10:00:00Z
+memory_types: [procedural, semantic]
+status: planned
+priority: high
+references: []
+---
+```
 
-3. **Hold**
-   - Blocked
-   - Waiting
-   - Limited
-   - Delayed
+### Moving Task State
+```bash
+/aegis task move TASK-001 active
+```
+Updates front matter automatically:
+```yaml
+---
+# ... other fields ...
+status: active
+updated: 2024-02-06T11:00:00Z
+---
+```
 
-4. **Completed**
-   - Done
-   - Tested
-   - Documented
-   - Reviewed
+### Updating Task
+```bash
+/aegis task update TASK-001
+```
+Validates front matter changes:
+```yaml
+---
+# ... other fields ...
+memory_types: [procedural, working]  # Valid change
+updated: 2024-02-06T12:00:00Z
+references: ["DECISION-001"]         # Added reference
+---
+```
 
-## Common Issues
+## Common Errors and Solutions
 
-1. **Task Details**
-   - Clear requirements
-   - Complete info
-   - Defined goals
-   - Set scope
+### Invalid Memory Types
+```yaml
+# Error
+memory_types: [semantic, working]  # Missing required procedural
 
-2. **Dependencies**
-   - Track chains
-   - Note requirements
-   - Watch progress
-   - Handle conflicts
+# Solution
+memory_types: [procedural, semantic, working]
+```
 
-3. **Status**
-   - Keep current
-   - Show progress
-   - Note changes
-   - Maintain context
+### Invalid Status Transition
+```yaml
+# Error
+status: completed  # Can't move directly from planned to completed
+
+# Solution
+1. First move to active:
+   status: active
+2. Then move to completed:
+   status: completed
+```
+
+### Missing Required Fields
+```yaml
+# Error
+---
+id: TASK-001
+title: "Task Title"
+# missing created, updated, memory_types, etc.
+---
+
+# Solution
+Add all required fields with valid values
+```
 
 ## Best Practices
 
-1. **Task Management**
-   - Clear titles
-   - Good descriptions
-   - Track progress
-   - Note blockers
+1. Memory Types
+   - Always include `procedural` type
+   - Add `semantic` for architectural tasks
+   - Add `working` for active development
 
-2. **Updates**
-   - Regular status
-   - Document blocks
-   - Track deps
-   - Show changes
+2. References
+   - Link related decisions
+   - Reference dependent tasks
+   - Update when dependencies change
 
-3. **Organization**
-   - Group logically
-   - Set priority
-   - Track deps
-   - Update status
+3. Status Updates
+   - Keep status current
+   - Update timestamps
+   - Document state changes
 
-For more information, see:
-- [Memory System](../memory_system.md)
-- [Getting Started](../getting_started.md)
-- [Core Files](../core_files.md)
+4. Front Matter Maintenance
+   - Validate before commits
+   - Keep references current
+   - Use correct formats
+
+## Related Commands
+- `/aegis start`: Initialize development session
+- `/aegis save`: Save task progress
+- `/aegis context`: View task context
+
+## See Also
+- [Memory Types](../memory_types.md)
+- [Front Matter Validation](../validation.md)
+- [Task Templates](../templates.md#task-template)

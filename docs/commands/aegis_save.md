@@ -1,199 +1,201 @@
-# Save Command Documentation
+# Save Command
 
-The `/aegis save` command preserves the current development session progress, creating a session log and updating task status.
-
-> **Important**: This command should be typed in your AI assistant's chat window, not in your terminal. The command helps guide your AI assistant in recording your progress.
+The `aegis save` command preserves session progress and updates project memory, ensuring proper front matter validation across all affected files.
 
 ## Usage
-
-Type in your AI assistant's chat window:
 ```bash
 /aegis save
 ```
 
-## Workflow
+## Front Matter Requirements
 
-```mermaid
-graph TD
-    A[Command Start] --> B[Create Session Log]
-    B --> C[Create Decisions]
-    C --> D[Update Tasks]
-    D --> E[Show Summary]
-
-    subgraph "Session Log"
-        B --> B1[Record Progress]
-        B --> B2[Document Changes]
-        B --> B3[Note Context]
-    end
-
-    subgraph "Decision Creation"
-        C --> C1[Architecture]
-        C --> C2[Technology]
-        C --> C3[Patterns]
-        C --> C4[Security]
-    end
-
-    subgraph "Task Updates"
-        D --> D1[Progress]
-        D --> D2[Status]
-        D --> D3[References]
-    end
+### Session Log Front Matter
+```yaml
+---
+id: SESSION-YYYYMMDDHHMMSS    # Timestamp-based session ID
+title: "Session Summary"       # Clear session description
+created: YYYY-MM-DDTHH:mm:ssZ # Creation timestamp (ISO 8601)
+updated: YYYY-MM-DDTHH:mm:ssZ # Last update timestamp (ISO 8601)
+memory_types: [episodic]      # Must include episodic
+focus: "Current Focus"        # Session focus area
+participants: []              # Session participants
+objectives: []                # Session objectives
+references: []                # Related file references
+---
 ```
 
-## Process Steps
+### Memory Type Rules
+- **Required**: `episodic`
+- **Optional**: `semantic`, `working`
+- **Maximum**: 3 memory types
+- **Valid Combinations**:
+  - `[episodic]`
+  - `[episodic, semantic]`
+  - `[episodic, working]`
+  - `[episodic, semantic, working]`
 
-1. **Create Session Log**
-   - Record progress made
-   - Document changes
-   - Note important context
-   - Link related items
+## Validation Process
 
-2. **Create Decision Records**
-   - Architecture changes
-   - Technology choices
-   - Pattern implementations
-   - Security decisions
-   - Breaking changes
-   - Convention creation
+### Pre-Save Validation
+1. Front Matter Checks:
+   ```yaml
+   - Existence: Front matter present
+   - Format: Valid YAML
+   - Required Fields: All present
+   - Memory Types: Valid combination
+   - References: Exist and valid
+   ```
 
-3. **Update Task Progress**
-   - Update status
-   - Move completed tasks
-   - Update references
-   - Note blockers
+2. Content Validation:
+   ```yaml
+   - Required Sections:
+     - Progress Summary
+     - Changes Made
+     - Next Steps
+   - Optional Sections:
+     - Decisions Made
+     - Insights
+     - Notes
+   ```
 
-4. **Show Summary**
-   - Updated files
-   - Status changes
-   - Key decisions
-   - Next steps
+3. State Updates:
+   ```yaml
+   - Task Status: Valid transitions
+   - Timestamps: ISO8601 format
+   - References: Cross-referenced
+   ```
 
-## File Updates
+## Error Handling
 
-### Session Log
-- Progress made
-- Changes implemented
-- Decisions taken
-- Context preserved
+### Critical Errors (Block Save)
+```yaml
+- Missing front matter
+- Invalid front matter format
+- Missing required fields
+- Invalid memory type combination
+- Missing required sections
+```
 
-### Decision Records
-- New decisions
-- Status updates
-- References
-- Impact notes
+### Warnings (Allow with Notice)
+```yaml
+- Invalid references
+- Missing optional sections
+- Suboptimal memory type combination
+```
+
+## Examples
+
+### Creating Session Log
+```yaml
+---
+id: SESSION-20240206223000
+title: "Feature Implementation Progress"
+created: 2024-02-06T22:30:00Z
+updated: 2024-02-06T22:30:00Z
+memory_types: [episodic, working]
+focus: "Front Matter Validation"
+participants: ["Developer"]
+objectives: ["Complete validation implementation"]
+references: ["TASK-008"]
+---
+
+## Progress Summary
+- Implemented front matter validation
+- Updated operation patterns
+- Enhanced documentation
+
+## Changes Made
+1. Code Updates:
+   - Added validation hooks
+   - Enhanced error handling
+   - Updated templates
+
+## Next Steps
+1. Complete command documentation
+2. Update cross-referencing guide
+3. Enhance getting started guide
+```
+
+### Updating Task Status
+```yaml
+# Original Task Front Matter
+---
+id: TASK-008
+status: active
+updated: 2024-02-06T21:30:00Z
+---
+
+# Updated After Save
+---
+id: TASK-008
+status: active
+updated: 2024-02-06T22:30:00Z  # Automatically updated
+references: ["SESSION-20240206223000"]  # Session reference added
+---
+```
+
+## State Transitions
 
 ### Task Updates
-- Progress status
-- Completion state
-- Dependencies
-- Blockers
+```yaml
+validation:
+  pre_update:
+    - front_matter_valid
+    - status_transition_valid
+    - references_exist
+  
+  post_update:
+    - timestamps_updated
+    - references_updated
+    - state_consistent
+```
 
-## Common Issues
-
-1. **File System**
-   - Check permissions
-   - Verify access
-   - Ensure space
-   - Handle locks
-
-2. **Content**
-   - Check references
-   - Verify links
-   - Update status
-   - Maintain order
-
-3. **State**
-   - Complete updates
-   - Check references
-   - Verify links
-   - Ensure consistency
+### Session Creation
+```yaml
+validation:
+  pre_create:
+    - template_valid
+    - front_matter_complete
+    - references_valid
+  
+  post_create:
+    - content_complete
+    - cross_references_updated
+    - state_consistent
+```
 
 ## Best Practices
 
-1. **Regular Saves**
-   - After changes
-   - Before breaks
-   - Task completion
-   - Session end
+1. Session Logs
+   - Use clear titles
+   - Document all changes
+   - Link related tasks
+   - Include decisions made
 
-2. **Clean Updates**
-   - Verify changes
-   - Check links
-   - Update status
-   - Review summary
+2. Front Matter
+   - Keep timestamps current
+   - Maintain references
+   - Use correct memory types
+   - Validate before saving
 
-3. **Organization**
-   - Link items
-   - Clear references
-   - Good descriptions
-   - Clean structure
+3. Content Organization
+   - Use required sections
+   - Be specific in summaries
+   - Document decisions
+   - Plan next steps
 
-## Next Steps After Save
-
-1. **Review Changes**
-   - Check updated files
-   - Verify task status
-   - Review decisions
-   - Confirm links
-
-2. **Plan Ahead**
-   - Note next tasks
-   - Review dependencies
-   - Check blockers
-   - Plan next session
-
-3. **Maintenance**
-   - Clean up old files
-   - Archive if needed
-   - Update references
-   - Organize tasks
-
-For more information, see:
-- [Memory System](../memory_system.md)
-- [Getting Started](../getting_started.md)
-- [Core Files](../core_files.md)
-
-## Next Steps
-
-After save completes, the command will suggest appropriate next actions:
-
-```mermaid
-graph TD
-    A[Save Complete] --> B{Check Progress}
-    B -->|Tasks Done| C[Suggest Status Update]
-    B -->|In Progress| D[Show Next Steps]
-    C --> E[Plan Next Tasks]
-    D --> F[Continue Work]
-```
-
-### Tasks Completed
-- Suggests running `/aegis status` to review
-- Offers to plan next tasks
-- Shows milestone progress
-- Updates project state
-
-### Work In Progress
-- Shows next implementation steps
-- Suggests continuing current task
-- Offers relevant help
-- Shows related tasks
-
-## Validation Rules
-
-1. Command Completion:
-   - Verify session log created
-   - Check task updates applied
-   - Confirm state changes saved
-   - Validate file consistency
-
-2. State Transitions:
+4. State Management
    - Update task statuses
-   - Move completed tasks
    - Record decisions
-   - Update project state
+   - Maintain references
+   - Ensure consistency
 
-3. Context Updates:
-   - Create session record
-   - Update current state
-   - Log progress
-   - Prepare next steps
+## Related Commands
+- `/aegis task`: Manage tasks
+- `/aegis context`: View context
+- `/aegis status`: Check state
+
+## See Also
+- [Memory Types](../memory_types.md)
+- [Front Matter Validation](../validation.md)
+- [Session Templates](../templates.md#session-template)

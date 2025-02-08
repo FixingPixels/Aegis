@@ -1,0 +1,183 @@
+# Memory Validation Operation Pattern
+version: 1.0
+command: validate_memory
+description: Validate and recover memory files with missing front matter
+
+# Operation Flow
+flow:
+  pre_checks:
+    - framework_ready: {verify: framework_check, error: "Framework not ready"}
+  
+  steps:
+    1_scan_memory_files:
+      action: scan_files
+      directories:
+        - tasks: {path: "tasks/**/*.md", recursive: true}
+        - sessions: {path: "sessions/*.md"}
+        - decisions: {path: "decisions/*.md"}
+        - state: {path: "current_state.md"}
+      report:
+        format: structured
+        include: [path, issues, memory_types]
+    
+    2_analyze_issues:
+      action: analyze_memory
+      checks:
+        - front_matter:
+            exists: {required: true}
+            format: {yaml: true}
+            fields: {required: [memory_types, created, updated]}
+        - memory_types:
+            valid: {check: compatibility}
+            allowed: {from: core.yaml}
+        - references:
+            valid: {check: exists}
+            cross_ref: {validate: true}
+      output:
+        report: "validation_report.md"
+        format: markdown
+    
+    3_generate_fixes:
+      action: generate_fixes
+      templates:
+        - tasks: {from: "tasks/TEMPLATE.md"}
+        - sessions: {from: "sessions/TEMPLATE.md"}
+        - decisions: {from: "decisions/TEMPLATE.md"}
+      fixes:
+        - missing_front_matter:
+            action: add_front_matter
+            template: |
+              ---
+              id: {auto_generate}
+              created: {timestamp}
+              updated: {timestamp}
+              memory_types: {infer_from_location}
+              references: {scan_content}
+              ---
+        - invalid_memory_types:
+            action: fix_memory_types
+            rules: {from: core.yaml}
+        - missing_fields:
+            action: add_missing_fields
+            required: {from: validation_rules}
+      
+    4_apply_fixes:
+      action: apply_fixes
+      mode: interactive
+      steps:
+        - backup: {create: true, location: ".context/backups"}
+        - validate: {pre_apply: true}
+        - apply: {if: validated}
+        - verify: {post_apply: true}
+      report:
+        changes: {log: true}
+        status: {display: true}
+
+# Validation Rules
+validation:
+  scan_rules:
+    directories: [tasks, sessions, decisions]
+    patterns: ["*.md"]
+    exclude: ["**/TEMPLATE.md", "**/README.md"]
+  
+  front_matter:
+    required: true
+    format: yaml
+    fields:
+      common:
+        - memory_types
+        - created
+        - updated
+        - references
+      type_specific:
+        tasks: [id, status, priority]
+        sessions: [id, focus]
+        decisions: [id, status, impact]
+
+# Recovery Process
+recovery:
+  steps:
+    - scan: {action: identify_issues}
+    - analyze: {action: determine_fixes}
+    - fix: {action: apply_changes}
+    - verify: {action: validate_results}
+  
+  safety:
+    backup: {required: true}
+    validation: {pre_post: true}
+    interactive: {confirm: true}
+
+# Reporting
+reporting:
+  formats:
+    - summary: {quick_view: true}
+    - detailed: {full_report: true}
+    - json: {machine_readable: true}
+  
+  content:
+    - issues: {by_type: true}
+    - fixes: {proposed: true}
+    - results: {after_fix: true}
+
+# Error Handling
+errors:
+  validation:
+    missing_front_matter:
+      severity: error
+      fix: {auto: true}
+    
+    invalid_memory_types:
+      severity: warning
+      fix: {suggest: true}
+    
+    missing_fields:
+      severity: warning
+      fix: {interactive: true}
+  
+  recovery:
+    backup_failed:
+      severity: error
+      action: abort
+    
+    fix_failed:
+      severity: warning
+      action: skip
+    
+    validation_failed:
+      severity: error
+      action: rollback
+
+# Templates
+templates:
+  front_matter:
+    task: |
+      ---
+      id: TASK-{number}
+      created: {timestamp}
+      updated: {timestamp}
+      memory_types: [procedural, working]
+      status: {current_status}
+      priority: medium
+      references: []
+      ---
+    
+    session: |
+      ---
+      id: SESSION-{timestamp}
+      created: {timestamp}
+      updated: {timestamp}
+      memory_types: [episodic, working]
+      focus: {from_context}
+      references: []
+      ---
+    
+    decision: |
+      ---
+      id: DECISION-{number}
+      created: {timestamp}
+      updated: {timestamp}
+      memory_types: [semantic, episodic]
+      status: proposed
+      impact: {analyze}
+      references: []
+      --- 

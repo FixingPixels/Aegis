@@ -1,118 +1,208 @@
-# Context Command Documentation
+# Context Command
 
-The `/aegis context` command performs a quick refresh of the current context, showing relevant information for current work.
-
-> **Important**: This command should be typed in your AI assistant's chat window, not in your terminal. The command helps guide your AI assistant in understanding context.
+The `aegis context` command provides a quick context refresh with front matter validation across all memory files.
 
 ## Usage
-
-Type in your AI assistant's chat window:
 ```bash
 /aegis context
 ```
 
-## Workflow
+## Front Matter Requirements
 
-```mermaid
-graph TD
-    A[Command Start] --> B[Quick Refresh]
-    B --> C[Show Context]
-    C --> D[Ready State]
-
-    subgraph "Quick Refresh"
-        B --> B1[Working Memory]
-        B --> B2[Current Task]
-        B --> B3[Recent Changes]
-    end
-
-    subgraph "Context Info"
-        C --> C1[Focus Area]
-        C --> C2[Progress]
-        C --> C3[Next Steps]
-    end
+### Current State Front Matter
+```yaml
+---
+id: STATE-CURRENT             # Fixed state identifier
+title: "Current State"        # State description
+created: YYYY-MM-DDTHH:mm:ssZ # Creation timestamp (ISO 8601)
+updated: YYYY-MM-DDTHH:mm:ssZ # Last update timestamp (ISO 8601)
+memory_types: [working]       # Must include working
+focus: "Current Focus"        # Active development focus
+active_task: "TASK-NNN"      # Currently active task
+status: "Status Description"  # Current state status
+references: []               # Related file references
+---
 ```
 
-## Process Steps
+### Memory Type Rules
+- **Required**: `working`
+- **Optional**: `semantic`, `procedural`, `episodic`
+- **Maximum**: 3 memory types
+- **Valid Combinations**:
+  - `[working]`
+  - `[working, semantic]`
+  - `[working, procedural]`
+  - `[working, episodic]`
+  - `[working, semantic, procedural]`
+  - `[working, semantic, episodic]`
+  - `[working, procedural, episodic]`
 
-1. **Quick Refresh**
-   - Working memory
-   - Current task
-   - Recent changes
-   - Active focus
+## Validation Process
 
-2. **Show Context**
-   - Focus area
-   - Current progress
-   - Next steps
-   - Blockers
+### Pre-Context Validation
+1. Front Matter Checks:
+   ```yaml
+   - Existence: Front matter present
+   - Format: Valid YAML
+   - Required Fields: All present
+   - Memory Types: Valid combination
+   - References: Exist and valid
+   ```
 
-3. **Ready State**
-   - Maintain focus
-   - Continue work
-   - Track progress
-   - Plan ahead
+2. State Validation:
+   ```yaml
+   - Current State: Exists and valid
+   - Active Tasks: Valid references
+   - Recent Sessions: Valid references
+   ```
 
-## Context Types
+3. Memory Processing:
+   ```yaml
+   - Working Memory: Current context
+   - Procedural Memory: Active tasks
+   - Episodic Memory: Recent changes
+   ```
 
-### Working Memory
-- Active focus
-- Current work
-- Technical details
-- Open items
+## Error Handling
 
-### Current Task
-- Progress
-- Status
-- Requirements
-- Resources
+### Critical Errors (Block Context)
+```yaml
+- Missing current state
+- Invalid front matter format
+- Missing required fields
+- Invalid memory type combination
+```
 
-### Recent Changes
-- Code updates
-- Decisions
-- Progress
-- Notes
+### Warnings (Allow with Notice)
+```yaml
+- Invalid references
+- Missing optional fields
+- Outdated timestamps
+```
 
-## Common Issues
+## Examples
 
-1. **Context Loss**
-   - Interruptions
-   - Lost focus
-   - Missing info
-   - Unclear state
+### Current State Display
+```yaml
+---
+id: STATE-CURRENT
+title: "Front Matter Implementation"
+created: 2024-02-06T20:00:00Z
+updated: 2024-02-06T22:45:00Z
+memory_types: [working, procedural]
+focus: "Front Matter Validation"
+active_task: "TASK-008"
+status: "Implementing validation"
+references: [
+  "TASK-008",
+  "SESSION-20240206223000"
+]
+---
 
-2. **Information**
-   - Too detailed
-   - Not clear
-   - Mixed focus
-   - Scattered
+## Knowledge Base
+- Front matter validation rules
+- Memory type compatibility
+- Validation hooks
 
-3. **Recovery**
-   - Complex work
-   - Many tasks
-   - Unclear path
-   - Missing notes
+## Active Development
+- Updating command documentation
+- Enhancing validation rules
+- Implementing error handling
+
+## Technical State
+- Core validation implemented
+- Operation patterns updated
+- Documentation in progress
+
+## Current Focus
+- Command documentation updates
+- Cross-referencing implementation
+- Getting started guide updates
+```
+
+### Context Validation
+```yaml
+validation:
+  front_matter:
+    check:
+      - existence: true
+      - format: yaml
+      - fields: complete
+    memory_types:
+      - working_required: true
+      - compatibility: valid
+    references:
+      - format: valid
+      - targets: exist
+
+  state:
+    check:
+      - current_state: exists
+      - active_tasks: valid
+      - recent_sessions: valid
+```
+
+## State Processing
+
+### Memory Type Processing
+```yaml
+processing:
+  working:
+    - current_state
+    - active_focus
+  procedural:
+    - active_tasks
+    - task_progress
+  episodic:
+    - recent_sessions
+    - recent_changes
+```
+
+### Validation Display
+```yaml
+display:
+  current:
+    - focus
+    - active_tasks
+    - recent_changes
+  validation:
+    - front_matter_status
+    - memory_type_issues
+    - reference_warnings
+```
 
 ## Best Practices
 
-1. **Regular Use**
-   - After breaks
-   - Task switches
-   - Reviews
-   - Resuming
+1. State Management
+   - Keep current state updated
+   - Maintain accurate focus
+   - Track active tasks
+   - Update references
 
-2. **Review**
-   - Check focus
-   - See progress
-   - Note changes
-   - Plan next
+2. Front Matter
+   - Validate regularly
+   - Keep timestamps current
+   - Use correct memory types
+   - Maintain references
 
-3. **Recovery**
-   - Quick scan
-   - State check
-   - Progress view
-   - Next steps
+3. Context Refresh
+   - Check before major changes
+   - Validate state consistency
+   - Review active tasks
+   - Update as needed
 
-For more information, see:
-- [Memory System](../memory_system.md)
-- [Getting Started](../getting_started.md)
-- [Core Files](../core_files.md)
+4. Memory Processing
+   - Ensure type compatibility
+   - Validate references
+   - Check timestamps
+   - Maintain consistency
+
+## Related Commands
+- `/aegis task`: Manage tasks
+- `/aegis save`: Save progress
+- `/aegis status`: Check state
+
+## See Also
+- [Memory Types](../memory_types.md)
+- [Front Matter Validation](../validation.md)
+- [State Management](../state_management.md)

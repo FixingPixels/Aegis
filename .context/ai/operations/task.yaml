@@ -1,106 +1,209 @@
 # Task Operation Pattern
 version: 1.0
-command: task
-description: Task management and tracking
+command: /aegis task
+description: "Manage and track tasks with front matter validation"
 
 # Operation Flow
 flow:
   pre_checks:
-    - framework_ready: {verify: framework_check, error: "Framework not ready"}
+    - framework_ready
+    - task_dirs_exist
+    - front_matter_valid
   
   steps:
-    1_load_tasks:
-      action: load_tasks
-      files:
-        - active: {dir: "tasks/active", pattern: "*.md"}
-        - planned: {dir: "tasks/planned", pattern: "*.md"}
-        - template: {path: "tasks/TEMPLATE.md", required: true}
+    1_validate_front_matter:
+      - check_existence: true
+      - validate_format: yaml
+      - verify_required_fields:
+          common:
+            - id
+            - title
+            - created
+            - updated
+            - memory_types
+            - references
+          task_specific:
+            - status
+            - priority
+            - phase
     
-    2_process_command:
-      action: handle_task_command
-      commands:
-        - new: {template: true, location: "tasks/planned"}
-        - list: {show: [active, planned], sort: priority}
-        - show: {active: true, details: true}
-        - move: {between: [planned, active, completed, hold]}
+    2_load_tasks:
+      - locations:
+          - .context/tasks/planned
+          - .context/tasks/active
+          - .context/tasks/completed
+          - .context/tasks/hold
+      - validate:
+          front_matter:
+            - existence
+            - format
+            - fields
+          memory_types:
+            - procedural_required
+            - compatibility
+          references:
+            - format
+            - existence
     
-    3_update_state:
-      action: update_task_state
-      update:
-        - status: {if: moved}
-        - progress: {if: changed}
-        - timestamps: {always: true}
+    3_process_command:
+      - actions:
+          create:
+            - use_template: true
+            - validate_front_matter: true
+            - check_memory_types: true
+          move:
+            - validate_state_change: true
+            - update_front_matter: true
+            - preserve_content: true
+          update:
+            - validate_changes: true
+            - update_timestamps: true
+            - check_references: true
+    
+    4_update_state:
+      - validate:
+          front_matter:
+            - all_required_fields
+            - memory_types
+            - references
+          content:
+            - required_sections
+            - progress_tracking
+      - update:
+          timestamps: ISO8601
+          references: true
+          status: if_changed
 
 # Validation Rules
 validation:
-  task_files:
-    template: {path: "tasks/TEMPLATE.md", required: true}
-    directories: [active, planned, completed, hold]
-    check: [exists, readable, writable]
-  
-  task_content:
-    required: [id, title, status, priority]
-    validate: [format, completeness]
+  front_matter:
+    existence:
+      check: true
+      error: "Front matter section is required"
+      severity: error
+    
+    format:
+      check: yaml
+      error: "Invalid YAML format in front matter"
+      severity: error
+    
+    required_fields:
+      check: complete
+      error: "Missing required fields: {fields}"
+      severity: error
+    
+    memory_types:
+      check:
+        - procedural_required
+        - compatibility
+        - count_range
+      error: "Invalid memory type configuration"
+      severity: error
+    
+    references:
+      check:
+        - format
+        - existence
+        - validity
+      error: "Invalid references detected"
+      severity: warning
+
+  task_management:
+    template:
+      check: true
+      error: "Invalid task template"
+    
+    state_transitions:
+      check:
+        - valid_states
+        - proper_sequence
+      error: "Invalid state transition"
+    
+    content:
+      check:
+        - required_sections
+        - progress_tracking
+      error: "Invalid task content"
 
 # Error Handling
 errors:
-  not_ready:
-    msg: "Framework not ready"
-    action: show_setup_instructions
-    help: "Copy .context directory to your project and ensure all required files exist"
-  
   missing_template:
-    msg: "Task template missing"
-    action: list_missing
-    help: "Ensure tasks/TEMPLATE.md exists"
+    severity: error
+    message: "Required template not found"
+    action: block_operation
   
-  invalid_task:
-    msg: "Invalid task format"
-    action: show_format
-    help: "Check task file format"
+  invalid_front_matter:
+    severity: error
+    message: "Front matter validation failed"
+    action: block_operation
+  
+  invalid_memory_types:
+    severity: error
+    message: "Invalid memory type combination"
+    action: block_operation
+  
+  invalid_references:
+    severity: warning
+    message: "Invalid references detected"
+    action: warn_user
+  
+  state_transition_failure:
+    severity: error
+    message: "Failed to transition task state"
+    action: block_operation
 
 # Task Management
 tasks:
   locations:
-    - planned: "tasks/planned/*.md"
-    - active: "tasks/active/*.md"
-    - completed: "tasks/completed/*.md"
-    - hold: "tasks/hold/*.md"
+    planned: .context/tasks/planned
+    active: .context/tasks/active
+    completed: .context/tasks/completed
+    hold: .context/tasks/hold
   
   transitions:
-    - planned_to_active: {update: status}
-    - active_to_completed: {update: [status, completion]}
-    - active_to_hold: {update: [status, reason]}
+    planned_to_active:
+      validate:
+        - front_matter
+        - memory_types
+        - references
+      update:
+        - status
+        - updated
+    
+    active_to_completed:
+      validate:
+        - progress_complete
+        - front_matter
+      update:
+        - status
+        - updated
+    
+    active_to_hold:
+      validate:
+        - reason_provided
+        - front_matter
+      update:
+        - status
+        - updated
 
 # Important Notes
 notes:
-  usage:
-    - task_creation: "Use template"
-    - task_movement: "Update status"
-    - task_tracking: "Keep current"
+  - "All tasks must have valid front matter"
+  - "Procedural memory type is required"
+  - "State transitions must be valid"
+  - "References must be verified"
+  - "Progress must be tracked"
 
 # Task Template
 template:
-  frontmatter:
-    required:
-      - type: task
-      - status: [planned, active, completed, blocked]
-      - created: timestamp
-      - memory_types: [procedural, working]
-      - priority: [high, medium, low]
-    
-    optional:
-      - due: date
-      - tags: []
-      - links: []
-      - aliases: []
-      - mvp_priority: number
-  
-  sections:
-    - objective: "Clear task goal"
-    - requirements: "Task requirements"
-    - implementation: "Progress tracking"
-    - success_criteria: "Completion criteria"
+  location: .context/tasks/TEMPLATE.md
+  required_sections:
+    - Description
+    - Implementation
+    - Validation
+  optional_sections:
+    - Dependencies
+    - Notes
 
 # Memory Processing
 memory:
@@ -125,4 +228,18 @@ next_steps:
   
   blocked_task:
     suggest: resolve_blockers
-    reason: "Address blocking issues" 
+    reason: "Address blocking issues"
+
+# Milestones
+milestones:
+  success:
+    - "Front matter validated"
+    - "Task created/updated"
+    - "State transition completed"
+    - "References verified"
+  
+  failure:
+    - "Invalid front matter"
+    - "Invalid state transition"
+    - "Missing required sections"
+    - "Reference validation failed" 
