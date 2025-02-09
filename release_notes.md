@@ -1,6 +1,6 @@
 # Aegis Framework Release Notes
 
-## v0.1.2-beta
+## v0.1.3-beta
 
 This release enhances the framework's documentation and task management capabilities, focusing on improved user guidance and automated task creation workflows.
 
